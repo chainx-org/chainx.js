@@ -1,0 +1,17 @@
+{
+  "name": "chainx.js",
+  "version": "2.5.37",
+  "main": "index.js",
+  "dependencies": {
+    "@chainx/account": "^2.5.21",
+    "@chainx/extrinsics": "^2.5.36",
+    "@chainx/rpc-provider": "^2.5.34",
+    "@chainx/rpc-rx": "^2.5.36",
+    "@chainx/storage": "^2.5.36",
+    "@chainx/types": "^2.5.36",
+    "@polkadot/keyring": "^0.34.37",
+    "@polkadot/util": "^0.34.37",
+    "eventemitter3": "^3.1.0",
+    "rxjs": "^6.3.3"
+  }
+}

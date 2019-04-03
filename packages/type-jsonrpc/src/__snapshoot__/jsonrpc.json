@@ -1,0 +1,383 @@
+{
+  "author": {
+    "isDeprecated": false,
+    "isHidden": false,
+    "description": "Authoring of network items",
+    "section": "author",
+    "methods": {
+      "pendingExtrinsics": {
+        "description": "Returns all pending extrinsics, potentially grouped by sender",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "pendingExtrinsics",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "author",
+        "type": "PendingExtrinsics"
+      },
+      "submitExtrinsic": {
+        "description": "Submit a fully formatted extrinsic for block inclusion",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": true,
+        "isSubscription": false,
+        "method": "submitExtrinsic",
+        "params": [{ "isOptional": false, "name": "extrinsic", "type": "Extrinsic" }],
+        "pubsub": ["", "", ""],
+        "section": "author",
+        "type": "Hash"
+      },
+      "submitAndWatchExtrinsic": {
+        "description": "Subscribe and watch an extrinsic until unsubscribed",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": true,
+        "isSubscription": true,
+        "method": "submitAndWatchExtrinsic",
+        "params": [{ "isOptional": false, "name": "extrinsic", "type": "Extrinsic" }],
+        "pubsub": ["extrinsicUpdate", "submitAndWatchExtrinsic", "unwatchExtrinsic"],
+        "section": "author",
+        "type": "ExtrinsicStatus"
+      }
+    }
+  },
+  "chain": {
+    "isDeprecated": false,
+    "isHidden": false,
+    "description": "Retrieval of chain data",
+    "section": "chain",
+    "methods": {
+      "getBlock": {
+        "description": "Get header and body of a relay chain block",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getBlock",
+        "params": [{ "isOptional": true, "name": "hash", "type": "Hash" }],
+        "pubsub": ["", "", ""],
+        "section": "chain",
+        "type": "SignedBlock"
+      },
+      "getBlockHash": {
+        "description": "Get the block hash for a specific block",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getBlockHash",
+        "params": [{ "isOptional": true, "name": "blockNumber", "type": "BlockNumber" }],
+        "pubsub": ["", "", ""],
+        "section": "chain",
+        "type": "Hash"
+      },
+      "getFinalisedHead": {
+        "description": "Get hash of the last finalised block in the canon chain",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getFinalisedHead",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "chain",
+        "type": "Hash"
+      },
+      "getHeader": {
+        "description": "Retrieves the header for a specific block",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getHeader",
+        "params": [{ "isOptional": true, "name": "hash", "type": "Hash" }],
+        "pubsub": ["", "", ""],
+        "section": "chain",
+        "type": "Header"
+      },
+      "getRuntimeVersion": {
+        "description": "Get the runtime version",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getRuntimeVersion",
+        "params": [{ "isOptional": true, "name": "hash", "type": "Hash" }],
+        "pubsub": ["", "", ""],
+        "section": "chain",
+        "type": "RuntimeVersion"
+      },
+      "subscribeFinalisedHeads": {
+        "description": "Retrieves the best finalised header via subscription",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": true,
+        "method": "subscribeFinalisedHeads",
+        "params": [],
+        "pubsub": ["finalisedHead", "subscribeFinalisedHeads", "unsubscribeFinalisedHeads"],
+        "section": "chain",
+        "type": "Header"
+      },
+      "subscribeRuntimeVersion": {
+        "description": "Retrieves the runtime version via subscription",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": true,
+        "method": "subscribeRuntimeVersion",
+        "params": [],
+        "pubsub": ["runtimeVersion", "subscribeRuntimeVersion", "unsubscribeRuntimeVersion"],
+        "section": "chain",
+        "type": "RuntimeVersion"
+      },
+      "subscribeNewHead": {
+        "description": "Retrieves the best header via subscription",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": true,
+        "method": "subscribeNewHead",
+        "params": [],
+        "pubsub": ["newHead", "subscribeNewHead", "unsubscribeNewHead"],
+        "section": "chain",
+        "type": "Header"
+      }
+    }
+  },
+  "state": {
+    "isDeprecated": false,
+    "isHidden": false,
+    "description": "Query of state",
+    "section": "state",
+    "methods": {
+      "call": {
+        "description": "Perform a call to a builtin on the chain",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "call",
+        "params": [
+          { "isOptional": false, "name": "method", "type": "Text" },
+          { "isOptional": false, "name": "data", "type": "Bytes" },
+          { "isOptional": true, "name": "block", "type": "Hash" }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "Bytes"
+      },
+      "getMetadata": {
+        "description": "Returns the runtime metadata",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getMetadata",
+        "params": [{ "isOptional": true, "name": "block", "type": "Hash" }],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "Metadata"
+      },
+      "getStorage": {
+        "description": "Retrieves the storage for a key",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getStorage",
+        "params": [
+          { "isOptional": false, "name": "key", "type": "StorageKey" },
+          { "isOptional": true, "name": "block", "type": "Hash" }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "StorageData"
+      },
+      "getStorageHash": {
+        "description": "Retrieves the storage hash",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getStorageHash",
+        "params": [
+          { "isOptional": false, "name": "key", "type": "StorageKey" },
+          { "isOptional": true, "name": "block", "type": "Hash" }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "Hash"
+      },
+      "getStorageSize": {
+        "description": "Retrieves the storage size",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getStorageSize",
+        "params": [
+          { "isOptional": false, "name": "key", "type": "StorageKey" },
+          { "isOptional": true, "name": "block", "type": "Hash" }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "u64"
+      },
+      "queryStorage": {
+        "description": "Query historical storage entries (by key) starting from a start block",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "queryStorage",
+        "params": [
+          { "isOptional": false, "name": "keys", "type": "Vec<StorageKey>" },
+          { "isOptional": false, "name": "startBlock", "type": "Hash" },
+          { "isOptional": true, "name": "block", "type": "Hash" }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "state",
+        "type": "Vec<StorageChangeSet>"
+      },
+      "subscribeStorage": {
+        "description": "Subscribes to storage changes for the provided keys",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": true,
+        "method": "subscribeStorage",
+        "params": [{ "isOptional": false, "name": "keys", "type": "Vec<StorageKey>" }],
+        "pubsub": ["storage", "subscribeStorage", "unsubscribeStorage"],
+        "section": "state",
+        "type": "StorageChangeSet"
+      }
+    }
+  },
+  "system": {
+    "isDeprecated": false,
+    "isHidden": false,
+    "description": "Methods to retrieve system info",
+    "section": "system",
+    "methods": {
+      "chain": {
+        "description": "Retrieves the chain",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "chain",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "system",
+        "type": "Text"
+      },
+      "name": {
+        "description": "Retrieves the node name",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "name",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "system",
+        "type": "Text"
+      },
+      "properties": {
+        "description": "Get a custom set of properties as a JSON object, defined in the chain spec",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "properties",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "system",
+        "type": "ChainProperties"
+      },
+      "version": {
+        "description": "Retrieves the version of the node",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "version",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "system",
+        "type": "Text"
+      }
+    }
+  },
+  "chainx": {
+    "isDeprecated": false,
+    "isHidden": false,
+    "description": "chainx rpc",
+    "section": "chainx",
+    "methods": {
+      "getBlockByNumber": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getBlockByNumber",
+        "params": [{ "isOptional": true, "name": "number", "type": "Number" }],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getCertByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getCertByAccount",
+        "params": [{ "isOptional": false, "name": "accountId", "type": "PublicKey" }],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getAssetsByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getAssetsByAccount",
+        "params": [{ "isOptional": false, "name": "accountId", "type": "PublicKey" }],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getNominationRecords": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getNominationRecords",
+        "params": [{ "isOptional": false, "name": "accountId", "type": "PublicKey" }],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getIntentions": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getIntentions",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      }
+    }
+  }
+}
