@@ -10,7 +10,7 @@ import Chain from './Chain';
 import Trade from './Trade';
 
 class ChainX {
-  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [] } = {}) {
+  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { net = 'testnet', broadcast = [] } = {}) {
     this.setNet(net);
     this._net = net;
     this._broadcast = broadcast;
