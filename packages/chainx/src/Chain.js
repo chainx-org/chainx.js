@@ -44,26 +44,6 @@ class Chain {
     });
   }
 
-  getBlockNumberObservable() {
-    const that = this;
-    return Observable.create(observer => {
-      let subscriptionId;
-      this.isRpcReady().then(() => {
-        this.api.rpc.chain
-          .subscribeNewHead(newHead => {
-            observer.next(newHead.number);
-          })
-          .then(id => {
-            subscriptionId = id;
-          });
-      });
-
-      return function unsubscribe() {
-        that.api.rpc.chain.subscribeNewHead.unsubscribe(subscriptionId);
-      };
-    });
-  }
-
   getBlockPeriod() {
     return this.api.query.timestamp.blockPeriod().then(result => result.toJSON() * 2);
   }
