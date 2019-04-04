@@ -1,6 +1,6 @@
 {
   "name": "@chainx/rpc-provider",
-  "version": "2.5.34",
+  "version": "2.5.38",
   "license": "MIT",
   "main": "index.js",
   "dependencies": {
