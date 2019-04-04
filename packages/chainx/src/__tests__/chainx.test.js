@@ -1,7 +1,7 @@
 import ChainX from '../index';
 
 describe('chainx.js', () => {
-  const chainx = new ChainX('wss://w1.chainx.org/ws', { broadcast: ['wss://w1.chainx.org/ws'] });
+  const chainx = new ChainX('wss://w1.chainx.org/ws', { broadcast: ['wss://w2.chainx.org/ws'] });
   jest.setTimeout(30000);
   beforeEach(async () => {
     await chainx.isRpcReady();

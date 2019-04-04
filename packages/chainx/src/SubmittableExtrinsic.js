@@ -112,7 +112,6 @@ export default class SubmittableExtrinsic extends Extrinsic {
 
   submitBroadcast(params) {
     if (!this._broadcast.length) return;
-    console.log('哈哈哈哈哈')
     const id = Math.random();
     const requireMessage = `{"id":5,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":[${params}]}`;
     const fromHttp = httpurl => {
