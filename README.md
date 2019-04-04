@@ -74,9 +74,119 @@ const Chainx = require('chainx.js').default;
 
 以下 api 均返回一个 [Extrinsic](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Extrinsic.js) 对象。注意所有涉及到金额的部分，均是以最小的精度为单位。不存在小数。
 
+### chainx.asset.transfer([dest](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/AccountId.js), [token](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/AccountId.js), [value](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js), [memo](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js))
+
+转账
+
+#### 参数
+
+- `dest`：接收人的地址
+- `token`：转账的币种
+- `value`：转账金额（最小的精度，只能为整数）
+- `memo`：备注
+
+#### 例子：
+
+```javascript
+chainx.asset.transfer('5FxL27izsvhViiQtgwBm6kP8XvMSZ3JjyoMCmaw7pGrgXqqJ', 'PCX', 1000, '转给你');
+```
+
+### chainx.asset.withdraw([token](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Token.js), [value](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js), [addr](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/AddrStr.js), [ext](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Memo.js))
+
+提现
+
+#### 参数
+
+- `token`：提现的资产类型
+- `value`：提现的数量
+- `addr`：接收的地址
+- `ext`：备注
+
+#### 例子：
+
+```javascript
+chainx.asset.withdraw('BTC', 100, '5FxL27izsvhViiQtgwBm6kP8XvMSZ3JjyoMCmaw7pGrgXqqJ', '提现');
+```
+
+### chainx.asset.createWithdrawTx([withdrawalIdList](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/Vector.js), [tx](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Bytes.js))
+
+提交构造的提现交易原文
+
+#### 参数
+
+- `withdrawalIdList`：提现ID列表
+- `tx`：构造的待签原文
+
+#### 例子：
+
+```javascript
+chainx.asset.createWithdrawTx([1, 2], '0x......');
+```
+
+### chainx.asset.signWithdrawTx([tx?](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Bytes.js))
+
+提交签名后的交易原文
+
+#### 参数
+
+- `tx`：签名后的交易原文
+
+#### 例子：
+
+```javascript
+chainx.asset.signWithdrawTx('0x......');
+```
+
 ### chainx.trade.putOrder([pair_index](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/TradingPairIndex.js), [order_type](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/OrderType.js), [order_direction](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/OrderDirection.js), [amount](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js), [price](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Price.js))
 
+用户挂单
+
+#### 参数
+
+- `pairid`：交易对ID
+- `ordertype`：类型（限价单|市价单)
+- `direction`：方向（买单|卖单)
+- `amount`：数量
+- `price`：价格
+
+#### 例子：
+
+```javascript
+chainx.trade.putOrder(1, 'Limit', 'Buy', 100, 100);
+```
+
 ### chainx.trade.cancelOrder([pair_index](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/TradingPairIndex.js), [order_index](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/OrderIndex.js))
+
+取消挂单
+
+#### 参数
+
+- `pairid`：交易对ID
+- `index`：用户委托编号
+
+#### 例子：
+
+```javascript
+chainx.trade.cancelOrder(0, 2);
+```
+
+### chainx.stake.register([name](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Name.js))
+
+注册节点。
+
+#### 参数
+
+- `name`：注册节点的名称
+
+
+
+#### 例子：
+
+```javascript
+chainx.stake.register('节点');
+```
+
+###
 
 ### chainx.stake.nominate([targetAddress](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Address.js), [value](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js), [memo](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Memo.js))
 
@@ -188,7 +298,7 @@ chainx.stake.unfreeze('5FxL27izsvhViiQtgwBm6kP8XvMSZ3JjyoMCmaw7pGrgXqqJ', 1);
 #### 例子
 
 ```js
-chainx.stake.unfreeze('ChainX', 'about', ['Bitcoin', '0x......'], ['Bitcoin', '0x......']);
+chainx.stake.setupTrustee('ChainX', 'about', ['Bitcoin', '0x......'], ['Bitcoin', '0x......']);
 ```
 
 
