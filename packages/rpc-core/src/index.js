@@ -114,7 +114,6 @@ export default class Rpc {
           };
           // 交易的错误处理
           return this._provider.subscribe(subscriptionType, subName, paramsJson, update).catch(err => {
-            console.log(err);
             cb(err);
           });
         } else {
