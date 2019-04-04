@@ -62,17 +62,125 @@ const Chainx = require('chainx.js').default;
 
 大部分类型都存在两个基本的方法：`toJSON()`，`toHex()`，`toJSON()` 用于将数据转化为用于 javascript 中的基础类型。而 `toHex()` 则一般是用于获取该数据编码后的二进制的十六进制的表示。在 `chainx.js` 中存在几种基本的类型，其余的类型基本上都是从它们中派生出来的。
 
-- 数字类型 [`UInt`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/UInt.js)： 在 chainx.js 内部，几乎所有的无符号数字都是继承于 `UInt` 类型，它是基于 `Bn.js` 实现的。常见的如 `Balance`，`U32`，`U64` 都是它的子类。
+-  [`UInt`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/UInt.js)： 在 chainx.js 内部，几乎所有的无符号数字都是继承于 `UInt` 类型，它是基于 `Bn.js` 实现的。常见的如 `Balance`，`U32`，`U64` 都是它的子类。
 
-## 发送交易
+- [`Text`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Text.js)：文本类型，继承于原生的 `String` ，`toHex` 的时候按 utf8 格式编码。
 
-我们需要有几个步骤，来完成一次完整的交易。首先确定我们需要调用的 Method，
+- [`Enum`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/Enum.js)：枚举类型，如：
 
+  ```js
+  export default class TxType extends Enum {
+    constructor(index) {
+      super(['Withdraw', 'Deposit'], index);
+    }
+  }
+  ```
 
+  此时说明枚举值有 'Withdraw', 'Deposit'。同时`new TxType('Withdraw') `和 `new TxType(0) `得到的同样的值。
+
+- [`Vector`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/Vector.js)：表现为一个数组的形式。如 `Vector.with(U32)` 则表示，由 `U32` 组成的数组。通过 `toJSON()`方法，可以得到一个数组。
+
+- [`Struct`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/Struct.js)：表现为一个 Object 的形式。如：
+
+- ```js
+  export class EventMetadata extends Struct {
+    constructor(value) {
+      super(
+        {
+          name: Text,
+          arguments: Vector.with(Type),
+          documentation: Vector.with(Text),
+        },
+        value
+      );
+    }
+  }
+  ```
+
+  `eventMetadata.toJSON() `将得到
+
+  ```js
+  {
+    name: 'text',
+    arguments: [type, type, ...],
+    documentation: ['text', 'text', ...],
+  }
+  ```
+
+  这样形式的 object
+
+- [`Compact`](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/codec/Compact.js) ：该类型通常与其它类型复合组成一个新的类型，此时内部数据编码是被压缩过的。如 `Compact.with(Nonce)`，将会压缩 `Nonce`的编码。
 
 ## 交易函数
 
-以下 api 均返回一个 [Extrinsic](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Extrinsic.js) 对象。注意所有涉及到金额的部分，均是以最小的精度为单位。不存在小数。
+我们需要有几个步骤，来完成一次完整的交易。首先确定我们需要调用的 Method，如下列所示。以下 api 均返回一个 [SubmittableExtrinsic](https://github.com/chainx-org/chainx.js/blob/master/packages/chainx/src/SubmittableExtrinsic.js) 对象，它继承于 [Extrinsic](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Extrinsic.js) 。注意所有涉及到金额的部分，均是以最小的精度为单位。不存在小数。
+
+[SubmittableExtrinsic](https://github.com/chainx-org/chainx.js/blob/master/packages/chainx/src/SubmittableExtrinsic.js) 存在几个比较重要的方法：
+
+- `sign(account, { nonce, acceleration, blockHash })`：使用 account 签名该交易，其中 nonce 指该账户当前交易数。acceleration 指加速倍率，倍率越高手续费被扣的越多，同时交易也越快。blockHash 默认为当前链的初始哈希。
+
+- `signAndSend(account, options?, callback?)`：使用 account 签名并发送该笔交易。acount 可以是账户的私钥，也可以是 account 对象。options 是可选的，和 sign 方法的参数一样，其中 nonce 默认自动从链上获取，acceleration 默认为 1。callback 是回调函数，第一个参数是 error，第二个参数是 result。对于一个正常的交易，callback 将会被调用若干次：
+
+- ```js
+  e.signAndSend('0x....', { acceleration: 10 }, (error, result) => {
+    /**
+    将输出三次
+   	{
+      "result": null,
+      "index": null,
+      "events": null,
+      // 交易 hash
+      "txHash": "0x4e93b7cae2868273a8a891684581564cf4431a81e90d2e6c7ee377b26648ac1d",
+      "blockHash": null,
+      "broadcast": null,
+      // 交易状态
+      "status": "Ready"
+  	}
+  	{
+      "result": null,
+      "index": null,
+      "events": null,
+      "txHash": "0x4e93b7cae2868273a8a891684581564cf4431a81e90d2e6c7ee377b26648ac1d",
+      "blockHash": null,
+      // 广播
+      "broadcast": [
+        "QmYqN9CKmx3qrNoaqXzDf7PiqvDssc1ALRYBLS65J6Z5wB",
+        "QmZGSfxrgWP4Kv9VWmnnYKAs8WNAq1ooQ7kXaAxuS78LZp",
+        "QmfNwbvXLbHsxPCmByimLxv1J7ZJpAjSfm82mSEnbobRkY",
+        "QmUNmpe6UoSpE3LhkL9knqTogbPDn7Lsg1EQErPDkUJzgL",
+        "QmSAwXWpAg45Zsp5X7U6hrAU5dFVacXifowjHbnC2VruRv",
+        "QmXxCbLmSMTfFGWep7TNnvUfHSYwGiJ8AyMVPDwyWVAbWn",
+        "QmVV2AJ3ju8iwBoE3zzf3tuadjAWyJEaR7338TcXjjcFfL",
+        "Qmdfxi8As1jUxx9SrQJYCDgQYPKhiXtgYVvX8vr2RsgYD1",
+        "QmPSVr8NRaZdUeNf3eAJfHgmV8WNtePgAWCAX5cU3H4qtn",
+        "QmaQSTwbvcxRjs83qAQLW4zfpZ4BnkBHzPhxUE9e85zuUw",
+        "QmP39VaaWPBYQ57JoZPYgz8yQg8khMX1LLuN4zwv7xZZEh"
+      ],
+      // 广播中
+      "status": "Broadcast"
+    }
+  	{
+  	// ExtrinsicSuccess 是交易成功。ExtrinsicFail 是交易失败
+    "result": "ExtrinsicSuccess",
+    "index": 2,
+    // 关联的 events 列表
+    "events": [{ "phase": 2, "event": [{...}] }, { "phase": 2, "event": [{...}] }, { "phase": 2, "event": [{...}] }],
+    "txHash": "0x4e93b7cae2868273a8a891684581564cf4431a81e90d2e6c7ee377b26648ac1d",
+    // 上链的块哈希
+    "blockHash": "0x56482c31dff1a35db9fbac22be02ae294545a6440dda53f49e240e6df5f2460d",
+    "broadcast": null,
+    // 交易完成
+    "status": "Finalised"
+  }
+  
+    **/
+    console.log(result);
+  })
+  ```
+
+- 
+
+
 
 ### chainx.asset.transfer([dest](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/AccountId.js), [token](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/AccountId.js), [value](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js), [memo](https://github.com/chainx-org/chainx.js/blob/master/packages/types/src/Balance.js))
 
