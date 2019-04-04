@@ -15,6 +15,17 @@ class ChainX {
     this._net = net;
     this._broadcast = broadcast;
     this._eventemitter = new EventEmitter();
+    if (!Array.isArray(broadcast)) {
+      throw new Error('broadcast must be a array');
+    } else {
+      for (const u of broadcast) {
+        try {
+          new URL(u);
+        } catch {
+          throw new Error('broadcast need valid url');
+        }
+      }
+    }
     this.setProvider(wsUrlOrProvider, broadcast);
   }
 

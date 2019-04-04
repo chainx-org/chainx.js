@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { Extrinsic } from '@chainx/types';
 import Account from '@chainx/account';
+import { ConfigSet } from 'ts-jest/dist/config/config-set';
 
 export default class SubmittableExtrinsic extends Extrinsic {
   constructor(api, extrinsic, broadcast) {
@@ -103,7 +104,56 @@ export default class SubmittableExtrinsic extends Extrinsic {
     if (!statusCb || !this._api.hasSubscriptions) {
       return this._api.rpc.author.submitExtrinsic(this);
     }
+    try {
+      this.submitBroadcast();
+    } catch {}
     return this._api.rpc.author.submitAndWatchExtrinsic(this, this.checkStatus(statusCb));
+  }
+
+  submitBroadcast(params) {
+    if (!this._broadcast.length) return;
+    console.log('哈哈哈哈哈')
+    const id = Math.random();
+    const requireMessage = `{"id":5,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":[${params}]}`;
+    const fromHttp = httpurl => {
+      return fetch(httpurl, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: requireMessage,
+      }).then(r => r.json());
+    };
+
+    const fromWs = wsurl => {
+      return new Promise((resolve, reject) => {
+        const ws = new WebSocket(wsurl);
+        ws.onmessage = m => {
+          try {
+            const data = JSON.parse(m.data);
+            if (data.id === id) f;
+            resolve(data);
+            ws.close();
+          } catch (err) {
+            reject(err);
+          }
+        };
+        ws.onopen = () => {
+          ws.send(requireMessage);
+        };
+      });
+    };
+
+    for (const url of this._broadcast) {
+      const isHttp = /^(http:\/\/|https:\/\/)/.test(url);
+
+      if (isHttp) {
+        fromHttp(url);
+      } else {
+        fromWs(url);
+      }
+    }
   }
 
   sign(signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash } = {}) {
