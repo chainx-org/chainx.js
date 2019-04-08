@@ -48,7 +48,7 @@ describe.skip('e2e transfer', () => {
         return api.author.submitAndWatchExtrinsic(extrinsic, status => {
           console.log(status);
 
-          if (status.type === 'Finalised') {
+          if (status.type === 'Finalized') {
             done();
           }
         });

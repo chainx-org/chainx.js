@@ -24,17 +24,17 @@ export default class SubmittableExtrinsic extends Extrinsic {
         if (status.type === 'Broadcast') {
           broadcast = status.value && status.value.toJSON();
         }
-        if (status.type === 'Finalised') {
-          blockHash = status.value;
-          const {
-            block: { extrinsics },
-          } = await this._api.rpc.chain.getBlock(blockHash);
-          const allEvents = await this._api.query.system.events.at(blockHash);
-          index = extrinsics.map(ext => ext.hash.toHex()).indexOf(this.hash.toHex());
-          if (index !== -1) {
-            events = allEvents.filter(({ phase }) => phase.type === 'ApplyExtrinsic' && phase.value.eqn(index));
-            result = events.length ? events[events.length - 1].event.data.method : eventName;
-          }
+        if (status.type === 'Finalized') {
+          // blockHash = status.value;
+          // const {
+          //   block: { extrinsics },
+          // } = await this._api.rpc.chain.getBlock(blockHash);
+          // const allEvents = await this._api.query.system.events.at(blockHash);
+          // index = extrinsics.map(ext => ext.hash.toHex()).indexOf(this.hash.toHex());
+          // if (index !== -1) {
+          //   events = allEvents.filter(({ phase }) => phase.type === 'ApplyExtrinsic' && phase.value.eqn(index));
+          //   result = events.length ? events[events.length - 1].event.data.method : eventName;
+          // }
         }
         statusCb(null, {
           result,

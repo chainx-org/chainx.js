@@ -40,7 +40,7 @@ const Chainx = require('chainx.js').default;
 
   // 签名并发送交易
   extrinsic.signAndSend('<账户私钥>', response => {
-    if (response.status === 'Finalised') {
+    if (response.status === 'Finalized') {
       if (response.result === 'ExtrinsicSuccess') {
         console.log('交易成功');
       }

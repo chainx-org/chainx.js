@@ -24,8 +24,8 @@ const getBlockHash = {
   type: 'Hash',
 };
 
-const getFinalisedHead = {
-  description: 'Get hash of the last finalised block in the canon chain',
+const getFinalizedHead = {
+  description: 'Get hash of the last finalized block in the canon chain',
   params: [],
   type: 'Hash',
 };
@@ -43,10 +43,10 @@ const subscribeNewHead = {
   type: 'Header',
 };
 
-const subscribeFinalisedHeads = {
-  description: 'Retrieves the best finalised header via subscription',
+const subscribeFinalizedHeads = {
+  description: 'Retrieves the best finalized header via subscription',
   params: [],
-  pubsub: ['finalisedHead', 'subscribeFinalisedHeads', 'unsubscribeFinalisedHeads'],
+  pubsub: ['finalizedHead', 'subscribeFinalizedHeads', 'unsubscribeFinalizedHeads'],
   type: 'Header',
 };
 
@@ -70,10 +70,10 @@ export default {
   methods: {
     getBlock: createMethod(section, 'getBlock', getBlock),
     getBlockHash: createMethod(section, 'getBlockHash', getBlockHash),
-    getFinalisedHead: createMethod(section, 'getFinalisedHead', getFinalisedHead),
+    getFinalizedHead: createMethod(section, 'getFinalizedHead', getFinalizedHead),
     getHeader: createMethod(section, 'getHeader', getHeader),
     getRuntimeVersion: createMethod(section, 'getRuntimeVersion', getRuntimeVersion),
-    subscribeFinalisedHeads: createMethod(section, 'subscribeFinalisedHeads', subscribeFinalisedHeads),
+    subscribeFinalizedHeads: createMethod(section, 'subscribeFinalizedHeads', subscribeFinalizedHeads),
     subscribeRuntimeVersion: createMethod(section, 'subscribeRuntimeVersion', subscribeRuntimeVersion),
     subscribeNewHead: createMethod(section, 'subscribeNewHead', subscribeNewHead),
   },
