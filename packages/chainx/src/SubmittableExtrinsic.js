@@ -5,10 +5,10 @@ import { Extrinsic } from '@chainx/types';
 import Account from '@chainx/account';
 
 export default class SubmittableExtrinsic extends Extrinsic {
-  constructor(api, extrinsic, broadcast) {
+  constructor(api, extrinsic, broadcasts) {
     super(extrinsic);
     this._api = api;
-    this._broadcast = broadcast;
+    this._broadcasts = broadcasts;
   }
 
   checkStatus(statusCb) {
@@ -110,7 +110,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
   }
 
   submitBroadcast(params) {
-    if (!this._broadcast.length) return;
+    if (!this._broadcasts.length) return;
     const id = Math.random();
     const requireMessage = `{"id":5,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":[${params}]}`;
     const fromHttp = httpurl => {
@@ -143,7 +143,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
       });
     };
 
-    for (const url of this._broadcast) {
+    for (const url of this._broadcasts) {
       const isHttp = /^(http:\/\/|https:\/\/)/.test(url);
 
       if (isHttp) {
