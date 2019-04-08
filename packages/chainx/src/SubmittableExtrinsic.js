@@ -3,7 +3,6 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { Extrinsic } from '@chainx/types';
 import Account from '@chainx/account';
-import { ConfigSet } from 'ts-jest/dist/config/config-set';
 
 export default class SubmittableExtrinsic extends Extrinsic {
   constructor(api, extrinsic, broadcast) {

@@ -6,4 +6,11 @@ describe('chainx.js', () => {
   beforeEach(async () => {
     await chainx.isRpcReady();
   });
+
+  it('test', done => {
+    const e = chainx.asset.transfer(chainx.account.from('Bob').address(), 'PCX', 100, ' jj');
+    e.signAndSend(chainx.account.from('ChainX1'), (error, response) => {
+      console.log(response);
+    });
+  });
 });
