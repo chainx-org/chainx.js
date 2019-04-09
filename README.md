@@ -2,6 +2,8 @@
 
 ## 安装
 
+
+
 ```bash
 yarn add chainx.js
 ```
@@ -11,6 +13,8 @@ yarn add chainx.js
 ```bash
 npm install chainx.js
 ```
+
+> 安装 0.9.7 的链对应的 chainx.js 版本 `yarn add chainx.js@2.6`
 
 ## 快速开始
 
@@ -33,7 +37,12 @@ const Chainx = require('chainx.js').default;
 
   // 构造交易参数（同步）
 
-  const extrinsic = chainx.asset.transfer('5DtoAAhWgWSthkcj7JfDcF2fGKEWg91QmgMx37D6tFBAc6Qg', 'PCX', '1000', '转账 PCX');
+  const extrinsic = chainx.asset.transfer(
+    '5DtoAAhWgWSthkcj7JfDcF2fGKEWg91QmgMx37D6tFBAc6Qg',
+    'PCX',
+    '1000',
+    '转账 PCX'
+  );
 
   // 查看 method 哈希
   console.log('Function: ', extrinsic.method.toHex());
