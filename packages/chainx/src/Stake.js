@@ -35,10 +35,6 @@ export default class Stake {
     return this.api.rpc.chainx.getTrusteeInfoByAccount(...args);
   };
 
-  getTokenDiscount = () => {
-    return this.api.query.xTokens.tokenDiscount().then(result => result.toJSON());
-  };
-
   /**
    * 注册节点
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L237
