@@ -6,7 +6,7 @@ import ExtrinsicStatus from '../ExtrinsicStatus';
 describe('ExtrinsicStatus', () => {
   const status = new ExtrinsicStatus(rpc.params.result);
   it('has the correct type', () => {
-    expect(status.type).toEqual('Finalized');
+    expect(status.type).toEqual('Finalised');
   });
   it('has the correct hash', () => {
     expect(status.value.toString()).toEqual('0xc465b92a72b1d20918d64cd4effa70c2bb58b53a3f8c24c3ac8fd8f465f059b4');

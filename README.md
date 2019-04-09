@@ -42,7 +42,7 @@ const Chainx = require('chainx.js').default;
   extrinsic.signAndSend('0x0000000000000000000000000000000000000000000000000000000000000000', (error, response) => {
     if (error) {
       console.log(error);
-    } else if (response.status === 'Finalized') {
+    } else if (response.status === 'Finalised') {
       if (response.result === 'ExtrinsicSuccess') {
         console.log('交易成功');
       }

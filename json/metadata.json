@@ -1133,7 +1133,7 @@
                 }
               ],
               "documentation": [
-                " Hint that the author of this block thinks the best finalized",
+                " Hint that the author of this block thinks the best finalised",
                 " block is the given number."
               ]
             }

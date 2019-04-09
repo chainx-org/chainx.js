@@ -73,13 +73,13 @@
         "section": "chain",
         "type": "Hash"
       },
-      "getFinalizedHead": {
-        "description": "Get hash of the last finalized block in the canon chain",
+      "getFinalisedHead": {
+        "description": "Get hash of the last finalised block in the canon chain",
         "isDeprecated": false,
         "isHidden": false,
         "isSigned": false,
         "isSubscription": false,
-        "method": "getFinalizedHead",
+        "method": "getFinalisedHead",
         "params": [],
         "pubsub": ["", "", ""],
         "section": "chain",
@@ -109,15 +109,15 @@
         "section": "chain",
         "type": "RuntimeVersion"
       },
-      "subscribeFinalizedHeads": {
-        "description": "Retrieves the best finalized header via subscription",
+      "subscribeFinalisedHeads": {
+        "description": "Retrieves the best finalised header via subscription",
         "isDeprecated": false,
         "isHidden": false,
         "isSigned": false,
         "isSubscription": true,
-        "method": "subscribeFinalizedHeads",
+        "method": "subscribeFinalisedHeads",
         "params": [],
-        "pubsub": ["finalizedHead", "subscribeFinalizedHeads", "unsubscribeFinalizedHeads"],
+        "pubsub": ["finalisedHead", "subscribeFinalisedHeads", "unsubscribeFinalisedHeads"],
         "section": "chain",
         "type": "Header"
       },

@@ -19,11 +19,11 @@ export class Broadcast extends Vector.with(Text) {}
  */
 export class Dropped extends Null {}
 /**
- * @name Finalized
+ * @name Finalised
  * @description
- * An [[ExtrinsicStats] indicating that the [[Extrinsic]]] has been finalized and included
+ * An [[ExtrinsicStats] indicating that the [[Extrinsic]]] has been finalised and included
  */
-export class Finalized extends Hash {}
+export class Finalised extends Hash {}
 /**
  * @name Future
  * @description
@@ -59,7 +59,7 @@ export default class ExtrinsicStatus extends EnumType {
       {
         Future,
         Ready,
-        Finalized,
+        Finalised,
         Usurped,
         Broadcast,
         Dropped,

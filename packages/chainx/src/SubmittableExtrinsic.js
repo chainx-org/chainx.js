@@ -23,7 +23,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
         if (status.type === 'Broadcast') {
           broadcast = status.value && status.value.toJSON();
         }
-        if (status.type === 'Finalized') {
+        if (status.type === 'Finalised') {
           blockHash = status.value;
           const {
             block: { extrinsics },

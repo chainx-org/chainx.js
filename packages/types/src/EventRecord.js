@@ -15,7 +15,7 @@ export class ApplyExtrinsic extends U32 {}
 /**
  * @name Finalization
  * @description
- * The [[Phase]] where the extrinsic is being Finalized
+ * The [[Phase]] where the extrinsic is being Finalised
  */
 export class Finalization extends Null {}
 /**
