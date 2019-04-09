@@ -29,16 +29,16 @@ const Chainx = require('chainx.js').default;
   // 查询某个账户的资产情况
   const bobAssets = await chainx.asset.getAssetsByAccount('5DtoAAhWgWSthkcj7JfDcF2fGKEWg91QmgMx37D6tFBAc6Qg', 0, 10);
 
-  console.log('bobAssets:', JSON.stringify(bobAssets));
+  console.log('bobAssets: ', JSON.stringify(bobAssets));
 
   // 构造交易参数（同步）
 
-  const extrinsic = chainx.asset.transfer();
+  const extrinsic = chainx.asset.transfer('5DtoAAhWgWSthkcj7JfDcF2fGKEWg91QmgMx37D6tFBAc6Qg', 'PCX', '1000', '转账 PCX');
 
   // 查看 method 哈希
-  console.log(extrinsic.method.toHex());
+  console.log('Function: ', extrinsic.method.toHex());
 
-  // 签名并发送交易
+  // 签名并发送交易，0x0000000000000000000000000000000000000000000000000000000000000000 是用于签名的私钥
   extrinsic.signAndSend('0x0000000000000000000000000000000000000000000000000000000000000000', (error, response) => {
     if (error) {
       console.log(error);
