@@ -127,7 +127,7 @@
             "documentation": [" A tally (for approval votes of council seat(s)) has started."]
           },
           {
-            "name": "TallyFinalised",
+            "name": "TallyFinalized",
             "arguments": ["Vec<AccountId>", "Vec<AccountId>"],
             "documentation": [
               " A tally (for approval votes of council seat(s)) has ended (with one or more new members)."
