@@ -39,8 +39,10 @@ const Chainx = require('chainx.js').default;
   console.log(extrinsic.method.toHex());
 
   // 签名并发送交易
-  extrinsic.signAndSend('<账户私钥>', (error, response) => {
-    if (response.status === 'Finalized') {
+  extrinsic.signAndSend('0x0000000000000000000000000000000000000000000000000000000000000000', (error, response) => {
+    if (error) {
+      console.log(error);
+    } else if (response.status === 'Finalized') {
       if (response.result === 'ExtrinsicSuccess') {
         console.log('交易成功');
       }
@@ -56,4 +58,5 @@ const Chainx = require('chainx.js').default;
 https://github.com/chainx-org/ChainX/wiki/JS-SDK
 
 ### RPC
+
 https://github.com/chainx-org/ChainX/wiki/RPC
