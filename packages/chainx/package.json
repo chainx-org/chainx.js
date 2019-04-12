@@ -1,12 +1,12 @@
 {
   "name": "chainx.js",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "main": "index.js",
   "dependencies": {
     "@chainx/account": "^2.5.38",
     "@chainx/extrinsics": "^2.6.0",
-    "@chainx/rpc-provider": "^2.5.38",
-    "@chainx/rpc-rx": "^2.6.0",
+    "@chainx/rpc-provider": "^2.6.1",
+    "@chainx/rpc-rx": "^2.6.1",
     "@chainx/storage": "^2.6.0",
     "@chainx/types": "^2.6.0",
     "@polkadot/keyring": "^0.34.37",
