@@ -97,4 +97,11 @@ export default class Stake {
   setupTrustee = (chain, about, hotEntity, coldEntity) => {
     return this.api.tx.xstaking.setupTrustee(chain, about, hotEntity, coldEntity);
   };
+
+  /**
+   * 切换投票
+   */
+  renominate = (from, to, value, memo) => {
+    return this.api.tx.xstaking.renominate(rom, to, value, memo);
+  };
 }
