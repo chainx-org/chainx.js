@@ -102,6 +102,6 @@ export default class Stake {
    * 切换投票
    */
   renominate = (from, to, value, memo) => {
-    return this.api.tx.xstaking.renominate(rom, to, value, memo);
+    return this.api.tx.xstaking.renominate(from, to, value, memo);
   };
 }
