@@ -19,7 +19,7 @@ class RpcError extends Error {
     // 重写标准属性
     this.name = this.constructor.name;
     this.message = knownErrorCode[data] || `[${code}]: ${message}`;
-    this.data = knownErrorCode[data];
+    this.data = { code, message, data };
 
     // 错误栈的兼容处理
     if (typeof Error.captureStackTrace === 'function') {
