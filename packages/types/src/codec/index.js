@@ -20,3 +20,5 @@ export { default as UInt } from './UInt';
 export { default as typeRegistry } from './typeRegistry';
 // Type management helper functions
 export { default as createType, getTypeClass, getTypeDef, TypeDefInfo } from './createType';
+
+export { default as BTreeMap } from './BTreeMap';

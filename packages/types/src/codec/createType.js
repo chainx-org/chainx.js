@@ -1,12 +1,13 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { assert } from '@polkadot/util';
+import { assert, stringCamelCase} from '@polkadot/util';
 import Compact from './Compact';
 import Option from './Option';
 import Struct from './Struct';
 import Tuple from './Tuple';
 import Vector from './Vector';
+import BTreeMap from './BTreeMap';
 import registry from './typeRegistry';
 export var TypeDefInfo;
 (function(TypeDefInfo) {
@@ -16,6 +17,7 @@ export var TypeDefInfo;
   TypeDefInfo[(TypeDefInfo['Struct'] = 3)] = 'Struct';
   TypeDefInfo[(TypeDefInfo['Tuple'] = 4)] = 'Tuple';
   TypeDefInfo[(TypeDefInfo['Vector'] = 5)] = 'Vector';
+  TypeDefInfo[(TypeDefInfo['BTreeMap'] = 6)] = 'BTreeMap';
 })(TypeDefInfo || (TypeDefInfo = {}));
 // safely split a string on ', ' while taking care of any nested occurences
 export function typeSplit(type) {
@@ -99,6 +101,9 @@ export function getTypeDef(_type, name) {
   } else if (startingWith(type, 'Vec<', '>')) {
     value.info = TypeDefInfo.Vector;
     value.sub = getTypeDef(subType);
+  } else if (startingWith(type, 'BTreeMap<', '>')) {
+    value.info = TypeDefInfo.BTreeMap;
+    value.sub = subType.split(',').map(name => getTypeDef(name.trim(), stringCamelCase(name.trim())));
   }
   return value;
 }
@@ -124,7 +129,18 @@ export function getTypeClass(value) {
   } else if (value.info === TypeDefInfo.Vector) {
     assert(value.sub && !Array.isArray(value.sub), 'Expected subtype for Vector');
     return Vector.with(getTypeClass(value.sub));
+  } else if (value.info === TypeDefInfo.BTreeMap) {
+    assert(value.sub && Array.isArray(value.sub), 'Expected subtype for BTreeMap');
+    return BTreeMap.with(
+      Struct.with(
+        value.sub.reduce((result, sub) => {
+          result[sub.name] = getTypeClass(sub);
+          return result;
+        }, {})
+      )
+    );
   }
+
   // NOTE We only load types via require - we have to avoid circular deps between type usage and creation
   const Types = require('../index');
 
