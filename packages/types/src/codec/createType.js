@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { assert, stringCamelCase} from '@polkadot/util';
+import { assert } from '@polkadot/util';
 import Compact from './Compact';
 import Option from './Option';
 import Struct from './Struct';
@@ -103,7 +103,7 @@ export function getTypeDef(_type, name) {
     value.sub = getTypeDef(subType);
   } else if (startingWith(type, 'BTreeMap<', '>')) {
     value.info = TypeDefInfo.BTreeMap;
-    value.sub = subType.split(',').map(name => getTypeDef(name.trim(), stringCamelCase(name.trim())));
+    value.sub = subType.split(',').map(name => getTypeDef(name.trim()));
   }
   return value;
 }
@@ -131,14 +131,7 @@ export function getTypeClass(value) {
     return Vector.with(getTypeClass(value.sub));
   } else if (value.info === TypeDefInfo.BTreeMap) {
     assert(value.sub && Array.isArray(value.sub), 'Expected subtype for BTreeMap');
-    return BTreeMap.with(
-      Struct.with(
-        value.sub.reduce((result, sub) => {
-          result[sub.name] = getTypeClass(sub);
-          return result;
-        }, {})
-      )
-    );
+    return BTreeMap.with(Tuple.with(value.sub.map(getTypeClass)));
   }
 
   // NOTE We only load types via require - we have to avoid circular deps between type usage and creation
