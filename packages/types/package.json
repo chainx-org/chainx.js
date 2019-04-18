@@ -1,6 +1,6 @@
 {
   "name": "@chainx/types",
-  "version": "2.7.4",
+  "version": "2.7.5",
   "main": "index.js",
   "dependencies": {
     "@polkadot/keyring": "^0.34.37",
