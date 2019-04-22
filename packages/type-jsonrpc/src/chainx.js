@@ -72,7 +72,7 @@ const getPseduNominationRecords = {
   type: 'RawJSON',
 };
 
-const getOrderPairs = {
+const getTradingPairs = {
   description: '',
   params: [],
   type: 'RawJSON',
@@ -132,6 +132,12 @@ const getTrusteeSessionInfo = {
   type: 'RawJSON',
 };
 
+const getMinimalWithdrawalValueByToken = {
+  description: '',
+  params: [createParam('token', 'Token')],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -154,7 +160,7 @@ export default {
     getIntentions: createMethod(section, 'getIntentions', getIntentions),
     getPseduIntentions: createMethod(section, 'getPseduIntentions', getPseduIntentions),
     getPseduNominationRecords: createMethod(section, 'getPseduNominationRecords', getPseduNominationRecords),
-    getOrderPairs: createMethod(section, 'getOrderPairs', getOrderPairs),
+    getTradingPairs: createMethod(section, 'getTradingPairs', getTradingPairs),
     getQuotations: createMethod(section, 'getQuotations', getQuotations),
     getOrders: createMethod(section, 'getOrders', getOrders),
     getDepositList: createMethod(section, 'getDepositList', getDepositList),
@@ -164,5 +170,6 @@ export default {
     getFeeByCallAndLength: createMethod(section, 'getFeeByCallAndLength', getFeeByCallAndLength),
     getWithdrawTx: createMethod(section, 'getWithdrawTx', getWithdrawTx),
     getTrusteeSessionInfo: createMethod(section, 'getTrusteeSessionInfo', getTrusteeSessionInfo),
+    getMinimalWithdrawalValueByToken: createMethod(section, 'getMinimalWithdrawalValueByToken', getMinimalWithdrawalValueByToken),
   },
 };

@@ -3,8 +3,8 @@ export default class Trade {
     this.api = chainx.api;
   }
 
-  getOrderPairs = (...args) => {
-    return this.api.rpc.chainx.getOrderPairs(...args);
+  getTradingPairs = (...args) => {
+    return this.api.rpc.chainx.getTradingPairs(...args);
   };
 
   getQuotations = (...args) => {

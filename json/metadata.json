@@ -249,7 +249,7 @@
               "TradingPairIndex",
               "OrderType",
               "Price",
-              "OrderDirection",
+              "Side",
               "Balance",
               "BlockNumber"
             ],
@@ -289,7 +289,7 @@
             "name": "InsertHeader",
             "arguments": ["u32", "H256", "u32", "H256", "H256", "u32", "u32", "u32", "H256"],
             "documentation": [
-              " version, block hash, block height, prev block hash, merkle root, timestamp, nonce, wait confirm block height, wait confirm block hash"
+              " version, block hash, block height, prev block hash, merkle root, timestamp, nonce, wait confirmed block height, wait confirmed block hash"
             ]
           },
           {
@@ -448,7 +448,7 @@
               "value": "Bytes"
             },
             "default": "0x00",
-            "documentation": [" Extrinsics data for the current block (maps extrinsic's index to its data)."]
+            "documentation": [" Extrinsics data for the current block (maps an extrinsic's index to its data)."]
           },
           {
             "name": "RandomSeed",
@@ -1348,7 +1348,7 @@
             },
             {
               "id": 2,
-              "name": "withdrawal_finish_from_root",
+              "name": "fix_withdrawal_state",
               "arguments": [
                 {
                   "name": "withdrawal_id",
@@ -1921,8 +1921,8 @@
                   "type": "OrderType"
                 },
                 {
-                  "name": "direction",
-                  "type": "OrderDirection"
+                  "name": "side",
+                  "type": "Side"
                 },
                 {
                   "name": "amount",
@@ -2138,6 +2138,21 @@
             },
             {
               "id": 4,
+              "name": "fix_withdrawal_state_by_trustees",
+              "arguments": [
+                {
+                  "name": "withdrawal_id",
+                  "type": "u32"
+                },
+                {
+                  "name": "success",
+                  "type": "bool"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "id": 5,
               "name": "remove_tx_and_proposal",
               "arguments": [
                 {
@@ -2152,7 +2167,7 @@
               "documentation": []
             },
             {
-              "id": 5,
+              "id": 6,
               "name": "set_btc_withdrawal_fee",
               "arguments": [
                 {

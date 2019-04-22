@@ -97,7 +97,7 @@ export { default as URL } from './URL';
 export { default as PublicKey } from './PublicKey';
 export { default as TradingPairIndex } from './TradingPairIndex';
 export { default as OrderType } from './OrderType';
-export { default as OrderDirection } from './OrderDirection';
+export { default as Side } from './Side';
 export { default as Price } from './Price';
 export { default as ID } from './ID';
 export { default as OrderStatus } from './OrderStatus';

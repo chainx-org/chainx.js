@@ -43,6 +43,10 @@ export default class Asset {
     return this.api.rpc.chainx.getWithdrawTx(Chain);
   };
 
+  getMinimalWithdrawalValueByToken = token => {
+    return this.api.rpc.chainx.getMinimalWithdrawalValueByToken(token);
+  };
+
   /**
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xassets/assets/src/lib.rs#L146
    */
