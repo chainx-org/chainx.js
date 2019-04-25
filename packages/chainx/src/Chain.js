@@ -44,8 +44,8 @@ class Chain {
     });
   }
 
-  getBlockPeriod() {
-    return this.api.query.timestamp.blockPeriod().then(result => result.toJSON() * 2);
+  getMinimumPeriod() {
+    return this.api.query.timestamp.minimumPeriod().then(result => result.toJSON() * 2);
   }
 
   getFeeByCallAndLength(method, length) {
