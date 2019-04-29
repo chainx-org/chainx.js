@@ -37,7 +37,7 @@ const peers = {
 const properties = {
   description: 'Get a custom set of properties as a JSON object, defined in the chain spec',
   params: [],
-  type: 'ChainProperties',
+  type: 'RawJSON',
 };
 
 const section = 'system';

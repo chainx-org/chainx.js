@@ -12,7 +12,7 @@ import {
   naclVerify,
 } from '@polkadot/util-crypto';
 
-import { encodeAddress, decodeAddress } from '@polkadot/keyring/address';
+import { encodeAddress, decodeAddress, setAddressPrefix } from '@polkadot/keyring/address';
 import defaults from '@polkadot/keyring/address/defaults';
 import { isHex, u8aToHex, bufferToU8a } from '@polkadot/util';
 import encodePkcs8 from '@polkadot/keyring/pair/encode';
@@ -34,6 +34,13 @@ class Account {
   constructor(keyPair) {
     this._keyPair = keyPair;
   }
+
+  static setNet = net => {
+    if (!net || !NET_PREFIX[net]) {
+      throw new Error('expect pass in the network type, testnet or mainnet');
+    }
+    setAddressPrefix(NET_PREFIX[net]);
+  };
 
   privateKey = () => {
     return u8aToHex(this._keyPair.secretKey.subarray(0, 32));

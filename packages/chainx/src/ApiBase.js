@@ -2,11 +2,13 @@ import EventEmitter from 'eventemitter3';
 import { catchError, map } from 'rxjs/operators';
 import Rpc from '@chainx/rpc-core';
 import { assert, isFunction, isObject, isUndefined, logger } from '@polkadot/util';
+import { setAddressPrefix } from '@polkadot/keyring/address';
 import { fromMetadata as extrinsicsFromMeta } from '@chainx/extrinsics';
 import { fromMetadata as storageFromMeta } from '@chainx/storage';
 import { typeRegistry as registry } from '@chainx/types/codec';
 import { Event, Method, Extrinsic } from '@chainx/types';
 import RpcRx from '@chainx/rpc-rx';
+import { NET_PREFIX } from '@chainx/account';
 
 import SubmittableExtrinsic from './SubmittableExtrinsic';
 
@@ -50,6 +52,11 @@ export default class ApiBase {
   get runtimeMetadata() {
     assert(!isUndefined(this._runtimeMetadata), INIT_ERROR);
     return this._runtimeMetadata;
+  }
+
+  get chainProperties() {
+    assert(!isUndefined(this._chainProperties), INIT_ERROR);
+    return this._chainProperties;
   }
 
   get runtimeVersion() {
@@ -121,6 +128,7 @@ export default class ApiBase {
     try {
       this._runtimeMetadata = await this._rpcBase.state.getMetadata();
       this._runtimeVersion = await this._rpcBase.chain.getRuntimeVersion();
+      this._chainProperties = await this._rpcBase.system.properties();
       this._genesisHash = await this._rpcBase.chain.getBlockHash(0);
 
       const extrinsics = extrinsicsFromMeta(this.runtimeMetadata);
@@ -133,6 +141,11 @@ export default class ApiBase {
 
       Event.injectMetadata(this.runtimeMetadata);
       Method.injectMethods(extrinsics);
+
+      // 设置网络类型
+      if (this._chainProperties && this._chainProperties.network && NET_PREFIX[this._chainProperties.network]) {
+        setAddressPrefix(NET_PREFIX[this._chainProperties.network]);
+      }
 
       return true;
     } catch (error) {

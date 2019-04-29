@@ -13,11 +13,7 @@
         "isSubscription": false,
         "method": "pendingExtrinsics",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "author",
         "type": "PendingExtrinsics"
       },
@@ -35,11 +31,7 @@
             "type": "Extrinsic"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "author",
         "type": "Hash"
       },
@@ -57,11 +49,7 @@
             "type": "Extrinsic"
           }
         ],
-        "pubsub": [
-          "extrinsicUpdate",
-          "submitAndWatchExtrinsic",
-          "unwatchExtrinsic"
-        ],
+        "pubsub": ["extrinsicUpdate", "submitAndWatchExtrinsic", "unwatchExtrinsic"],
         "section": "author",
         "type": "ExtrinsicStatus"
       }
@@ -87,11 +75,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chain",
         "type": "SignedBlock"
       },
@@ -109,11 +93,7 @@
             "type": "BlockNumber"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chain",
         "type": "Hash"
       },
@@ -125,11 +105,7 @@
         "isSubscription": false,
         "method": "getFinalizedHead",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chain",
         "type": "Hash"
       },
@@ -147,11 +123,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chain",
         "type": "Header"
       },
@@ -169,11 +141,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chain",
         "type": "RuntimeVersion"
       },
@@ -185,11 +153,7 @@
         "isSubscription": true,
         "method": "subscribeFinalizedHeads",
         "params": [],
-        "pubsub": [
-          "finalizedHead",
-          "subscribeFinalizedHeads",
-          "unsubscribeFinalizedHeads"
-        ],
+        "pubsub": ["finalizedHead", "subscribeFinalizedHeads", "unsubscribeFinalizedHeads"],
         "section": "chain",
         "type": "Header"
       },
@@ -201,11 +165,7 @@
         "isSubscription": true,
         "method": "subscribeRuntimeVersion",
         "params": [],
-        "pubsub": [
-          "runtimeVersion",
-          "subscribeRuntimeVersion",
-          "unsubscribeRuntimeVersion"
-        ],
+        "pubsub": ["runtimeVersion", "subscribeRuntimeVersion", "unsubscribeRuntimeVersion"],
         "section": "chain",
         "type": "RuntimeVersion"
       },
@@ -217,11 +177,7 @@
         "isSubscription": true,
         "method": "subscribeNewHead",
         "params": [],
-        "pubsub": [
-          "newHead",
-          "subscribeNewHead",
-          "unsubscribeNewHead"
-        ],
+        "pubsub": ["newHead", "subscribeNewHead", "unsubscribeNewHead"],
         "section": "chain",
         "type": "Header"
       }
@@ -257,11 +213,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "Bytes"
       },
@@ -279,11 +231,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "Metadata"
       },
@@ -306,11 +254,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "StorageData"
       },
@@ -333,11 +277,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "Hash"
       },
@@ -360,11 +300,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "u64"
       },
@@ -392,11 +328,7 @@
             "type": "Hash"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "state",
         "type": "Vec<StorageChangeSet>"
       },
@@ -414,11 +346,7 @@
             "type": "Vec<StorageKey>"
           }
         ],
-        "pubsub": [
-          "storage",
-          "subscribeStorage",
-          "unsubscribeStorage"
-        ],
+        "pubsub": ["storage", "subscribeStorage", "unsubscribeStorage"],
         "section": "state",
         "type": "StorageChangeSet"
       }
@@ -438,11 +366,7 @@
         "isSubscription": false,
         "method": "chain",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
         "type": "Text"
       },
@@ -454,11 +378,7 @@
         "isSubscription": false,
         "method": "name",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
         "type": "Text"
       },
@@ -470,13 +390,9 @@
         "isSubscription": false,
         "method": "properties",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
-        "type": "ChainProperties"
+        "type": "RawJSON"
       },
       "version": {
         "description": "Retrieves the version of the node",
@@ -486,11 +402,7 @@
         "isSubscription": false,
         "method": "version",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
         "type": "Text"
       },
@@ -502,11 +414,7 @@
         "isSubscription": false,
         "method": "health",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
         "type": "RawJSON"
       },
@@ -518,11 +426,7 @@
         "isSubscription": false,
         "method": "peers",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "system",
         "type": "RawJSON"
       }
@@ -548,11 +452,7 @@
             "type": "Number"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -570,11 +470,7 @@
             "type": "PublicKey"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -602,11 +498,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -629,11 +521,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -661,11 +549,7 @@
             "type": "Memo"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -693,11 +577,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -725,11 +605,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -747,11 +623,7 @@
             "type": "PublicKey"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -763,11 +635,7 @@
         "isSubscription": false,
         "method": "getIntentions",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -779,11 +647,7 @@
         "isSubscription": false,
         "method": "getPseduIntentions",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -801,27 +665,19 @@
             "type": "PublicKey"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
-      "getOrderPairs": {
+      "getTradingPairs": {
         "description": "",
         "isDeprecated": false,
         "isHidden": false,
         "isSigned": false,
         "isSubscription": false,
-        "method": "getOrderPairs",
+        "method": "getTradingPairs",
         "params": [],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -844,11 +700,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -876,11 +728,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -908,11 +756,7 @@
             "type": "u32"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -935,11 +779,7 @@
             "type": "Chain"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -957,11 +797,7 @@
             "type": "PublicKey"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -989,11 +825,7 @@
             "type": "Text"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -1016,11 +848,7 @@
             "type": "u64"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -1038,11 +866,7 @@
             "type": "Chain"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
-        ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       },
@@ -1060,11 +884,25 @@
             "type": "Chain"
           }
         ],
-        "pubsub": [
-          "",
-          "",
-          ""
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getMinimalWithdrawalValueByToken": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getMinimalWithdrawalValueByToken",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "token",
+            "type": "Token"
+          }
         ],
+        "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
       }

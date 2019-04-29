@@ -1,7 +1,6 @@
 import EventEmitter from 'eventemitter3';
 import { WsProvider } from '@chainx/rpc-provider';
-import Account, { NET_PREFIX } from '@chainx/account';
-import { setAddressPrefix } from '@polkadot/keyring/address';
+import Account from '@chainx/account';
 
 import ApiBase from './ApiBase';
 import Stake from './Stake';
@@ -10,9 +9,7 @@ import Chain from './Chain';
 import Trade from './Trade';
 
 class ChainX {
-  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { net = 'testnet', broadcast = [] } = {}) {
-    this.setNet(net);
-    this._net = net;
+  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [] } = {}) {
     this._broadcast = broadcast;
     this._eventemitter = new EventEmitter();
     if (!Array.isArray(broadcast)) {
@@ -27,10 +24,6 @@ class ChainX {
       }
     }
     this.setProvider(wsUrlOrProvider, broadcast);
-  }
-
-  get net() {
-    return this._net;
   }
 
   get broadcast() {
@@ -63,13 +56,6 @@ class ChainX {
 
   get trade() {
     return this._trade;
-  }
-
-  setNet(net) {
-    if (!net || !NET_PREFIX[net]) {
-      throw new Error('expect pass in the network type, testnet or mainnet');
-    }
-    setAddressPrefix(NET_PREFIX[net]);
   }
 
   on(type, handler) {
