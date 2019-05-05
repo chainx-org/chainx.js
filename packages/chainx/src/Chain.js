@@ -52,6 +52,10 @@ class Chain {
     return this.api.rpc.chainx.getFeeByCallAndLength(method, length);
   }
 
+  chainProperties() {
+    return this.api.rpc.system.properties();
+  }
+
   subscribeNewHead() {
     return this.api.rpc$.chain.subscribeNewHead().pipe(
       filter(header => header && !!header.blockNumber),

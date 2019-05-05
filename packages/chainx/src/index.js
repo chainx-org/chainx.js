@@ -58,6 +58,10 @@ class ChainX {
     return this._trade;
   }
 
+  get networkType() {
+    return this.chainProperties && this.chainProperties.network ? this.chainProperties.network : null;
+  }
+
   on(type, handler) {
     this._eventemitter.on(type, handler);
     return this;
