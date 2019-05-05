@@ -94,8 +94,8 @@ export default class Stake {
   /**
    * 设置信托
    */
-  setupTrustee = (chain, about, hotEntity, coldEntity) => {
-    return this.api.tx.xstaking.setupTrustee(chain, about, hotEntity, coldEntity);
+  setupBitcoinTrustee = (about, hotEntity, coldEntity) => {
+    return this.api.tx.xbridgeFeatures.setupBitcoinTrustee(about, hotEntity, coldEntity);
   };
 
   /**
