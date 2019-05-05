@@ -1,10 +1,10 @@
 {
   "name": "@chainx/rpc-rx",
-  "version": "2.9.0",
+  "version": "2.10.0-alpha.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/rpc-core": "^2.9.0",
+    "@chainx/rpc-core": "^2.10.0-alpha.0",
     "@polkadot/util": "^0.34.37",
     "rxjs": "^6.3.3"
   },
