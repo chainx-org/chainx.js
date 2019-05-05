@@ -6,7 +6,7 @@ import EnumType from './codec/EnumType';
 class Normal extends H520 {}
 class Compressed extends H264 {}
 
-export default class BitcoinTrusteeType extends EnumType {
+class BitcoinTrusteeType extends EnumType {
   constructor(value, index) {
     super(
       {
