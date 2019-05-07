@@ -7,6 +7,7 @@ import {
 } from '@chainx/types/Metadata';
 import { Text, Vector } from '@chainx/types';
 import createFunction from './createFunction';
+
 // Small helper function to factorize code on this page.
 const createRuntimeFunction = (method, key, { documentation, type }) =>
   createFunction(

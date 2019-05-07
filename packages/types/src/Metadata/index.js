@@ -7,11 +7,11 @@ import * as v4S from './v4/Storage';
 
 export default Metadata;
 
-export const v0SStoragePlainType = v0S.StoragePlainType;
-export const v0SStorageStorageFunctionMetadata = v0S.StorageStorageFunctionMetadata;
-export const v0SStorageStorageFunctionModifier = v0S.StorageStorageFunctionModifier;
-export const v0SStorageStorageFunctionType = v0S.StorageStorageFunctionType;
-export const v4SStoragePlainType = v4S.StoragePlainType;
-export const v4SStorageStorageFunctionMetadata = v4S.StorageStorageFunctionMetadata;
-export const v4SStorageStorageFunctionModifier = v4S.StorageStorageFunctionModifier;
-export const v4SStorageStorageFunctionType = v4S.StorageStorageFunctionType;
+export const v0SPlainType = v0S.PlainType;
+export const v0SStorageFunctionMetadata = v0S.StorageFunctionMetadata;
+export const v0SStorageFunctionModifier = v0S.StorageFunctionModifier;
+export const v0SStorageFunctionType = v0S.StorageFunctionType;
+export const v4SPlainType = v4S.PlainType;
+export const v4SStorageFunctionMetadata = v4S.StorageFunctionMetadata;
+export const v4SStorageFunctionModifier = v4S.StorageFunctionModifier;
+export const v4SStorageFunctionType = v4S.StorageFunctionType;

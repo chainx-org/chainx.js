@@ -131,7 +131,7 @@ export default class ApiBase {
       this._chainProperties = await this._rpcBase.system.properties();
       this._genesisHash = await this._rpcBase.chain.getBlockHash(0);
 
-      const extrinsics = extrinsicsFromMeta(this.runtimeMetadata);
+      const extrinsics = extrinsicsFromMeta(this.runtimeMetadata.asV0);
       const storage = storageFromMeta(this.runtimeMetadata);
       this._extrinsics = this.decorateExtrinsics(extrinsics);
 
@@ -139,7 +139,7 @@ export default class ApiBase {
       this._query = this.decorateGetStorage(storage, false);
       this._subscribeStorage$ = this.decorateSubscribeStorage(storage);
 
-      Event.injectMetadata(this.runtimeMetadata);
+      Event.injectMetadata(this.runtimeMetadata.asV0);
       Method.injectMethods(extrinsics);
 
       // 设置网络类型

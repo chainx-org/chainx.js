@@ -10,6 +10,7 @@
 /**
  * @summary Type definitions that are used in the system
  */
+export * from './codec';
 export { default as AccountId } from './AccountId';
 export { default as AccountIndex } from './AccountIndex';
 export { default as Address } from './Address';
