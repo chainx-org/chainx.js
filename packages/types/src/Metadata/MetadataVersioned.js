@@ -9,48 +9,61 @@ import MetadataV0 from './v0';
 import MetadataV1 from './v1';
 import MetadataV2 from './v2';
 import MetadataV3 from './v3';
+import MetadataV4 from './v4';
 import v1ToV0 from './v1/toV0';
 import v2ToV1 from './v2/toV1';
 import v3ToV2 from './v3/toV2';
+import v4ToV3 from './v4/toV3';
+
 class MetadataEnum extends EnumType {
-    constructor(value) {
-        super({
-            MetadataV0,
-            MetadataV1,
-            MetadataV2,
-            MetadataV3
-        }, value);
-    }
-    /**
-     * @description Returns the wrapped values as a V0 object
-     */
-    get asV0() {
-        return this.value;
-    }
-    /**
-     * @description Returns the wrapped values as a V1 object
-     */
-    get asV1() {
-        return this.value;
-    }
-    /**
-     * @description Returns the wrapped values as a V2 object
-     */
-    get asV2() {
-        return this.value;
-    }
-    /**
-     * @description Returns the wrapped values as a V3 object
-     */
-    get asV3() {
-        return this.value;
-    }
-    /**
-     * @description The version this metadata represents
-     */
-    get version() {
-        return this.index;
-    }
+  constructor(value) {
+    super(
+      {
+        MetadataV0,
+        MetadataV1,
+        MetadataV2,
+        MetadataV3,
+        MetadataV4,
+      },
+      value
+    );
+  }
+  /**
+   * @description Returns the wrapped values as a V0 object
+   */
+  get asV0() {
+    return this.value;
+  }
+  /**
+   * @description Returns the wrapped values as a V1 object
+   */
+  get asV1() {
+    return this.value;
+  }
+  /**
+   * @description Returns the wrapped values as a V2 object
+   */
+  get asV2() {
+    return this.value;
+  }
+  /**
+   * @description Returns the wrapped values as a V3 object
+   */
+  get asV3() {
+    return this.value;
+  }
+  /**
+   * @description Returns the wrapped values as a V4 object
+   */
+  get asV4() {
+    return this.value;
+  }
+  /**
+   * @description The version this metadata represents
+   */
+  get version() {
+    return this.index;
+  }
 }
 /**
  * @name MetadataVersioned
@@ -58,76 +71,92 @@ class MetadataEnum extends EnumType {
  * The versioned runtime metadata as a decoded structure
  */
 export default class MetadataVersioned extends Struct {
-    constructor(value) {
-        super({
-            magicNumber: MagicNumber,
-            metadata: MetadataEnum
-        }, value);
+  constructor(value) {
+    super(
+      {
+        magicNumber: MagicNumber,
+        metadata: MetadataEnum,
+      },
+      value
+    );
+  }
+  /**
+   * @description
+   */
+  get magicNumber() {
+    return this.get('magicNumber');
+  }
+  /**
+   * @description the metadata wrapped
+   */
+  get metadata() {
+    return this.get('metadata');
+  }
+  /**
+   * @description the metadata version this structure represents
+   */
+  get version() {
+    return this.metadata.index;
+  }
+  /**
+   * @description Returns the wrapped metadata as a V0 object
+   */
+  get asV0() {
+    if (this.metadata.version === 0) {
+      return this.metadata.asV0;
     }
-    /**
-     * @description
-     */
-    get magicNumber() {
-        return this.get('magicNumber');
+    if (isUndefined(this._convertedV0)) {
+      this._convertedV0 = v1ToV0(this.asV1);
     }
-    /**
-     * @description the metadata wrapped
-     */
-    get metadata() {
-        return this.get('metadata');
+    return this._convertedV0;
+  }
+  /**
+   * @description Returns the wrapped values as a V1 object
+   */
+  get asV1() {
+    if (this.metadata.version === 1) {
+      return this.metadata.asV1;
     }
-    /**
-     * @description the metadata version this structure represents
-     */
-    get version() {
-        return this.metadata.index;
+    assert([2, 3, 4].includes(this.metadata.version), `Cannot convert metadata from v${this.metadata.version} to v1`);
+    if (isUndefined(this._convertedV1)) {
+      this._convertedV1 = v2ToV1(this.metadata.asV2);
     }
-    /**
-     * @description Returns the wrapped metadata as a V0 object
-     */
-    get asV0() {
-        if (this.metadata.version === 0) {
-            return this.metadata.asV0;
-        }
-        if (isUndefined(this._convertedV0)) {
-            this._convertedV0 = v1ToV0(this.asV1);
-        }
-        return this._convertedV0;
+    return this._convertedV1;
+  }
+  /**
+   * @description Returns the wrapped values as a V2 object
+   */
+  get asV2() {
+    if (this.metadata.version === 2) {
+      return this.metadata.asV2;
     }
-    /**
-     * @description Returns the wrapped values as a V1 object
-     */
-    get asV1() {
-        if (this.metadata.version === 1) {
-            return this.metadata.asV1;
-        }
-        assert([2, 3].includes(this.metadata.version), `Cannot convert metadata from v${this.metadata.version} to v1`);
-        if (isUndefined(this._convertedV1)) {
-            this._convertedV1 = v2ToV1(this.metadata.asV2);
-        }
-        return this._convertedV1;
+    assert([3, 4].includes(this.metadata.version), `Cannot convert metadata from v${this.metadata.version} to v2`);
+    if (isUndefined(this._convertedV2)) {
+      this._convertedV2 = v3ToV2(this.metadata.asV3);
     }
-    /**
-     * @description Returns the wrapped values as a V2 object
-     */
-    get asV2() {
-        if (this.metadata.version === 2) {
-            return this.metadata.asV2;
-        }
-        assert(this.metadata.version === 3, `Cannot convert metadata from v${this.metadata.version} to v1`);
-        if (isUndefined(this._convertedV2)) {
-            this._convertedV2 = v3ToV2(this.metadata.asV3);
-        }
-        return this._convertedV2;
+    return this._convertedV2;
+  }
+  /**
+   * @description Returns the wrapped values as a V3 object
+   */
+  get asV3() {
+    if (this.metadata.version === 3) {
+      return this.metadata.asV3;
     }
-    /**
-     * @description Returns the wrapped values as a V3 object
-     */
-    get asV3() {
-        assert(this.metadata.version === 3, `Cannot convert metadata from v${this.metadata.version} to v3`);
-        return this.metadata.asV3;
+    assert([4].includes(this.metadata.version), `Cannot convert metadata from v${this.metadata.version} to v2`);
+    if (isUndefined(this._convertedV3)) {
+      this._convertedV3 = v4ToV3(this.metadata.asV4);
     }
-    getUniqTypes(throwError) {
-        return this.metadata.value.getUniqTypes(throwError);
-    }
+    return this.metadata.asV3;
+  }
+  getUniqTypes(throwError) {
+    return this.metadata.value.getUniqTypes(throwError);
+  }
+  /**
+   * @description Returns the wrapped values as a V3 object
+   */
+  get asV4() {
+    assert(this.metadata.version === 4, `Cannot convert metadata from v${this.metadata.version} to v4`);
+    return this.metadata.asV4;
+  }
 }

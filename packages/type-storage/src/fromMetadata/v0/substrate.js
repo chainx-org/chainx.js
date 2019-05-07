@@ -1,10 +1,12 @@
-// Copyright 2017-2018 @polkadot/storage authors & contributors
+// Copyright 2017-2019 @polkadot/storage authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { StorageFunctionModifier, StorageFunctionType } from '@chainx/types/Metadata';
-import { Text } from '@chainx/types';
-import { Vector } from '@chainx/types/codec';
-import createFunction from './utils/createFunction';
+import {
+  v0SStorageFunctionModifier as StorageFunctionModifier,
+  v0SStorageFunctionType as StorageFunctionType,
+} from '@chainx/types/Metadata';
+import { Text, Vector } from '@chainx/types';
+import createFunction from './createFunction';
 // Small helper function to factorize code on this page.
 const createRuntimeFunction = (method, key, { documentation, type }) =>
   createFunction(
@@ -12,7 +14,7 @@ const createRuntimeFunction = (method, key, { documentation, type }) =>
     new Text(method),
     {
       documentation: new Vector(Text, [documentation]),
-      modifier: new StorageFunctionModifier(0),
+      modifier: new StorageFunctionModifier(1),
       type: new StorageFunctionType(type, 0),
       toJSON: () => key,
     },
@@ -34,7 +36,7 @@ export const authorityCount = createRuntimeFunction('authorityCount', ':auth:len
   type: 'u32',
 });
 export const authorityPrefix = createRuntimeFunction('authorityPrefix', ':auth:', {
-  documentation: 'Prefix under which authorities are storied.',
+  documentation: 'Prefix under which authorities are stored.',
   type: 'u32',
 });
 export const extrinsicIndex = createRuntimeFunction('extrinsicIndex', ':extrinsic_index', {

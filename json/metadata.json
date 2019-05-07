@@ -1,28 +1,143 @@
 {
-  "outerEvent": {
-    "name": "Event",
-    "events": [
-      [
-        "system",
-        [
+  "magicNumber": 1635018093,
+  "metadata": {
+    "modules": [
+      {
+        "name": "system",
+        "prefix": "System",
+        "storage": [
+          {
+            "name": "AccountNonce",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountId",
+              "value": "Index",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000",
+            "documentation": [" Extrinsics nonce for accounts."]
+          },
+          {
+            "name": "ExtrinsicCount",
+            "modifier": "Optional",
+            "type": "u32",
+            "fallback": "0x00",
+            "documentation": [" Total extrinsics count for the current block."]
+          },
+          {
+            "name": "AllExtrinsicsLen",
+            "modifier": "Optional",
+            "type": "u32",
+            "fallback": "0x00",
+            "documentation": [" Total length in bytes for all extrinsics put together, for the current block."]
+          },
+          {
+            "name": "BlockHash",
+            "modifier": "Default",
+            "type": {
+              "key": "BlockNumber",
+              "value": "Hash",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "documentation": [" Map of block numbers to block hashes."]
+          },
+          {
+            "name": "ExtrinsicData",
+            "modifier": "Default",
+            "type": {
+              "key": "u32",
+              "value": "Bytes",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" Extrinsics data for the current block (maps an extrinsic's index to its data)."]
+          },
+          {
+            "name": "RandomSeed",
+            "modifier": "Default",
+            "type": "Hash",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "documentation": [" Random seed of the current block."]
+          },
+          {
+            "name": "Number",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x0000000000000000",
+            "documentation": [" The current block number being processed. Set by `execute_block`."]
+          },
+          {
+            "name": "ParentHash",
+            "modifier": "Default",
+            "type": "Hash",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "documentation": [" Hash of the previous block."]
+          },
+          {
+            "name": "ExtrinsicsRoot",
+            "modifier": "Default",
+            "type": "Hash",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "documentation": [" Extrinsics root of the current block, also part of the block header."]
+          },
+          {
+            "name": "Digest",
+            "modifier": "Default",
+            "type": "Digest",
+            "fallback": "0x00",
+            "documentation": [" Digest of the current block, also part of the block header."]
+          },
+          {
+            "name": "Events",
+            "modifier": "Default",
+            "type": "Vec<EventRecord>",
+            "fallback": "0x00",
+            "documentation": [" Events deposited for the current block."]
+          }
+        ],
+        "calls": null,
+        "events": [
           {
             "name": "ExtrinsicSuccess",
-            "arguments": [],
+            "args": [],
             "documentation": [" An extrinsic completed successfully."]
           },
           {
             "name": "ExtrinsicFailed",
-            "arguments": [],
+            "args": [],
             "documentation": [" An extrinsic failed."]
           }
         ]
-      ],
-      [
-        "indices",
-        [
+      },
+      {
+        "name": "indices",
+        "prefix": "Indices",
+        "storage": [
+          {
+            "name": "NextEnumSet",
+            "modifier": "Default",
+            "type": "AccountIndex",
+            "fallback": "0x00000000",
+            "documentation": [" The next free enumeration set."]
+          },
+          {
+            "name": "EnumSet",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountIndex",
+              "value": "Vec<AccountId>",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" The enumeration sets."]
+          }
+        ],
+        "calls": [],
+        "events": [
           {
             "name": "NewAccountIndex",
-            "arguments": ["AccountId", "AccountIndex"],
+            "args": ["AccountId", "AccountIndex"],
             "documentation": [
               " A new account index was assigned.",
               "",
@@ -31,181 +146,1415 @@
             ]
           }
         ]
-      ],
-      [
-        "xsession",
-        [
+      },
+      {
+        "name": "timestamp",
+        "prefix": "Timestamp",
+        "storage": [
+          {
+            "name": "Now",
+            "modifier": "Default",
+            "type": "Moment",
+            "fallback": "0x0000000000000000",
+            "documentation": [" Current time for the current block."]
+          },
+          {
+            "name": "BlockPeriod",
+            "modifier": "Optional",
+            "type": "Moment",
+            "fallback": "0x00",
+            "documentation": [" Old storage item provided for compatibility. Remove after all networks upgraded."]
+          },
+          {
+            "name": "MinimumPeriod",
+            "modifier": "Default",
+            "type": "Moment",
+            "fallback": "0x0300000000000000",
+            "documentation": [
+              " The minimum period between blocks. Beware that this is different to the *expected* period",
+              " that the block production apparatus provides. Your chosen consensus system will generally",
+              " work with this to determine a sensible block time. e.g. For Aura, it will be double this",
+              " period on default settings."
+            ]
+          },
+          {
+            "name": "DidUpdate",
+            "modifier": "Default",
+            "type": "bool",
+            "fallback": "0x00",
+            "documentation": [" Did the timestamp get updated in this block?"]
+          }
+        ],
+        "calls": [
+          {
+            "name": "set",
+            "args": [
+              {
+                "name": "now",
+                "type": "Compact<Moment>"
+              }
+            ],
+            "documentation": [
+              " Set the current time.",
+              "",
+              " This call should be invoked exactly once per block. It will panic at the finalization phase,",
+              " if this call hasn't been invoked by that time.",
+              "",
+              " The timestamp should be greater than the previous one by the amount specified by `minimum_period`.",
+              "",
+              " The dispatch origin for this call must be `Inherent`."
+            ]
+          }
+        ],
+        "events": null
+      },
+      {
+        "name": "consensus",
+        "prefix": "Consensus",
+        "storage": [
+          {
+            "name": "OriginalAuthorities",
+            "modifier": "Optional",
+            "type": "Vec<SessionKey>",
+            "fallback": "0x00",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "report_misbehavior",
+            "args": [
+              {
+                "name": "_report",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": [" Report some misbehavior."]
+          },
+          {
+            "name": "note_offline",
+            "args": [
+              {
+                "name": "offline",
+                "type": "InherentOfflineReport"
+              }
+            ],
+            "documentation": [" Note that the previous block's validator missed its opportunity to propose a block."]
+          },
+          {
+            "name": "remark",
+            "args": [
+              {
+                "name": "_remark",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": [" Make some on-chain remark."]
+          },
+          {
+            "name": "set_heap_pages",
+            "args": [
+              {
+                "name": "pages",
+                "type": "u64"
+              }
+            ],
+            "documentation": [" Set the number of pages in the WebAssembly environment's heap."]
+          },
+          {
+            "name": "set_code",
+            "args": [
+              {
+                "name": "new",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": [" Set the new code."]
+          },
+          {
+            "name": "set_storage",
+            "args": [
+              {
+                "name": "items",
+                "type": "Vec<KeyValue>"
+              }
+            ],
+            "documentation": [" Set some items of storage."]
+          },
+          {
+            "name": "kill_storage",
+            "args": [
+              {
+                "name": "keys",
+                "type": "Vec<Key>"
+              }
+            ],
+            "documentation": [" Kill some items from storage."]
+          }
+        ],
+        "events": null
+      },
+      {
+        "name": "xsession",
+        "prefix": "Session",
+        "storage": [
+          {
+            "name": "Validators",
+            "modifier": "Default",
+            "type": "Vec<(AccountId,u64)>",
+            "fallback": "0x00",
+            "documentation": [" The current set of validators."]
+          },
+          {
+            "name": "SessionLength",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0xe803000000000000",
+            "documentation": [" Current length of the session."]
+          },
+          {
+            "name": "CurrentIndex",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x0000000000000000",
+            "documentation": [" Current index of the session."]
+          },
+          {
+            "name": "CurrentStart",
+            "modifier": "Default",
+            "type": "Moment",
+            "fallback": "0x0000000000000000",
+            "documentation": [" Timestamp when current session started."]
+          },
+          {
+            "name": "ForcingNewSession",
+            "modifier": "Optional",
+            "type": "bool",
+            "fallback": "0x00",
+            "documentation": [
+              " New session is being forced is this entry exists; in which case, the boolean value is whether",
+              " the new session should be considered a normal rotation (rewardable) or exceptional (slashable)."
+            ]
+          },
+          {
+            "name": "LastLengthChange",
+            "modifier": "Optional",
+            "type": "BlockNumber",
+            "fallback": "0x00",
+            "documentation": [" Block at which the session length last changed."]
+          },
+          {
+            "name": "NextKeyFor",
+            "modifier": "Optional",
+            "type": {
+              "key": "AccountId",
+              "value": "SessionKey",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" The next key for a given validator."]
+          },
+          {
+            "name": "NextSessionLength",
+            "modifier": "Optional",
+            "type": "BlockNumber",
+            "fallback": "0x00",
+            "documentation": [" The next session length."]
+          }
+        ],
+        "calls": [
+          {
+            "name": "set_key",
+            "args": [
+              {
+                "name": "key",
+                "type": "SessionKey"
+              }
+            ],
+            "documentation": [
+              " Sets the session key of `_validator` to `_key`. This doesn't take effect until the next",
+              " session."
+            ]
+          },
+          {
+            "name": "set_length",
+            "args": [
+              {
+                "name": "new",
+                "type": "Compact<BlockNumber>"
+              }
+            ],
+            "documentation": [
+              " Set a new session length. Won't kick in until the next session change (at current length)."
+            ]
+          },
+          {
+            "name": "force_new_session",
+            "args": [
+              {
+                "name": "apply_rewards",
+                "type": "bool"
+              }
+            ],
+            "documentation": [" Forces a new session."]
+          }
+        ],
+        "events": [
           {
             "name": "NewSession",
-            "arguments": ["BlockNumber"],
+            "args": ["BlockNumber"],
             "documentation": [
               " New session has happened. Note that the argument is the session index, not the block",
               " number as the type might suggest."
             ]
           }
         ]
-      ],
-      [
-        "xgrandpa",
-        [
+      },
+      {
+        "name": "finality_tracker",
+        "prefix": "",
+        "storage": null,
+        "calls": [
+          {
+            "name": "final_hint",
+            "args": [
+              {
+                "name": "hint",
+                "type": "Compact<BlockNumber>"
+              }
+            ],
+            "documentation": [
+              " Hint that the author of this block thinks the best finalized",
+              " block is the given number."
+            ]
+          }
+        ],
+        "events": null
+      },
+      {
+        "name": "xgrandpa",
+        "prefix": "GrandpaFinality",
+        "storage": [
+          {
+            "name": "PendingChange",
+            "modifier": "Optional",
+            "type": "StoredPendingChange",
+            "fallback": "0x00",
+            "documentation": []
+          },
+          {
+            "name": "NextForced",
+            "modifier": "Optional",
+            "type": "BlockNumber",
+            "fallback": "0x00",
+            "documentation": []
+          },
+          {
+            "name": "SessionsPerGrandpa",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x64000000",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "set_sessions_per_era",
+            "args": [
+              {
+                "name": "per_grandpa",
+                "type": "u32"
+              }
+            ],
+            "documentation": [" Set the number of sessions in an grandpa."]
+          },
+          {
+            "name": "report_misbehavior",
+            "args": [
+              {
+                "name": "_report",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": [" Report some misbehaviour."]
+          }
+        ],
+        "events": [
           {
             "name": "NewAuthorities",
-            "arguments": ["Vec<(SessionKey,u64)>"],
+            "args": ["Vec<(SessionKey,u64)>"],
             "documentation": [" New authority set has been applied."]
           }
         ]
-      ],
-      [
-        "xfee_manager",
-        [
+      },
+      {
+        "name": "xaura",
+        "prefix": "",
+        "storage": null,
+        "calls": null,
+        "events": null
+      },
+      {
+        "name": "xsystem",
+        "prefix": "XSystem",
+        "storage": [
+          {
+            "name": "BlockProducer",
+            "modifier": "Optional",
+            "type": "AccountId",
+            "fallback": "0x00",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "set_block_producer",
+            "args": [
+              {
+                "name": "producer",
+                "type": "AccountId"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": null
+      },
+      {
+        "name": "xaccounts",
+        "prefix": "",
+        "storage": null,
+        "calls": null,
+        "events": null
+      },
+      {
+        "name": "xfee_manager",
+        "prefix": "XFeeManager",
+        "storage": [
+          {
+            "name": "Switch",
+            "modifier": "Default",
+            "type": "SwitchStore",
+            "fallback": "0x00000000",
+            "documentation": []
+          },
+          {
+            "name": "ProducerFeeProportion",
+            "modifier": "Default",
+            "type": "(u32,u32)",
+            "fallback": "0x0000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "TransactionBaseFee",
+            "modifier": "Default",
+            "type": "Balance",
+            "fallback": "0x0000000000000000",
+            "documentation": [" The fee to be paid for making a transaction; the base."]
+          },
+          {
+            "name": "TransactionByteFee",
+            "modifier": "Default",
+            "type": "Balance",
+            "fallback": "0x0000000000000000",
+            "documentation": [" The fee to be paid for making a transaction; the per-byte portion."]
+          }
+        ],
+        "calls": [
+          {
+            "name": "set_producer_producer_fee_proportion",
+            "args": [
+              {
+                "name": "proportion",
+                "type": "(u32,u32)"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_switch_store",
+            "args": [
+              {
+                "name": "switch",
+                "type": "SwitchStore"
+              }
+            ],
+            "documentation": [" first version, when add more SWITCH, should use new switch"]
+          }
+        ],
+        "events": [
           {
             "name": "FeeForJackpot",
-            "arguments": ["AccountId", "Balance"],
+            "args": ["AccountId", "Balance"],
             "documentation": []
           },
           {
             "name": "FeeForProducer",
-            "arguments": ["AccountId", "Balance"],
+            "args": ["AccountId", "Balance"],
             "documentation": []
           },
           {
             "name": "FeeForCouncil",
-            "arguments": ["AccountId", "Balance"],
+            "args": ["AccountId", "Balance"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xassets",
-        [
+      },
+      {
+        "name": "xassets",
+        "prefix": "XAssets",
+        "storage": [
+          {
+            "name": "AssetList",
+            "modifier": "Default",
+            "type": {
+              "key": "Chain",
+              "value": "Vec<Token>",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" Asset token index list for Chain, different Chain has different token list"]
+          },
+          {
+            "name": "AssetInfo",
+            "modifier": "Optional",
+            "type": {
+              "key": "Token",
+              "value": "(Asset,bool,BlockNumber)",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" asset info for every token, key is token token"]
+          },
+          {
+            "name": "AssetBalance",
+            "modifier": "Default",
+            "type": {
+              "key": "(AccountId,Token)",
+              "value": "BTreeMap<AssetType,Balance>",
+              "isLinked": false
+            },
+            "fallback": "0x00000000",
+            "documentation": [" asset balance for user&token, use btree_map to accept different asset type"]
+          },
+          {
+            "name": "TotalAssetBalance",
+            "modifier": "Default",
+            "type": {
+              "key": "Token",
+              "value": "BTreeMap<AssetType,Balance>",
+              "isLinked": false
+            },
+            "fallback": "0x00000000",
+            "documentation": [" asset balance for a token, use btree_map to accept different asset type"]
+          },
+          {
+            "name": "MemoLen",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x00000000",
+            "documentation": [" memo len"]
+          }
+        ],
+        "calls": [
+          {
+            "name": "register_asset",
+            "args": [
+              {
+                "name": "asset",
+                "type": "Asset"
+              },
+              {
+                "name": "is_online",
+                "type": "bool"
+              },
+              {
+                "name": "is_psedu_intention",
+                "type": "bool"
+              }
+            ],
+            "documentation": [" register_asset to module, should allow by root"]
+          },
+          {
+            "name": "revoke_asset",
+            "args": [
+              {
+                "name": "token",
+                "type": "Token"
+              }
+            ],
+            "documentation": [" revoke asset, mark this asset is invalid"]
+          },
+          {
+            "name": "set_balance",
+            "args": [
+              {
+                "name": "who",
+                "type": "Address"
+              },
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "balances",
+                "type": "BTreeMap<AssetType,Balance>"
+              }
+            ],
+            "documentation": [" set free token for an account"]
+          },
+          {
+            "name": "transfer",
+            "args": [
+              {
+                "name": "dest",
+                "type": "Address"
+              },
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "value",
+                "type": "Balance"
+              },
+              {
+                "name": "memo",
+                "type": "Memo"
+              }
+            ],
+            "documentation": [" transfer between account"]
+          }
+        ],
+        "events": [
           {
             "name": "Move",
-            "arguments": ["Token", "AccountId", "AssetType", "AccountId", "AssetType", "Balance"],
+            "args": ["Token", "AccountId", "AssetType", "AccountId", "AssetType", "Balance"],
             "documentation": []
           },
           {
             "name": "Issue",
-            "arguments": ["Token", "AccountId", "Balance"],
+            "args": ["Token", "AccountId", "Balance"],
             "documentation": []
           },
           {
             "name": "Destory",
-            "arguments": ["Token", "AccountId", "Balance"],
+            "args": ["Token", "AccountId", "Balance"],
             "documentation": []
           },
           {
             "name": "Set",
-            "arguments": ["Token", "AccountId", "AssetType", "Balance"],
+            "args": ["Token", "AccountId", "AssetType", "Balance"],
             "documentation": []
           },
           {
             "name": "Register",
-            "arguments": ["Token", "bool"],
+            "args": ["Token", "bool"],
             "documentation": []
           },
           {
             "name": "Revoke",
-            "arguments": ["Token"],
+            "args": ["Token"],
             "documentation": []
           },
           {
             "name": "NewAccount",
-            "arguments": ["AccountId"],
+            "args": ["AccountId"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xrecords",
-        [
+      },
+      {
+        "name": "xrecords",
+        "prefix": "XAssetsRecords",
+        "storage": [
+          {
+            "name": "ApplicationMHeader",
+            "modifier": "Optional",
+            "type": {
+              "key": "Chain",
+              "value": "MultiNodeIndex",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" linked node header"]
+          },
+          {
+            "name": "ApplicationMTail",
+            "modifier": "Optional",
+            "type": {
+              "key": "Chain",
+              "value": "MultiNodeIndex",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" linked node tail"]
+          },
+          {
+            "name": "ApplicationMap",
+            "modifier": "Optional",
+            "type": {
+              "key": "u32",
+              "value": "Node",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [
+              " withdrawal applications collection, use serial number to mark them, and has prev and next to link them"
+            ]
+          },
+          {
+            "name": "SerialNumber",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x00000000",
+            "documentation": [" withdrawal application serial number"]
+          }
+        ],
+        "calls": [
+          {
+            "name": "deposit_from_root",
+            "args": [
+              {
+                "name": "who",
+                "type": "AccountId"
+              },
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "balance",
+                "type": "Balance"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "withdrawal_from_root",
+            "args": [
+              {
+                "name": "who",
+                "type": "AccountId"
+              },
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "balance",
+                "type": "Balance"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "fix_withdrawal_state",
+            "args": [
+              {
+                "name": "withdrawal_id",
+                "type": "u32"
+              },
+              {
+                "name": "success",
+                "type": "bool"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "fix_withdrawal_state_list",
+            "args": [
+              {
+                "name": "item",
+                "type": "Vec<(u32,bool)>"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
           {
             "name": "Deposit",
-            "arguments": ["AccountId", "Token", "Balance"],
+            "args": ["AccountId", "Token", "Balance"],
             "documentation": []
           },
           {
             "name": "WithdrawalApply",
-            "arguments": ["u32", "AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "TxState"],
+            "args": ["u32", "AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "TxState"],
             "documentation": []
           },
           {
             "name": "WithdrawalFinish",
-            "arguments": ["u32", "bool"],
+            "args": ["u32", "bool"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xstaking",
-        [
+      },
+      {
+        "name": "xprocess",
+        "prefix": "Withdrawal",
+        "storage": [
+          {
+            "name": "TokenBlackList",
+            "modifier": "Default",
+            "type": "Vec<Token>",
+            "fallback": "0x00",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "withdraw",
+            "args": [
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "value",
+                "type": "Balance"
+              },
+              {
+                "name": "addr",
+                "type": "AddrStr"
+              },
+              {
+                "name": "ext",
+                "type": "Memo"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": null
+      },
+      {
+        "name": "xstaking",
+        "prefix": "XStaking",
+        "storage": [
+          {
+            "name": "InitialReward",
+            "modifier": "Default",
+            "type": "Balance",
+            "fallback": "0x0000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "ValidatorCount",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x00000000",
+            "documentation": [" The ideal number of staking participants."]
+          },
+          {
+            "name": "MinimumValidatorCount",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x04000000",
+            "documentation": [" Minimum number of staking participants before emergency conditions are imposed."]
+          },
+          {
+            "name": "SessionsPerEra",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0xe803000000000000",
+            "documentation": [" The length of a staking era in sessions."]
+          },
+          {
+            "name": "BondingDuration",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0xe803000000000000",
+            "documentation": [" The length of the bonding duration in blocks."]
+          },
+          {
+            "name": "IntentionBondingDuration",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x1027000000000000",
+            "documentation": [" The length of the bonding duration in blocks for intention."]
+          },
+          {
+            "name": "SessionsPerEpoch",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x1027000000000000",
+            "documentation": []
+          },
+          {
+            "name": "CurrentEra",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x0000000000000000",
+            "documentation": [" The current era index."]
+          },
+          {
+            "name": "Intentions",
+            "modifier": "Default",
+            "type": "Vec<AccountId>",
+            "fallback": "0x00",
+            "documentation": [" All the accounts with a desire to stake."]
+          },
+          {
+            "name": "NextSessionsPerEra",
+            "modifier": "Optional",
+            "type": "BlockNumber",
+            "fallback": "0x00",
+            "documentation": [" The next value of sessions per era."]
+          },
+          {
+            "name": "LastEraLengthChange",
+            "modifier": "Default",
+            "type": "BlockNumber",
+            "fallback": "0x0000000000000000",
+            "documentation": [" The session index at which the era length last changed."]
+          },
+          {
+            "name": "ForcingNewEra",
+            "modifier": "Optional",
+            "type": "Null",
+            "fallback": "0x00",
+            "documentation": [" We are forcing a new era."]
+          },
+          {
+            "name": "StakeWeight",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountId",
+              "value": "Balance",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "IntentionProfiles",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountId",
+              "value": "IntentionProfs",
+              "isLinked": false
+            },
+            "fallback": "0x000000000000000000000000000000000000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "NominationRecords",
+            "modifier": "Optional",
+            "type": {
+              "key": "(AccountId,AccountId)",
+              "value": "NominationRecord",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": []
+          },
+          {
+            "name": "MinimumPenalty",
+            "modifier": "Default",
+            "type": "Balance",
+            "fallback": "0x0000000000000000",
+            "documentation": [" Minimum penalty for each slash."]
+          },
+          {
+            "name": "OfflineValidatorsPerSession",
+            "modifier": "Default",
+            "type": "Vec<AccountId>",
+            "fallback": "0x00",
+            "documentation": [" The active validators that have ever been offline per session."]
+          },
+          {
+            "name": "MissedOfPerSession",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountId",
+              "value": "u32",
+              "isLinked": false
+            },
+            "fallback": "0x00000000",
+            "documentation": [" Total blocks that each active validator missed in the current session."]
+          }
+        ],
+        "calls": [
+          {
+            "name": "nominate",
+            "args": [
+              {
+                "name": "target",
+                "type": "Address"
+              },
+              {
+                "name": "value",
+                "type": "Balance"
+              },
+              {
+                "name": "memo",
+                "type": "Memo"
+              }
+            ],
+            "documentation": [" Transactor could be an intention."]
+          },
+          {
+            "name": "renominate",
+            "args": [
+              {
+                "name": "from",
+                "type": "Address"
+              },
+              {
+                "name": "to",
+                "type": "Address"
+              },
+              {
+                "name": "value",
+                "type": "Balance"
+              },
+              {
+                "name": "memo",
+                "type": "Memo"
+              }
+            ],
+            "documentation": [" Renominate from one to another intention."]
+          },
+          {
+            "name": "unnominate",
+            "args": [
+              {
+                "name": "target",
+                "type": "Address"
+              },
+              {
+                "name": "value",
+                "type": "Balance"
+              },
+              {
+                "name": "memo",
+                "type": "Memo"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "claim",
+            "args": [
+              {
+                "name": "target",
+                "type": "Address"
+              }
+            ],
+            "documentation": [" Claim the reward for your nomination."]
+          },
+          {
+            "name": "unfreeze",
+            "args": [
+              {
+                "name": "target",
+                "type": "Address"
+              },
+              {
+                "name": "revocation_index",
+                "type": "u32"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "refresh",
+            "args": [
+              {
+                "name": "url",
+                "type": "Option<URL>"
+              },
+              {
+                "name": "desire_to_run",
+                "type": "Option<bool>"
+              },
+              {
+                "name": "next_key",
+                "type": "Option<SessionKey>"
+              },
+              {
+                "name": "about",
+                "type": "Option<Text>"
+              }
+            ],
+            "documentation": [" Update the url, desire to join in elections of intention and session key."]
+          },
+          {
+            "name": "register",
+            "args": [
+              {
+                "name": "name",
+                "type": "Name"
+              }
+            ],
+            "documentation": [" Register to be an intention."]
+          },
+          {
+            "name": "set_sessions_per_era",
+            "args": [
+              {
+                "name": "new",
+                "type": "Compact<BlockNumber>"
+              }
+            ],
+            "documentation": [" Set the number of sessions in an era."]
+          },
+          {
+            "name": "set_bonding_duration",
+            "args": [
+              {
+                "name": "new",
+                "type": "Compact<BlockNumber>"
+              }
+            ],
+            "documentation": [" The length of the bonding duration in eras."]
+          },
+          {
+            "name": "set_validator_count",
+            "args": [
+              {
+                "name": "new",
+                "type": "Compact<u32>"
+              }
+            ],
+            "documentation": [" The ideal number of validators."]
+          },
+          {
+            "name": "force_new_era",
+            "args": [
+              {
+                "name": "apply_rewards",
+                "type": "bool"
+              }
+            ],
+            "documentation": [
+              " Force there to be a new era. This also forces a new session immediately after.",
+              " `apply_rewards` should be true for validators to get the session reward."
+            ]
+          },
+          {
+            "name": "set_minimum_penalty",
+            "args": [
+              {
+                "name": "new",
+                "type": "Balance"
+              }
+            ],
+            "documentation": [" Set the offline slash grace period."]
+          }
+        ],
+        "events": [
           {
             "name": "Reward",
-            "arguments": ["Balance", "Balance"],
+            "args": ["Balance", "Balance"],
             "documentation": [" All validators have been rewarded by the given balance."]
           },
           {
             "name": "MissedBlocksOfOfflineValidatorPerSession",
-            "arguments": ["Vec<(AccountId,u32)>"],
+            "args": ["Vec<(AccountId,u32)>"],
             "documentation": [" Missed blocks by each offline validator per session."]
           },
           {
             "name": "EnforceValidatorsInactive",
-            "arguments": ["Vec<AccountId>"],
+            "args": ["Vec<AccountId>"],
             "documentation": []
           },
           {
             "name": "Rotation",
-            "arguments": ["Vec<(AccountId,u64)>"],
+            "args": ["Vec<(AccountId,u64)>"],
             "documentation": []
           },
           {
             "name": "Unnominate",
-            "arguments": ["BlockNumber"],
+            "args": ["BlockNumber"],
             "documentation": []
           },
           {
             "name": "Nominate",
-            "arguments": ["AccountId", "AccountId", "Balance"],
+            "args": ["AccountId", "AccountId", "Balance"],
             "documentation": []
           },
           {
             "name": "Claim",
-            "arguments": ["u64", "u64", "Balance"],
+            "args": ["u64", "u64", "Balance"],
             "documentation": []
           },
           {
             "name": "Refresh",
-            "arguments": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<Text>"],
+            "args": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<Text>"],
             "documentation": []
           },
           {
             "name": "Unfreeze",
-            "arguments": ["AccountId", "AccountId"],
+            "args": ["AccountId", "AccountId"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xtokens",
-        [
+      },
+      {
+        "name": "xtokens",
+        "prefix": "XTokens",
+        "storage": [
+          {
+            "name": "TokenDiscount",
+            "modifier": "Default",
+            "type": {
+              "key": "Token",
+              "value": "u32",
+              "isLinked": false
+            },
+            "fallback": "0x00000000",
+            "documentation": []
+          },
+          {
+            "name": "PseduIntentions",
+            "modifier": "Default",
+            "type": "Vec<Token>",
+            "fallback": "0x00",
+            "documentation": []
+          },
+          {
+            "name": "PseduIntentionProfiles",
+            "modifier": "Default",
+            "type": {
+              "key": "Token",
+              "value": "PseduIntentionVoteWeight",
+              "isLinked": false
+            },
+            "fallback": "0x00000000000000000000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "DepositRecords",
+            "modifier": "Default",
+            "type": {
+              "key": "(AccountId,Token)",
+              "value": "DepositVoteWeight",
+              "isLinked": false
+            },
+            "fallback": "0x00000000000000000000000000000000",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "claim",
+            "args": [
+              {
+                "name": "token",
+                "type": "Token"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_token_discount",
+            "args": [
+              {
+                "name": "token",
+                "type": "Token"
+              },
+              {
+                "name": "value",
+                "type": "u32"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
           {
             "name": "DepositorReward",
-            "arguments": ["AccountId", "Token", "Balance"],
+            "args": ["AccountId", "Token", "Balance"],
             "documentation": []
           },
           {
             "name": "DepositorClaim",
-            "arguments": ["AccountId", "Token", "u64", "u64", "Balance"],
+            "args": ["AccountId", "Token", "u64", "u64", "Balance"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xspot",
-        [
+      },
+      {
+        "name": "xspot",
+        "prefix": "XSpot",
+        "storage": [
+          {
+            "name": "TradingPairCount",
+            "modifier": "Default",
+            "type": "TradingPairIndex",
+            "fallback": "0x00000000",
+            "documentation": [" How many trading pairs so far."]
+          },
+          {
+            "name": "TradingPairOf",
+            "modifier": "Optional",
+            "type": {
+              "key": "TradingPairIndex",
+              "value": "TradingPair",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" Essential info of the trading pair."]
+          },
+          {
+            "name": "TradingPairInfoOf",
+            "modifier": "Optional",
+            "type": {
+              "key": "TradingPairIndex",
+              "value": "(Price,Price,BlockNumber)",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" (latest price, average price, last last update height) of trading pair"]
+          },
+          {
+            "name": "TradeHistoryIndexOf",
+            "modifier": "Default",
+            "type": {
+              "key": "TradingPairIndex",
+              "value": "TradeHistoryIndex",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000",
+            "documentation": [" Total transactions has been made for a trading pair."]
+          },
+          {
+            "name": "OrderCountOf",
+            "modifier": "Default",
+            "type": {
+              "key": "AccountId",
+              "value": "OrderIndex",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000",
+            "documentation": [" Total orders has made by an account."]
+          },
+          {
+            "name": "OrderInfoOf",
+            "modifier": "Optional",
+            "type": {
+              "key": "(AccountId,OrderIndex)",
+              "value": "OrderInfo",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" Details of the order given account and his order ID"]
+          },
+          {
+            "name": "QuotationsOf",
+            "modifier": "Default",
+            "type": {
+              "key": "(TradingPairIndex,Price)",
+              "value": "Vec<(AccountId,OrderIndex)>",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" All the account and his order number given a certain trading pair and price."]
+          },
+          {
+            "name": "HandicapOf",
+            "modifier": "Default",
+            "type": {
+              "key": "TradingPairIndex",
+              "value": "HandicapInfo",
+              "isLinked": false
+            },
+            "fallback": "0x00000000000000000000000000000000",
+            "documentation": [" TradingPairIndex => (highest_bid, lowest_offer)"]
+          },
+          {
+            "name": "PriceVolatility",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x00000000",
+            "documentation": [" Price volatility"]
+          }
+        ],
+        "calls": [
+          {
+            "name": "put_order",
+            "args": [
+              {
+                "name": "pair_index",
+                "type": "TradingPairIndex"
+              },
+              {
+                "name": "order_type",
+                "type": "OrderType"
+              },
+              {
+                "name": "side",
+                "type": "Side"
+              },
+              {
+                "name": "amount",
+                "type": "Balance"
+              },
+              {
+                "name": "price",
+                "type": "Price"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "cancel_order",
+            "args": [
+              {
+                "name": "pair_index",
+                "type": "TradingPairIndex"
+              },
+              {
+                "name": "order_index",
+                "type": "OrderIndex"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_cancel_order",
+            "args": [
+              {
+                "name": "who",
+                "type": "AccountId"
+              },
+              {
+                "name": "pair_index",
+                "type": "TradingPairIndex"
+              },
+              {
+                "name": "order_index",
+                "type": "OrderIndex"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_handicap",
+            "args": [
+              {
+                "name": "pair_index",
+                "type": "TradingPairIndex"
+              },
+              {
+                "name": "highest_bid",
+                "type": "Price"
+              },
+              {
+                "name": "lowest_offer",
+                "type": "Price"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
           {
             "name": "UpdateOrder",
-            "arguments": [
+            "args": [
               "AccountId",
               "OrderIndex",
               "Balance",
@@ -218,7 +1567,7 @@
           },
           {
             "name": "PutOrder",
-            "arguments": [
+            "args": [
               "AccountId",
               "OrderIndex",
               "TradingPairIndex",
@@ -232,7 +1581,7 @@
           },
           {
             "name": "FillOrder",
-            "arguments": [
+            "args": [
               "TradeHistoryIndex",
               "TradingPairIndex",
               "Price",
@@ -247,1752 +1596,25 @@
           },
           {
             "name": "UpdateOrderPair",
-            "arguments": ["TradingPairIndex", "CurrencyPair", "u32", "u32", "bool"],
+            "args": ["TradingPairIndex", "CurrencyPair", "u32", "u32", "bool"],
             "documentation": []
           },
           {
             "name": "PriceVolatility",
-            "arguments": ["u32"],
+            "args": ["u32"],
             "documentation": []
           }
         ]
-      ],
-      [
-        "xbitcoin",
-        [
-          {
-            "name": "InsertHeader",
-            "arguments": ["u32", "H256", "u32", "H256", "H256", "u32", "u32", "u32", "H256"],
-            "documentation": [
-              " version, block hash, block height, prev block hash, merkle root, timestamp, nonce, wait confirmed block height, wait confirmed block hash"
-            ]
-          },
-          {
-            "name": "InsertTx",
-            "arguments": ["H256", "H256", "TxType"],
-            "documentation": [" tx hash, block hash, tx type"]
-          },
-          {
-            "name": "Deposit",
-            "arguments": ["AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "Bytes", "TxState"],
-            "documentation": [
-              " who, Chain, Token, apply blockheader, balance, memo, Chain Addr, chain txid, apply height, TxState"
-            ]
-          },
-          {
-            "name": "DepositPending",
-            "arguments": ["AccountId", "Chain", "Token", "Balance", "AddrStr"],
-            "documentation": [" who, Chain, Token, balance,  Chain Addr"]
-          },
-          {
-            "name": "Withdrawal",
-            "arguments": ["u32", "Bytes", "TxState"],
-            "documentation": [" who, withdrawal id, txid, TxState"]
-          },
-          {
-            "name": "CreateWithdrawalProposal",
-            "arguments": ["AccountId", "Vec<u32>"],
-            "documentation": [" create withdraw tx, who proposal, withdrawal list id"]
-          },
-          {
-            "name": "UpdateSignWithdrawTx",
-            "arguments": ["AccountId", "bool"],
-            "documentation": [" Sign withdraw tx"]
-          },
-          {
-            "name": "WithdrawalFatalErr",
-            "arguments": ["Bytes", "Bytes"],
-            "documentation": [" WithdrawalFatalErr, tx hash, Proposal hash,"]
-          },
-          {
-            "name": "DropWithdrawTx",
-            "arguments": ["u32", "u32", "Vec<u32>"],
-            "documentation": [" reject_count, sum_count, withdrawal id list"]
-          },
-          {
-            "name": "Bind",
-            "arguments": ["H256", "AddrStr", "AccountId", "BindStatus"],
-            "documentation": [" tx hash, input addr, account addr, bind state (init|update)"]
-          }
-        ]
-      ],
-      [
-        "xsdot",
-        [
-          {
-            "name": "Claimed",
-            "arguments": ["AccountId", "EthereumAddress", "Balance"],
-            "documentation": [" Someone claimed some DOTs."]
-          }
-        ]
-      ],
-      [
-        "xbridge_features",
-        [
-          {
-            "name": "SetBitcoinTrusteeProps",
-            "arguments": ["AccountId", "BitcoinTrusteeIntentionProps"],
-            "documentation": []
-          },
-          {
-            "name": "BitcoinNewTrustees",
-            "arguments": ["u32", "BitcoinTrusteeSessionInfo"],
-            "documentation": []
-          }
-        ]
-      ],
-      [
-        "xmultisig",
-        [
-          {
-            "name": "DeployMultiSig",
-            "arguments": ["AccountId", "AccountId", "u32", "u32"],
-            "documentation": [" deploy a multisig and get address, who deploy, deploy addr, owners num, required num"]
-          },
-          {
-            "name": "ExecMultiSig",
-            "arguments": ["AccountId", "AccountId", "Hash", "Proposal"],
-            "documentation": [" exec. who, addr, multisigid, type"]
-          },
-          {
-            "name": "Confirm",
-            "arguments": ["AccountId", "Hash", "u32", "u64"],
-            "documentation": [" confirm. addr, multisigid, yet_needed, owners_done"]
-          },
-          {
-            "name": "RemoveMultiSigIdFor",
-            "arguments": ["AccountId", "Hash"],
-            "documentation": [" remove multisig id for a multisig addr"]
-          }
-        ]
-      ]
-    ]
-  },
-  "modules": [
-    {
-      "prefix": "system",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": []
-        }
       },
-      "storage": {
-        "prefix": "System",
-        "functions": [
-          {
-            "name": "AccountNonce",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountId",
-              "value": "Index"
-            },
-            "default": "0x0000000000000000",
-            "documentation": [" Extrinsics nonce for accounts."]
-          },
-          {
-            "name": "ExtrinsicCount",
-            "modifier": "Optional",
-            "type": "u32",
-            "default": "0x00",
-            "documentation": [" Total extrinsics count for the current block."]
-          },
-          {
-            "name": "AllExtrinsicsLen",
-            "modifier": "Optional",
-            "type": "u32",
-            "default": "0x00",
-            "documentation": [" Total length in bytes for all extrinsics put together, for the current block."]
-          },
-          {
-            "name": "BlockHash",
-            "modifier": "Default",
-            "type": {
-              "key": "BlockNumber",
-              "value": "Hash"
-            },
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": [" Map of block numbers to block hashes."]
-          },
-          {
-            "name": "ExtrinsicData",
-            "modifier": "Default",
-            "type": {
-              "key": "u32",
-              "value": "Bytes"
-            },
-            "default": "0x00",
-            "documentation": [" Extrinsics data for the current block (maps an extrinsic's index to its data)."]
-          },
-          {
-            "name": "RandomSeed",
-            "modifier": "Default",
-            "type": "Hash",
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": [" Random seed of the current block."]
-          },
-          {
-            "name": "Number",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x0000000000000000",
-            "documentation": [" The current block number being processed. Set by `execute_block`."]
-          },
-          {
-            "name": "ParentHash",
-            "modifier": "Default",
-            "type": "Hash",
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": [" Hash of the previous block."]
-          },
-          {
-            "name": "ExtrinsicsRoot",
-            "modifier": "Default",
-            "type": "Hash",
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": [" Extrinsics root of the current block, also part of the block header."]
-          },
-          {
-            "name": "Digest",
-            "modifier": "Default",
-            "type": "Digest",
-            "default": "0x00",
-            "documentation": [" Digest of the current block, also part of the block header."]
-          },
-          {
-            "name": "Events",
-            "modifier": "Default",
-            "type": "Vec<EventRecord>",
-            "default": "0x00",
-            "documentation": [" Events deposited for the current block."]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "indices",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": []
-        }
-      },
-      "storage": {
-        "prefix": "Indices",
-        "functions": [
-          {
-            "name": "NextEnumSet",
-            "modifier": "Default",
-            "type": "AccountIndex",
-            "default": "0x00000000",
-            "documentation": [" The next free enumeration set."]
-          },
-          {
-            "name": "EnumSet",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountIndex",
-              "value": "Vec<AccountId>"
-            },
-            "default": "0x00",
-            "documentation": [" The enumeration sets."]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "timestamp",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "set",
-              "arguments": [
-                {
-                  "name": "now",
-                  "type": "Compact<Moment>"
-                }
-              ],
-              "documentation": [
-                " Set the current time.",
-                "",
-                " This call should be invoked exactly once per block. It will panic at the finalization phase,",
-                " if this call hasn't been invoked by that time.",
-                "",
-                " The timestamp should be greater than the previous one by the amount specified by `minimum_period`.",
-                "",
-                " The dispatch origin for this call must be `Inherent`."
-              ]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "Timestamp",
-        "functions": [
-          {
-            "name": "Now",
-            "modifier": "Default",
-            "type": "Moment",
-            "default": "0x0000000000000000",
-            "documentation": [" Current time for the current block."]
-          },
-          {
-            "name": "BlockPeriod",
-            "modifier": "Optional",
-            "type": "Moment",
-            "default": "0x00",
-            "documentation": [" Old storage item provided for compatibility. Remove after all networks upgraded."]
-          },
-          {
-            "name": "MinimumPeriod",
-            "modifier": "Default",
-            "type": "Moment",
-            "default": "0x0300000000000000",
-            "documentation": [
-              " The minimum period between blocks. Beware that this is different to the *expected* period",
-              " that the block production apparatus provides. Your chosen consensus system will generally",
-              " work with this to determine a sensible block time. e.g. For Aura, it will be double this",
-              " period on default settings."
-            ]
-          },
-          {
-            "name": "DidUpdate",
-            "modifier": "Default",
-            "type": "bool",
-            "default": "0x00",
-            "documentation": [" Did the timestamp get updated in this block?"]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "consensus",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "report_misbehavior",
-              "arguments": [
-                {
-                  "name": "_report",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": [" Report some misbehavior."]
-            },
-            {
-              "id": 1,
-              "name": "note_offline",
-              "arguments": [
-                {
-                  "name": "offline",
-                  "type": "InherentOfflineReport"
-                }
-              ],
-              "documentation": [" Note that the previous block's validator missed its opportunity to propose a block."]
-            },
-            {
-              "id": 2,
-              "name": "remark",
-              "arguments": [
-                {
-                  "name": "_remark",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": [" Make some on-chain remark."]
-            },
-            {
-              "id": 3,
-              "name": "set_heap_pages",
-              "arguments": [
-                {
-                  "name": "pages",
-                  "type": "u64"
-                }
-              ],
-              "documentation": [" Set the number of pages in the WebAssembly environment's heap."]
-            },
-            {
-              "id": 4,
-              "name": "set_code",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": [" Set the new code."]
-            },
-            {
-              "id": 5,
-              "name": "set_storage",
-              "arguments": [
-                {
-                  "name": "items",
-                  "type": "Vec<KeyValue>"
-                }
-              ],
-              "documentation": [" Set some items of storage."]
-            },
-            {
-              "id": 6,
-              "name": "kill_storage",
-              "arguments": [
-                {
-                  "name": "keys",
-                  "type": "Vec<Key>"
-                }
-              ],
-              "documentation": [" Kill some items from storage."]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "Consensus",
-        "functions": [
-          {
-            "name": "OriginalAuthorities",
-            "modifier": "Optional",
-            "type": "Vec<SessionKey>",
-            "default": "0x00",
-            "documentation": []
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xsession",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "set_key",
-              "arguments": [
-                {
-                  "name": "key",
-                  "type": "SessionKey"
-                }
-              ],
-              "documentation": [
-                " Sets the session key of `_validator` to `_key`. This doesn't take effect until the next",
-                " session."
-              ]
-            },
-            {
-              "id": 1,
-              "name": "set_length",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Compact<BlockNumber>"
-                }
-              ],
-              "documentation": [
-                " Set a new session length. Won't kick in until the next session change (at current length)."
-              ]
-            },
-            {
-              "id": 2,
-              "name": "force_new_session",
-              "arguments": [
-                {
-                  "name": "apply_rewards",
-                  "type": "bool"
-                }
-              ],
-              "documentation": [" Forces a new session."]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "Session",
-        "functions": [
-          {
-            "name": "Validators",
-            "modifier": "Default",
-            "type": "Vec<(AccountId,u64)>",
-            "default": "0x00",
-            "documentation": [" The current set of validators."]
-          },
-          {
-            "name": "SessionLength",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0xe803000000000000",
-            "documentation": [" Current length of the session."]
-          },
-          {
-            "name": "CurrentIndex",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x0000000000000000",
-            "documentation": [" Current index of the session."]
-          },
-          {
-            "name": "CurrentStart",
-            "modifier": "Default",
-            "type": "Moment",
-            "default": "0x0000000000000000",
-            "documentation": [" Timestamp when current session started."]
-          },
-          {
-            "name": "ForcingNewSession",
-            "modifier": "Optional",
-            "type": "bool",
-            "default": "0x00",
-            "documentation": [
-              " New session is being forced is this entry exists; in which case, the boolean value is whether",
-              " the new session should be considered a normal rotation (rewardable) or exceptional (slashable)."
-            ]
-          },
-          {
-            "name": "LastLengthChange",
-            "modifier": "Optional",
-            "type": "BlockNumber",
-            "default": "0x00",
-            "documentation": [" Block at which the session length last changed."]
-          },
-          {
-            "name": "NextKeyFor",
-            "modifier": "Optional",
-            "type": {
-              "key": "AccountId",
-              "value": "SessionKey"
-            },
-            "default": "0x00",
-            "documentation": [" The next key for a given validator."]
-          },
-          {
-            "name": "NextSessionLength",
-            "modifier": "Optional",
-            "type": "BlockNumber",
-            "default": "0x00",
-            "documentation": [" The next session length."]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "finality_tracker",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "final_hint",
-              "arguments": [
-                {
-                  "name": "hint",
-                  "type": "Compact<BlockNumber>"
-                }
-              ],
-              "documentation": [
-                " Hint that the author of this block thinks the best finalized",
-                " block is the given number."
-              ]
-            }
-          ]
-        }
-      },
-      "storage": null
-    },
-    {
-      "prefix": "xgrandpa",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "set_sessions_per_era",
-              "arguments": [
-                {
-                  "name": "per_grandpa",
-                  "type": "u32"
-                }
-              ],
-              "documentation": [" Set the number of sessions in an grandpa."]
-            },
-            {
-              "id": 1,
-              "name": "report_misbehavior",
-              "arguments": [
-                {
-                  "name": "_report",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": [" Report some misbehaviour."]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "GrandpaFinality",
-        "functions": [
-          {
-            "name": "PendingChange",
-            "modifier": "Optional",
-            "type": "StoredPendingChange",
-            "default": "0x00",
-            "documentation": []
-          },
-          {
-            "name": "NextForced",
-            "modifier": "Optional",
-            "type": "BlockNumber",
-            "default": "0x00",
-            "documentation": []
-          },
-          {
-            "name": "SessionsPerGrandpa",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x64000000",
-            "documentation": []
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xaura",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": []
-        }
-      },
-      "storage": null
-    },
-    {
-      "prefix": "xsystem",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "set_block_producer",
-              "arguments": [
-                {
-                  "name": "producer",
-                  "type": "AccountId"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XSystem",
-        "functions": [
-          {
-            "name": "BlockProducer",
-            "modifier": "Optional",
-            "type": "AccountId",
-            "default": "0x00",
-            "documentation": []
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xaccounts",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": []
-        }
-      },
-      "storage": null
-    },
-    {
-      "prefix": "xfee_manager",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "set_producer_producer_fee_proportion",
-              "arguments": [
-                {
-                  "name": "proportion",
-                  "type": "(u32,u32)"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "set_switch_store",
-              "arguments": [
-                {
-                  "name": "switch",
-                  "type": "SwitchStore"
-                }
-              ],
-              "documentation": [" first version, when add more SWITCH, should use new switch"]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XFeeManager",
-        "functions": [
-          {
-            "name": "Switch",
-            "modifier": "Default",
-            "type": "SwitchStore",
-            "default": "0x00000000",
-            "documentation": []
-          },
-          {
-            "name": "ProducerFeeProportion",
-            "modifier": "Default",
-            "type": "(u32,u32)",
-            "default": "0x0000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "TransactionBaseFee",
-            "modifier": "Default",
-            "type": "Balance",
-            "default": "0x0000000000000000",
-            "documentation": [" The fee to be paid for making a transaction; the base."]
-          },
-          {
-            "name": "TransactionByteFee",
-            "modifier": "Default",
-            "type": "Balance",
-            "default": "0x0000000000000000",
-            "documentation": [" The fee to be paid for making a transaction; the per-byte portion."]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xassets",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "register_asset",
-              "arguments": [
-                {
-                  "name": "asset",
-                  "type": "Asset"
-                },
-                {
-                  "name": "is_online",
-                  "type": "bool"
-                },
-                {
-                  "name": "is_psedu_intention",
-                  "type": "bool"
-                }
-              ],
-              "documentation": [" register_asset to module, should allow by root"]
-            },
-            {
-              "id": 1,
-              "name": "revoke_asset",
-              "arguments": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                }
-              ],
-              "documentation": [" revoke asset, mark this asset is invalid"]
-            },
-            {
-              "id": 2,
-              "name": "set_balance",
-              "arguments": [
-                {
-                  "name": "who",
-                  "type": "Address"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "balances",
-                  "type": "BTreeMap<AssetType,Balance>"
-                }
-              ],
-              "documentation": [" set free token for an account"]
-            },
-            {
-              "id": 3,
-              "name": "transfer",
-              "arguments": [
-                {
-                  "name": "dest",
-                  "type": "Address"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "memo",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": [" transfer between account"]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XAssets",
-        "functions": [
-          {
-            "name": "AssetList",
-            "modifier": "Default",
-            "type": {
-              "key": "Chain",
-              "value": "Vec<Token>"
-            },
-            "default": "0x00",
-            "documentation": [" Asset token index list for Chain, different Chain has different token list"]
-          },
-          {
-            "name": "AssetInfo",
-            "modifier": "Optional",
-            "type": {
-              "key": "Token",
-              "value": "(Asset,bool,BlockNumber)"
-            },
-            "default": "0x00",
-            "documentation": [" asset info for every token, key is token token"]
-          },
-          {
-            "name": "AssetBalance",
-            "modifier": "Default",
-            "type": {
-              "key": "(AccountId,Token)",
-              "value": "BTreeMap<AssetType,Balance>"
-            },
-            "default": "0x00000000",
-            "documentation": [" asset balance for user&token, use btree_map to accept different asset type"]
-          },
-          {
-            "name": "TotalAssetBalance",
-            "modifier": "Default",
-            "type": {
-              "key": "Token",
-              "value": "BTreeMap<AssetType,Balance>"
-            },
-            "default": "0x00000000",
-            "documentation": [" asset balance for a token, use btree_map to accept different asset type"]
-          },
-          {
-            "name": "MemoLen",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x00000000",
-            "documentation": [" memo len"]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xrecords",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "deposit_from_root",
-              "arguments": [
-                {
-                  "name": "who",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "balance",
-                  "type": "Balance"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "withdrawal_from_root",
-              "arguments": [
-                {
-                  "name": "who",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "balance",
-                  "type": "Balance"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 2,
-              "name": "fix_withdrawal_state",
-              "arguments": [
-                {
-                  "name": "withdrawal_id",
-                  "type": "u32"
-                },
-                {
-                  "name": "success",
-                  "type": "bool"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 3,
-              "name": "fix_withdrawal_state_list",
-              "arguments": [
-                {
-                  "name": "item",
-                  "type": "Vec<(u32,bool)>"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XAssetsRecords",
-        "functions": [
-          {
-            "name": "ApplicationMHeader",
-            "modifier": "Optional",
-            "type": {
-              "key": "Chain",
-              "value": "MultiNodeIndex"
-            },
-            "default": "0x00",
-            "documentation": [" linked node header"]
-          },
-          {
-            "name": "ApplicationMTail",
-            "modifier": "Optional",
-            "type": {
-              "key": "Chain",
-              "value": "MultiNodeIndex"
-            },
-            "default": "0x00",
-            "documentation": [" linked node tail"]
-          },
-          {
-            "name": "ApplicationMap",
-            "modifier": "Optional",
-            "type": {
-              "key": "u32",
-              "value": "Node"
-            },
-            "default": "0x00",
-            "documentation": [
-              " withdrawal applications collection, use serial number to mark them, and has prev and next to link them"
-            ]
-          },
-          {
-            "name": "SerialNumber",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x00000000",
-            "documentation": [" withdrawal application serial number"]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xprocess",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "withdraw",
-              "arguments": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "addr",
-                  "type": "AddrStr"
-                },
-                {
-                  "name": "ext",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "Withdrawal",
-        "functions": [
-          {
-            "name": "TokenBlackList",
-            "modifier": "Default",
-            "type": "Vec<Token>",
-            "default": "0x00",
-            "documentation": []
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xstaking",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "nominate",
-              "arguments": [
-                {
-                  "name": "target",
-                  "type": "Address"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "memo",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": [" Transactor could be an intention."]
-            },
-            {
-              "id": 1,
-              "name": "renominate",
-              "arguments": [
-                {
-                  "name": "from",
-                  "type": "Address"
-                },
-                {
-                  "name": "to",
-                  "type": "Address"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "memo",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": [" Renominate from one to another intention."]
-            },
-            {
-              "id": 2,
-              "name": "unnominate",
-              "arguments": [
-                {
-                  "name": "target",
-                  "type": "Address"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "memo",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 3,
-              "name": "claim",
-              "arguments": [
-                {
-                  "name": "target",
-                  "type": "Address"
-                }
-              ],
-              "documentation": [" Claim the reward for your nomination."]
-            },
-            {
-              "id": 4,
-              "name": "unfreeze",
-              "arguments": [
-                {
-                  "name": "target",
-                  "type": "Address"
-                },
-                {
-                  "name": "revocation_index",
-                  "type": "u32"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 5,
-              "name": "refresh",
-              "arguments": [
-                {
-                  "name": "url",
-                  "type": "Option<URL>"
-                },
-                {
-                  "name": "desire_to_run",
-                  "type": "Option<bool>"
-                },
-                {
-                  "name": "next_key",
-                  "type": "Option<SessionKey>"
-                },
-                {
-                  "name": "about",
-                  "type": "Option<Text>"
-                }
-              ],
-              "documentation": [" Update the url, desire to join in elections of intention and session key."]
-            },
-            {
-              "id": 6,
-              "name": "register",
-              "arguments": [
-                {
-                  "name": "name",
-                  "type": "Name"
-                }
-              ],
-              "documentation": [" Register to be an intention."]
-            },
-            {
-              "id": 7,
-              "name": "set_sessions_per_era",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Compact<BlockNumber>"
-                }
-              ],
-              "documentation": [" Set the number of sessions in an era."]
-            },
-            {
-              "id": 8,
-              "name": "set_bonding_duration",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Compact<BlockNumber>"
-                }
-              ],
-              "documentation": [" The length of the bonding duration in eras."]
-            },
-            {
-              "id": 9,
-              "name": "set_validator_count",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Compact<u32>"
-                }
-              ],
-              "documentation": [" The ideal number of validators."]
-            },
-            {
-              "id": 10,
-              "name": "force_new_era",
-              "arguments": [
-                {
-                  "name": "apply_rewards",
-                  "type": "bool"
-                }
-              ],
-              "documentation": [
-                " Force there to be a new era. This also forces a new session immediately after.",
-                " `apply_rewards` should be true for validators to get the session reward."
-              ]
-            },
-            {
-              "id": 11,
-              "name": "set_minimum_penalty",
-              "arguments": [
-                {
-                  "name": "new",
-                  "type": "Balance"
-                }
-              ],
-              "documentation": [" Set the offline slash grace period."]
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XStaking",
-        "functions": [
-          {
-            "name": "InitialReward",
-            "modifier": "Default",
-            "type": "Balance",
-            "default": "0x0000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "ValidatorCount",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x00000000",
-            "documentation": [" The ideal number of staking participants."]
-          },
-          {
-            "name": "MinimumValidatorCount",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x04000000",
-            "documentation": [" Minimum number of staking participants before emergency conditions are imposed."]
-          },
-          {
-            "name": "SessionsPerEra",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0xe803000000000000",
-            "documentation": [" The length of a staking era in sessions."]
-          },
-          {
-            "name": "BondingDuration",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0xe803000000000000",
-            "documentation": [" The length of the bonding duration in blocks."]
-          },
-          {
-            "name": "IntentionBondingDuration",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x1027000000000000",
-            "documentation": [" The length of the bonding duration in blocks for intention."]
-          },
-          {
-            "name": "SessionsPerEpoch",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x1027000000000000",
-            "documentation": []
-          },
-          {
-            "name": "CurrentEra",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x0000000000000000",
-            "documentation": [" The current era index."]
-          },
-          {
-            "name": "Intentions",
-            "modifier": "Default",
-            "type": "Vec<AccountId>",
-            "default": "0x00",
-            "documentation": [" All the accounts with a desire to stake."]
-          },
-          {
-            "name": "NextSessionsPerEra",
-            "modifier": "Optional",
-            "type": "BlockNumber",
-            "default": "0x00",
-            "documentation": [" The next value of sessions per era."]
-          },
-          {
-            "name": "LastEraLengthChange",
-            "modifier": "Default",
-            "type": "BlockNumber",
-            "default": "0x0000000000000000",
-            "documentation": [" The session index at which the era length last changed."]
-          },
-          {
-            "name": "ForcingNewEra",
-            "modifier": "Optional",
-            "type": "Null",
-            "default": "0x00",
-            "documentation": [" We are forcing a new era."]
-          },
-          {
-            "name": "StakeWeight",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountId",
-              "value": "Balance"
-            },
-            "default": "0x0000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "IntentionProfiles",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountId",
-              "value": "IntentionProfs"
-            },
-            "default": "0x000000000000000000000000000000000000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "NominationRecords",
-            "modifier": "Optional",
-            "type": {
-              "key": "(AccountId,AccountId)",
-              "value": "NominationRecord"
-            },
-            "default": "0x00",
-            "documentation": []
-          },
-          {
-            "name": "MinimumPenalty",
-            "modifier": "Default",
-            "type": "Balance",
-            "default": "0x0000000000000000",
-            "documentation": [" Minimum penalty for each slash."]
-          },
-          {
-            "name": "OfflineValidatorsPerSession",
-            "modifier": "Default",
-            "type": "Vec<AccountId>",
-            "default": "0x00",
-            "documentation": [" The active validators that have ever been offline per session."]
-          },
-          {
-            "name": "MissedOfPerSession",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountId",
-              "value": "u32"
-            },
-            "default": "0x00000000",
-            "documentation": [" Total blocks that each active validator missed in the current session."]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xtokens",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "claim",
-              "arguments": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "set_token_discount",
-              "arguments": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "value",
-                  "type": "u32"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XTokens",
-        "functions": [
-          {
-            "name": "TokenDiscount",
-            "modifier": "Default",
-            "type": {
-              "key": "Token",
-              "value": "u32"
-            },
-            "default": "0x00000000",
-            "documentation": []
-          },
-          {
-            "name": "PseduIntentions",
-            "modifier": "Default",
-            "type": "Vec<Token>",
-            "default": "0x00",
-            "documentation": []
-          },
-          {
-            "name": "PseduIntentionProfiles",
-            "modifier": "Default",
-            "type": {
-              "key": "Token",
-              "value": "PseduIntentionVoteWeight"
-            },
-            "default": "0x00000000000000000000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "DepositRecords",
-            "modifier": "Default",
-            "type": {
-              "key": "(AccountId,Token)",
-              "value": "DepositVoteWeight"
-            },
-            "default": "0x00000000000000000000000000000000",
-            "documentation": []
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xspot",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "put_order",
-              "arguments": [
-                {
-                  "name": "pair_index",
-                  "type": "TradingPairIndex"
-                },
-                {
-                  "name": "order_type",
-                  "type": "OrderType"
-                },
-                {
-                  "name": "side",
-                  "type": "Side"
-                },
-                {
-                  "name": "amount",
-                  "type": "Balance"
-                },
-                {
-                  "name": "price",
-                  "type": "Price"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "cancel_order",
-              "arguments": [
-                {
-                  "name": "pair_index",
-                  "type": "TradingPairIndex"
-                },
-                {
-                  "name": "order_index",
-                  "type": "OrderIndex"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 2,
-              "name": "set_cancel_order",
-              "arguments": [
-                {
-                  "name": "who",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "pair_index",
-                  "type": "TradingPairIndex"
-                },
-                {
-                  "name": "order_index",
-                  "type": "OrderIndex"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 3,
-              "name": "set_handicap",
-              "arguments": [
-                {
-                  "name": "pair_index",
-                  "type": "TradingPairIndex"
-                },
-                {
-                  "name": "highest_bid",
-                  "type": "Price"
-                },
-                {
-                  "name": "lowest_offer",
-                  "type": "Price"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
-        "prefix": "XSpot",
-        "functions": [
-          {
-            "name": "TradingPairCount",
-            "modifier": "Default",
-            "type": "TradingPairIndex",
-            "default": "0x00000000",
-            "documentation": [" How many trading pairs so far."]
-          },
-          {
-            "name": "TradingPairOf",
-            "modifier": "Optional",
-            "type": {
-              "key": "TradingPairIndex",
-              "value": "TradingPair"
-            },
-            "default": "0x00",
-            "documentation": [" Essential info of the trading pair."]
-          },
-          {
-            "name": "TradingPairInfoOf",
-            "modifier": "Optional",
-            "type": {
-              "key": "TradingPairIndex",
-              "value": "(Price,Price,BlockNumber)"
-            },
-            "default": "0x00",
-            "documentation": [" (latest price, average price, last last update height) of trading pair"]
-          },
-          {
-            "name": "TradeHistoryIndexOf",
-            "modifier": "Default",
-            "type": {
-              "key": "TradingPairIndex",
-              "value": "TradeHistoryIndex"
-            },
-            "default": "0x0000000000000000",
-            "documentation": [" Total transactions has been made for a trading pair."]
-          },
-          {
-            "name": "OrderCountOf",
-            "modifier": "Default",
-            "type": {
-              "key": "AccountId",
-              "value": "OrderIndex"
-            },
-            "default": "0x0000000000000000",
-            "documentation": [" Total orders has made by an account."]
-          },
-          {
-            "name": "OrderInfoOf",
-            "modifier": "Optional",
-            "type": {
-              "key": "(AccountId,OrderIndex)",
-              "value": "OrderInfo"
-            },
-            "default": "0x00",
-            "documentation": [" Details of the order given account and his order ID"]
-          },
-          {
-            "name": "QuotationsOf",
-            "modifier": "Default",
-            "type": {
-              "key": "(TradingPairIndex,Price)",
-              "value": "Vec<(AccountId,OrderIndex)>"
-            },
-            "default": "0x00",
-            "documentation": [" All the account and his order number given a certain trading pair and price."]
-          },
-          {
-            "name": "HandicapOf",
-            "modifier": "Default",
-            "type": {
-              "key": "TradingPairIndex",
-              "value": "HandicapInfo"
-            },
-            "default": "0x00000000000000000000000000000000",
-            "documentation": [" TradingPairIndex => (highest_bid, lowest_offer)"]
-          },
-          {
-            "name": "PriceVolatility",
-            "modifier": "Default",
-            "type": "u32",
-            "default": "0x00000000",
-            "documentation": [" Price volatility"]
-          }
-        ]
-      }
-    },
-    {
-      "prefix": "xbitcoin",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "push_header",
-              "arguments": [
-                {
-                  "name": "header",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "push_transaction",
-              "arguments": [
-                {
-                  "name": "tx",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 2,
-              "name": "create_withdraw_tx",
-              "arguments": [
-                {
-                  "name": "withdrawal_id_list",
-                  "type": "Vec<u32>"
-                },
-                {
-                  "name": "tx",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 3,
-              "name": "sign_withdraw_tx",
-              "arguments": [
-                {
-                  "name": "tx",
-                  "type": "Option<Bytes>"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 4,
-              "name": "fix_withdrawal_state_by_trustees",
-              "arguments": [
-                {
-                  "name": "withdrawal_id",
-                  "type": "u32"
-                },
-                {
-                  "name": "success",
-                  "type": "bool"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 5,
-              "name": "remove_tx_and_proposal",
-              "arguments": [
-                {
-                  "name": "txhash",
-                  "type": "Option<H256>"
-                },
-                {
-                  "name": "drop_proposal",
-                  "type": "bool"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 6,
-              "name": "set_btc_withdrawal_fee",
-              "arguments": [
-                {
-                  "name": "fee",
-                  "type": "Balance"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
-      },
-      "storage": {
+      {
+        "name": "xbitcoin",
         "prefix": "XBridgeOfBTC",
-        "functions": [
+        "storage": [
           {
             "name": "BestIndex",
             "modifier": "Default",
             "type": "H256",
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "documentation": [" get bestheader"]
           },
           {
@@ -2000,9 +1622,10 @@
             "modifier": "Default",
             "type": {
               "key": "u32",
-              "value": "Vec<H256>"
+              "value": "Vec<H256>",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" block hash list for a height"]
           },
           {
@@ -2010,9 +1633,10 @@
             "modifier": "Optional",
             "type": {
               "key": "H256",
-              "value": "BlockHeaderInfo"
+              "value": "BlockHeaderInfo",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" all valid blockheader (include orphan blockheader)"]
           },
           {
@@ -2020,9 +1644,10 @@
             "modifier": "Optional",
             "type": {
               "key": "H256",
-              "value": "TxInfo"
+              "value": "TxInfo",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" tx info for txhash"]
           },
           {
@@ -2030,9 +1655,10 @@
             "modifier": "Optional",
             "type": {
               "key": "H256",
-              "value": "BitcoinAddress"
+              "value": "BitcoinAddress",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" tx first input addr for this tx"]
           },
           {
@@ -2040,207 +1666,284 @@
             "modifier": "Optional",
             "type": {
               "key": "BitcoinAddress",
-              "value": "Vec<DepositCache>"
+              "value": "Vec<DepositCache>",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" unclaim deposit info, addr => tx_hash, btc value, blockhash"]
           },
           {
             "name": "CurrentWithdrawalProposal",
             "modifier": "Optional",
             "type": "WithdrawalProposal",
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" withdrawal tx outs for account, tx_hash => outs ( out index => withdrawal account )"]
           },
           {
             "name": "GenesisInfo",
             "modifier": "Default",
             "type": "(BlockHeader,u32)",
-            "default": "0x4101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "fallback": "0x4101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "documentation": [" get GenesisInfo (header, height)"]
           },
           {
             "name": "ParamsInfo",
             "modifier": "Default",
             "type": "Params",
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "documentation": [" get ParamsInfo from genesis_config"]
           },
           {
             "name": "NetworkId",
             "modifier": "Default",
             "type": "u32",
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": ["  NetworkId for testnet or mainnet"]
           },
           {
             "name": "ReservedBlock",
             "modifier": "Default",
             "type": "u32",
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": [" reserved count for block"]
           },
           {
             "name": "ConfirmationNumber",
             "modifier": "Default",
             "type": "u32",
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": [" get ConfirmationNumber from genesis_config"]
           },
           {
             "name": "BtcWithdrawalFee",
             "modifier": "Default",
             "type": "u64",
-            "default": "0x0000000000000000",
+            "fallback": "0x0000000000000000",
             "documentation": [" get BtcWithdrawalFee from genesis_config"]
           },
           {
             "name": "MaxWithdrawalCount",
             "modifier": "Default",
             "type": "u32",
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": [" max withdraw account count in bitcoin withdrawal transaction"]
           }
+        ],
+        "calls": [
+          {
+            "name": "push_header",
+            "args": [
+              {
+                "name": "header",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "push_transaction",
+            "args": [
+              {
+                "name": "tx",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "create_withdraw_tx",
+            "args": [
+              {
+                "name": "withdrawal_id_list",
+                "type": "Vec<u32>"
+              },
+              {
+                "name": "tx",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "sign_withdraw_tx",
+            "args": [
+              {
+                "name": "tx",
+                "type": "Option<Bytes>"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "fix_withdrawal_state_by_trustees",
+            "args": [
+              {
+                "name": "withdrawal_id",
+                "type": "u32"
+              },
+              {
+                "name": "success",
+                "type": "bool"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_btc_withdrawal_fee_by_trustees",
+            "args": [
+              {
+                "name": "fee",
+                "type": "Balance"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "remove_tx_and_proposal",
+            "args": [
+              {
+                "name": "txhash",
+                "type": "Option<H256>"
+              },
+              {
+                "name": "drop_proposal",
+                "type": "bool"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_btc_withdrawal_fee",
+            "args": [
+              {
+                "name": "fee",
+                "type": "Balance"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
+          {
+            "name": "InsertHeader",
+            "args": ["u32", "H256", "u32", "H256", "H256", "u32", "u32", "u32", "H256"],
+            "documentation": [
+              " version, block hash, block height, prev block hash, merkle root, timestamp, nonce, wait confirmed block height, wait confirmed block hash"
+            ]
+          },
+          {
+            "name": "InsertTx",
+            "args": ["H256", "H256", "TxType"],
+            "documentation": [" tx hash, block hash, tx type"]
+          },
+          {
+            "name": "Deposit",
+            "args": ["AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "Bytes", "TxState"],
+            "documentation": [
+              " who, Chain, Token, apply blockheader, balance, memo, Chain Addr, chain txid, apply height, TxState"
+            ]
+          },
+          {
+            "name": "DepositPending",
+            "args": ["AccountId", "Chain", "Token", "Balance", "AddrStr"],
+            "documentation": [" who, Chain, Token, balance,  Chain Addr"]
+          },
+          {
+            "name": "Withdrawal",
+            "args": ["u32", "Bytes", "TxState"],
+            "documentation": [" who, withdrawal id, txid, TxState"]
+          },
+          {
+            "name": "CreateWithdrawalProposal",
+            "args": ["AccountId", "Vec<u32>"],
+            "documentation": [" create withdraw tx, who proposal, withdrawal list id"]
+          },
+          {
+            "name": "UpdateSignWithdrawTx",
+            "args": ["AccountId", "bool"],
+            "documentation": [" Sign withdraw tx"]
+          },
+          {
+            "name": "WithdrawalFatalErr",
+            "args": ["Bytes", "Bytes"],
+            "documentation": [" WithdrawalFatalErr, tx hash, Proposal hash,"]
+          },
+          {
+            "name": "DropWithdrawTx",
+            "args": ["u32", "u32", "Vec<u32>"],
+            "documentation": [" reject_count, sum_count, withdrawal id list"]
+          },
+          {
+            "name": "Bind",
+            "args": ["H256", "AddrStr", "AccountId", "BindStatus"],
+            "documentation": [" tx hash, input addr, account addr, bind state (init|update)"]
+          }
         ]
-      }
-    },
-    {
-      "prefix": "xsdot",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "claim",
-              "arguments": [
-                {
-                  "name": "ethereum_signature",
-                  "type": "EcdsaSignature"
-                },
-                {
-                  "name": "sign_data",
-                  "type": "Bytes"
-                },
-                {
-                  "name": "input_data",
-                  "type": "Bytes"
-                }
-              ],
-              "documentation": [" Make a claim."]
-            }
-          ]
-        }
       },
-      "storage": {
+      {
+        "name": "xsdot",
         "prefix": "XBridgeOfSDOT",
-        "functions": [
+        "storage": [
           {
             "name": "Claims",
             "modifier": "Optional",
             "type": {
               "key": "EthereumAddress",
-              "value": "Balance"
+              "value": "Balance",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
             "name": "Total",
             "modifier": "Default",
             "type": "Balance",
-            "default": "0x0000000000000000",
+            "fallback": "0x0000000000000000",
             "documentation": []
           }
+        ],
+        "calls": [
+          {
+            "name": "claim",
+            "args": [
+              {
+                "name": "ethereum_signature",
+                "type": "EcdsaSignature"
+              },
+              {
+                "name": "sign_data",
+                "type": "Bytes"
+              },
+              {
+                "name": "input_data",
+                "type": "Bytes"
+              }
+            ],
+            "documentation": [" Make a claim."]
+          }
+        ],
+        "events": [
+          {
+            "name": "Claimed",
+            "args": ["AccountId", "EthereumAddress", "Balance"],
+            "documentation": [" Someone claimed some DOTs."]
+          }
         ]
-      }
-    },
-    {
-      "prefix": "xbridge_features",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "setup_bitcoin_trustee",
-              "arguments": [
-                {
-                  "name": "about",
-                  "type": "Text"
-                },
-                {
-                  "name": "hot_entity",
-                  "type": "H264"
-                },
-                {
-                  "name": "cold_entity",
-                  "type": "H264"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "transition_trustee_session",
-              "arguments": [
-                {
-                  "name": "chain",
-                  "type": "Chain"
-                },
-                {
-                  "name": "new_trustees",
-                  "type": "Vec<AccountId>"
-                }
-              ],
-              "documentation": [" use for trustee multisig addr"]
-            },
-            {
-              "id": 2,
-              "name": "transition_trustee_session_by_root",
-              "arguments": [
-                {
-                  "name": "chain",
-                  "type": "Chain"
-                },
-                {
-                  "name": "new_trustees",
-                  "type": "Vec<AccountId>"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 3,
-              "name": "set_trustee_info_config",
-              "arguments": [
-                {
-                  "name": "chain",
-                  "type": "Chain"
-                },
-                {
-                  "name": "config",
-                  "type": "TrusteeInfoConfig"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
       },
-      "storage": {
+      {
+        "name": "xbridge_features",
         "prefix": "XBridgeFeatures",
-        "functions": [
+        "storage": [
           {
             "name": "TrusteeMultiSigAddr",
             "modifier": "Default",
             "type": {
               "key": "Chain",
-              "value": "AccountId"
+              "value": "AccountId",
+              "isLinked": false
             },
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "documentation": []
           },
           {
@@ -2248,9 +1951,10 @@
             "modifier": "Default",
             "type": {
               "key": "Chain",
-              "value": "TrusteeInfoConfig"
+              "value": "TrusteeInfoConfig",
+              "isLinked": false
             },
-            "default": "0x0000000000000000",
+            "fallback": "0x0000000000000000",
             "documentation": [" trustee basal info config"]
           },
           {
@@ -2258,9 +1962,10 @@
             "modifier": "Default",
             "type": {
               "key": "Chain",
-              "value": "u32"
+              "value": "u32",
+              "isLinked": false
             },
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": [
               " when generate trustee, auto generate a new session number, increase the newest trustee addr, can't modify by user"
             ]
@@ -2270,9 +1975,10 @@
             "modifier": "Optional",
             "type": {
               "key": "u32",
-              "value": "BitcoinTrusteeSessionInfo"
+              "value": "BitcoinTrusteeSessionInfo",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" all bitcoin session trustee addr"]
           },
           {
@@ -2280,9 +1986,10 @@
             "modifier": "Optional",
             "type": {
               "key": "AccountId",
-              "value": "BitcoinTrusteeIntentionProps"
+              "value": "BitcoinTrusteeIntentionProps",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" properties for bitcoin trustees"]
           },
           {
@@ -2290,9 +1997,10 @@
             "modifier": "Default",
             "type": {
               "key": "AccountId",
-              "value": "Vec<BitcoinAddress>"
+              "value": "Vec<BitcoinAddress>",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [" account deposit accountid, chain => multi deposit addr"]
           },
           {
@@ -2300,9 +2008,10 @@
             "modifier": "Optional",
             "type": {
               "key": "BitcoinAddress",
-              "value": "(AccountId,Option<AccountId>)"
+              "value": "(AccountId,Option<AccountId>)",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": [
               " account deposit addr => (accountid, option(channel accountid))  (channel is a validator)"
             ]
@@ -2312,9 +2021,10 @@
             "modifier": "Default",
             "type": {
               "key": "AccountId",
-              "value": "Vec<EthereumAddress>"
+              "value": "Vec<EthereumAddress>",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
@@ -2322,77 +2032,109 @@
             "modifier": "Optional",
             "type": {
               "key": "EthereumAddress",
-              "value": "(AccountId,Option<AccountId>)"
+              "value": "(AccountId,Option<AccountId>)",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           }
+        ],
+        "calls": [
+          {
+            "name": "setup_bitcoin_trustee",
+            "args": [
+              {
+                "name": "about",
+                "type": "Text"
+              },
+              {
+                "name": "hot_entity",
+                "type": "H264"
+              },
+              {
+                "name": "cold_entity",
+                "type": "H264"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "transition_trustee_session",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "new_trustees",
+                "type": "Vec<AccountId>"
+              }
+            ],
+            "documentation": [" use for trustee multisig addr"]
+          },
+          {
+            "name": "transition_trustee_session_by_root",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "new_trustees",
+                "type": "Vec<AccountId>"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_trustee_info_config",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "config",
+                "type": "TrusteeInfoConfig"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
+          {
+            "name": "SetBitcoinTrusteeProps",
+            "args": ["AccountId", "BitcoinTrusteeIntentionProps"],
+            "documentation": []
+          },
+          {
+            "name": "BitcoinNewTrustees",
+            "args": ["u32", "BitcoinTrusteeSessionInfo"],
+            "documentation": []
+          },
+          {
+            "name": "BitcoinBinding",
+            "args": ["AccountId", "Option<AccountId>", "BitcoinAddress", "Option<AccountId>"],
+            "documentation": [
+              " Record binding info for bitcoin addr(channel) and ChainX AccountId, params: new binding accountid, old binding accountid, crosschain addr, channel"
+            ]
+          },
+          {
+            "name": "EthereumBinding",
+            "args": ["AccountId", "Option<AccountId>", "EthereumAddress", "Option<AccountId>"],
+            "documentation": [" Record binding info for ethereum addr(channel) and ChainX AccountId"]
+          }
         ]
-      }
-    },
-    {
-      "prefix": "xmultisig",
-      "module": {
-        "name": "Module",
-        "call": {
-          "name": "Call",
-          "functions": [
-            {
-              "id": 0,
-              "name": "execute",
-              "arguments": [
-                {
-                  "name": "multi_sig_addr",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "proposal",
-                  "type": "Proposal"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 1,
-              "name": "confirm",
-              "arguments": [
-                {
-                  "name": "multi_sig_addr",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "multi_sig_id",
-                  "type": "Hash"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "id": 2,
-              "name": "remove_multi_sig_for",
-              "arguments": [
-                {
-                  "name": "multi_sig_addr",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "multi_sig_id",
-                  "type": "Hash"
-                }
-              ],
-              "documentation": []
-            }
-          ]
-        }
       },
-      "storage": {
+      {
+        "name": "xmultisig",
         "prefix": "XMultiSig",
-        "functions": [
+        "storage": [
           {
             "name": "RootAddrList",
             "modifier": "Default",
             "type": "Vec<AccountId>",
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
@@ -2400,9 +2142,10 @@
             "modifier": "Optional",
             "type": {
               "key": "AccountId",
-              "value": "AddrInfo"
+              "value": "AddrInfo",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
@@ -2410,9 +2153,10 @@
             "modifier": "Default",
             "type": {
               "key": "AccountId",
-              "value": "Vec<Hash>"
+              "value": "Vec<Hash>",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
@@ -2420,9 +2164,10 @@
             "modifier": "Optional",
             "type": {
               "key": "(AccountId,Hash)",
-              "value": "PendingState"
+              "value": "PendingState",
+              "isLinked": false
             },
-            "default": "0x00",
+            "fallback": "0x00",
             "documentation": []
           },
           {
@@ -2430,9 +2175,10 @@
             "modifier": "Default",
             "type": {
               "key": "(AccountId,u32)",
-              "value": "AccountId"
+              "value": "AccountId",
+              "isLinked": false
             },
-            "default": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "documentation": []
           },
           {
@@ -2440,107 +2186,79 @@
             "modifier": "Default",
             "type": {
               "key": "AccountId",
-              "value": "u32"
+              "value": "u32",
+              "isLinked": false
             },
-            "default": "0x00000000",
+            "fallback": "0x00000000",
             "documentation": []
           }
+        ],
+        "calls": [
+          {
+            "name": "execute",
+            "args": [
+              {
+                "name": "multi_sig_addr",
+                "type": "AccountId"
+              },
+              {
+                "name": "proposal",
+                "type": "Proposal"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "confirm",
+            "args": [
+              {
+                "name": "multi_sig_addr",
+                "type": "AccountId"
+              },
+              {
+                "name": "multi_sig_id",
+                "type": "Hash"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "remove_multi_sig_for",
+            "args": [
+              {
+                "name": "multi_sig_addr",
+                "type": "AccountId"
+              },
+              {
+                "name": "multi_sig_id",
+                "type": "Hash"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
+          {
+            "name": "DeployMultiSig",
+            "args": ["AccountId", "AccountId", "u32", "u32"],
+            "documentation": [" deploy a multisig and get address, who deploy, deploy addr, owners num, required num"]
+          },
+          {
+            "name": "ExecMultiSig",
+            "args": ["AccountId", "AccountId", "Hash", "Proposal"],
+            "documentation": [" exec. who, addr, multisigid, type"]
+          },
+          {
+            "name": "Confirm",
+            "args": ["AccountId", "Hash", "u32", "u64"],
+            "documentation": [" confirm. addr, multisigid, yet_needed, owners_done"]
+          },
+          {
+            "name": "RemoveMultiSigIdFor",
+            "args": ["AccountId", "Hash"],
+            "documentation": [" remove multisig id for a multisig addr"]
+          }
         ]
-      }
-    }
-  ],
-  "outerDispatch": {
-    "name": "Call",
-    "calls": [
-      {
-        "name": "Indices",
-        "prefix": "indices",
-        "index": 0
-      },
-      {
-        "name": "Timestamp",
-        "prefix": "timestamp",
-        "index": 1
-      },
-      {
-        "name": "Consensus",
-        "prefix": "consensus",
-        "index": 2
-      },
-      {
-        "name": "Session",
-        "prefix": "xsession",
-        "index": 3
-      },
-      {
-        "name": "",
-        "prefix": "finality_tracker",
-        "index": 4
-      },
-      {
-        "name": "GrandpaFinality",
-        "prefix": "xgrandpa",
-        "index": 5
-      },
-      {
-        "name": "XSystem",
-        "prefix": "xsystem",
-        "index": 6
-      },
-      {
-        "name": "XFeeManager",
-        "prefix": "xfee_manager",
-        "index": 7
-      },
-      {
-        "name": "XAssets",
-        "prefix": "xassets",
-        "index": 8
-      },
-      {
-        "name": "XAssetsRecords",
-        "prefix": "xrecords",
-        "index": 9
-      },
-      {
-        "name": "Withdrawal",
-        "prefix": "xprocess",
-        "index": 10
-      },
-      {
-        "name": "XStaking",
-        "prefix": "xstaking",
-        "index": 11
-      },
-      {
-        "name": "XTokens",
-        "prefix": "xtokens",
-        "index": 12
-      },
-      {
-        "name": "XSpot",
-        "prefix": "xspot",
-        "index": 13
-      },
-      {
-        "name": "XBridgeOfBTC",
-        "prefix": "xbitcoin",
-        "index": 14
-      },
-      {
-        "name": "XBridgeOfSDOT",
-        "prefix": "xsdot",
-        "index": 15
-      },
-      {
-        "name": "XBridgeFeatures",
-        "prefix": "xbridge_features",
-        "index": 16
-      },
-      {
-        "name": "XMultiSig",
-        "prefix": "xmultisig",
-        "index": 17
       }
     ]
   }

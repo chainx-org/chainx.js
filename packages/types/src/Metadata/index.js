@@ -1,39 +1,17 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { isHex, hexToU8a, u8aConcat } from '@polkadot/util';
-import { MAGIC_ERROR, MAGIC_NUMBER } from './MagicNumber';
-import MetadataVersioned from './MetadataVersioned';
-/**
- * @name Metadata
- * @description
- * The versioned runtime metadata as a decoded structure
- */
-export default class Metadata extends MetadataVersioned {
-  constructor(value) {
-    super(Metadata.decodeMetadata(value));
-    return this.asV0;
-  }
-  // first we try and parse using the versioned structure, if this does fail,
-  // we adjust with the magic number and a manual version and re-try. As soon as
-  // we remove support for V0, we will just do a new here
-  static decodeMetadata(_value = new Uint8Array()) {
-    const value = isHex(_value) ? hexToU8a(_value) : _value;
-    try {
-      return new MetadataVersioned(value);
-    } catch (error) {
-      if (error.code !== MAGIC_ERROR) {
-        throw error;
-      }
-    }
-    return new MetadataVersioned(
-      u8aConcat(
-        MAGIC_NUMBER.toU8a(), // manually add the magic number
-        Uint8Array.from([0]), // add the version for the original
-        value // the actual data as retrieved
-      )
-    );
-  }
-}
+import { default as Metadata } from './Metadata';
+import * as v0S from './v0/Storage';
+import * as v4S from './v4/Storage';
 
-export * from './v0/Modules';
+export default Metadata;
+
+export const v0SStoragePlainType = v0S.StoragePlainType;
+export const v0SStorageStorageFunctionMetadata = v0S.StorageStorageFunctionMetadata;
+export const v0SStorageStorageFunctionModifier = v0S.StorageStorageFunctionModifier;
+export const v0SStorageStorageFunctionType = v0S.StorageStorageFunctionType;
+export const v4SStoragePlainType = v4S.StoragePlainType;
+export const v4SStorageStorageFunctionMetadata = v4S.StorageStorageFunctionMetadata;
+export const v4SStorageStorageFunctionModifier = v4S.StorageStorageFunctionModifier;
+export const v4SStorageStorageFunctionType = v4S.StorageStorageFunctionType;
