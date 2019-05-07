@@ -59,11 +59,11 @@ export class MetadataModule extends Struct {
   }
 }
 /**
- * @name MetadataV2
+ * @name MetadataV4
  * @description
  * The runtime metadata as a decoded structure
  */
-export default class MetadataV2 extends Struct {
+export default class MetadataV4 extends Struct {
   constructor(value) {
     super(
       {

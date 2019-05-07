@@ -31,6 +31,13 @@ export class EventMetadata extends Struct {
     return this.get('documentation');
   }
   /**
+   * @description The [[Text]] documentation
+   * @deprecated Use `.documentation` instead.
+   */
+  get docs() {
+    return this.documentation;
+  }
+  /**
    * @description The name for the event
    */
   get name() {

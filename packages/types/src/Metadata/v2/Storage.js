@@ -6,13 +6,11 @@ import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
 import Bool from '../../Bool';
 import Bytes from '../../Bytes';
-import Null from '../../Null';
 import Text from '../../Text';
 import Type from '../../Type';
-import { MetadataStorageModifier } from '../v1/Storage';
-
-export class Default extends Null {}
-export class Optional extends Null {}
+import { PlainType, StorageFunctionModifier } from '../v1/Storage';
+// Re-export classes that haven't changed between V1 and V2
+export { PlainType, StorageFunctionModifier };
 export class MapType extends Struct {
   constructor(value) {
     super(
@@ -43,8 +41,7 @@ export class MapType extends Struct {
     return this.get('isLinked').valueOf();
   }
 }
-export class PlainType extends Type {}
-export class MetadataStorageType extends EnumType {
+export class StorageFunctionType extends EnumType {
   constructor(value, index) {
     super(
       {
@@ -85,24 +82,38 @@ export class MetadataStorageType extends EnumType {
  * @description
  * The definition of a storage function
  */
-export class MetadataStorage extends Struct {
+export class StorageFunctionMetadata extends Struct {
   constructor(value) {
     super(
       {
         name: Text,
-        modifier: MetadataStorageModifier,
-        type: MetadataStorageType,
+        modifier: StorageFunctionModifier,
+        type: StorageFunctionType,
         fallback: Bytes,
-        docs: Vector.with(Text),
+        documentation: Vector.with(Text),
       },
       value
     );
   }
   /**
+   * @description The default value of the storage function
+   * @deprecated Use `.fallback` instead.
+   */
+  get default() {
+    return this.fallback;
+  }
+  /**
    * @description The [[Text]] documentation
    */
+  get documentation() {
+    return this.get('documentation');
+  }
+  /**
+   * @description The [[Text]] documentation
+   * @deprecated Use `.documentation` instead.
+   */
   get docs() {
-    return this.get('docs');
+    return this.documentation;
   }
   /**
    * @description The [[Bytes]] fallback default
@@ -123,7 +134,7 @@ export class MetadataStorage extends Struct {
     return this.get('name');
   }
   /**
-   * @description The [[MetadataStorageType]]
+   * @description The [[StorageFunctionType]]
    */
   get type() {
     return this.get('type');

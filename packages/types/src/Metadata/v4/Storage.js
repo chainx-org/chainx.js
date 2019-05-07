@@ -1,18 +1,98 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
+import Enum from '../../codec/Enum';
 import EnumType from '../../codec/EnumType';
 import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
+import Bool from '../../Bool';
 import Bytes from '../../Bytes';
 import Text from '../../Text';
-import { MapType, PlainType, StorageFunctionModifier } from '../v2/Storage';
-// Re-export classes that haven't changed between V2 and V3
-export { MapType, PlainType, StorageFunctionModifier };
+import Type from '../../Type';
+import { PlainType, StorageFunctionModifier } from '../v3/Storage';
+// Re-export classes that haven't changed between V3 and V4
+export { PlainType, StorageFunctionModifier };
+export class StorageHasher extends Enum {
+  constructor(value) {
+    super(['Blake2_128', 'Blake2_256', 'Twox128', 'Twox256', 'Twox128Concat'], value);
+  }
+  /**
+   * @description Is the enum Blake2_128?
+   */
+  get isBlake2128() {
+    return this.toNumber() === 0;
+  }
+  /**
+   * @description Is the enum Blake2_256?
+   */
+  get isBlake2256() {
+    return this.toNumber() === 1;
+  }
+  /**
+   * @description Is the enum Twox128?
+   */
+  get isTwox128() {
+    return this.toNumber() === 2;
+  }
+  /**
+   * @description Is the enum Twox256?
+   */
+  get isTwox256() {
+    return this.toNumber() === 3;
+  }
+  /**
+   * @description Is the enum isTwox128Concat?
+   */
+  get isTwox128Concat() {
+    return this.toNumber() === 4;
+  }
+  toJSON() {
+    // This looks prettier in the generated JSON
+    return this.toString();
+  }
+}
+export class MapType extends Struct {
+  constructor(value) {
+    super(
+      {
+        hasher: StorageHasher,
+        key: Type,
+        value: Type,
+        isLinked: Bool,
+      },
+      value
+    );
+  }
+  /**
+   * @description The hash algorithm used to hash keys, as [[StorageHasher]]
+   */
+  get hasher() {
+    return this.get('hasher');
+  }
+  /**
+   * @description Is this an enumerable linked map
+   */
+  get isLinked() {
+    return this.get('isLinked').valueOf();
+  }
+  /**
+   * @description The mapped key as [[Type]]
+   */
+  get key() {
+    return this.get('key');
+  }
+  /**
+   * @description The mapped value as [[Type]]
+   */
+  get value() {
+    return this.get('value');
+  }
+}
 export class DoubleMapType extends Struct {
   constructor(value) {
     super(
       {
+        hasher: StorageHasher,
         key1: Text,
         key2: Text,
         value: Text,
@@ -20,6 +100,12 @@ export class DoubleMapType extends Struct {
       },
       value
     );
+  }
+  /**
+   * @description The hashing algorithm used to hash keys, as [[Text]]
+   */
+  get hasher() {
+    return this.get('hasher');
   }
   /**
    * @description The mapped key as [[Text]]
@@ -124,6 +210,12 @@ export class StorageFunctionMetadata extends Struct {
     return this.fallback;
   }
   /**
+   * @description The default value of the storage function
+   */
+  get fallback() {
+    return this.get('fallback');
+  }
+  /**
    * @description The [[Text]] documentation
    */
   get documentation() {
@@ -137,22 +229,16 @@ export class StorageFunctionMetadata extends Struct {
     return this.documentation;
   }
   /**
-   * @description The [[Bytes]] fallback default
-   */
-  get fallback() {
-    return this.get('fallback');
-  }
-  /**
-   * @description The [[MetadataArgument]] for arguments
-   */
-  get modifier() {
-    return this.get('modifier');
-  }
-  /**
-   * @description The call name
+   * @description The key name
    */
   get name() {
     return this.get('name');
+  }
+  /**
+   * @description The modifier
+   */
+  get modifier() {
+    return this.get('modifier');
   }
   /**
    * @description The [[StorageFunctionType]]

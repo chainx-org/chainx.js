@@ -8,8 +8,7 @@ import Text from '../../Text';
 import { flattenUniq, validateTypes } from '../util';
 import { MetadataCall } from './Calls';
 import { MetadataEvent } from './Events';
-import { MetadataStorage } from './Storage';
-
+import { StorageFunctionMetadata } from './Storage';
 /**
  * @name MetadataModule
  * @description
@@ -21,7 +20,7 @@ export class MetadataModule extends Struct {
       {
         name: Text,
         prefix: Text,
-        storage: Option.with(Vector.with(MetadataStorage)),
+        storage: Option.with(Vector.with(StorageFunctionMetadata)),
         calls: Option.with(Vector.with(MetadataCall)),
         events: Option.with(Vector.with(MetadataEvent)),
       },
