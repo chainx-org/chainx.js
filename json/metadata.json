@@ -57,11 +57,14 @@
             "documentation": [" Extrinsics data for the current block (maps an extrinsic's index to its data)."]
           },
           {
-            "name": "RandomSeed",
+            "name": "RandomMaterial",
             "modifier": "Default",
-            "type": "Hash",
-            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": [" Random seed of the current block."]
+            "type": "(i8,Vec<Hash>)",
+            "fallback": "0x0000",
+            "documentation": [
+              " Series of block headers from the last 81 blocks that acts as random seed material. This is arranged as a",
+              " ring buffer with the `i8` prefix being the index into the `Vec` of the oldest hash."
+            ]
           },
           {
             "name": "Number",
@@ -509,6 +512,13 @@
             "type": "AccountId",
             "fallback": "0x00",
             "documentation": []
+          },
+          {
+            "name": "NetworkProps",
+            "modifier": "Default",
+            "type": "(NetworkType,AddressType)",
+            "fallback": "0x0100000000",
+            "documentation": []
           }
         ],
         "calls": [
@@ -527,143 +537,10 @@
       },
       {
         "name": "xaccounts",
-        "prefix": "XAccounts",
-        "storage": [
-          {
-            "name": "IntentionOf",
-            "modifier": "Optional",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "Name",
-              "value": "AccountId",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [" intention name => intention"]
-          },
-          {
-            "name": "IntentionNameOf",
-            "modifier": "Optional",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "AccountId",
-              "value": "Name",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [" intention => intention name"]
-          },
-          {
-            "name": "IntentionPropertiesOf",
-            "modifier": "Default",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "AccountId",
-              "value": "IntentionProps",
-              "isLinked": false
-            },
-            "fallback": "0x00000000",
-            "documentation": []
-          },
-          {
-            "name": "CrossChainAddressMapOf",
-            "modifier": "Optional",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "(Chain,Bytes)",
-              "value": "(AccountId,Option<AccountId>)",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [
-              " account deposit addr(chain, addr bytes) => (accountid, option(channel accountid))  (channel is a validator)"
-            ]
-          },
-          {
-            "name": "CrossChainBindOf",
-            "modifier": "Default",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "(Chain,AccountId)",
-              "value": "Vec<Bytes>",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [" account deposit accountid, chain => multi deposit addr"]
-          },
-          {
-            "name": "TrusteeSessionInfoLen",
-            "modifier": "Default",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "Chain",
-              "value": "u32",
-              "isLinked": false
-            },
-            "fallback": "0x00000000",
-            "documentation": [
-              " when generate trustee, auto generate a new session number, increase the newest trustee addr, can't modify by user"
-            ]
-          },
-          {
-            "name": "TrusteeSessionInfoOf",
-            "modifier": "Optional",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "(Chain,u32)",
-              "value": "TrusteeSessionInfo",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [" all session trustee addr"]
-          },
-          {
-            "name": "TrusteeInfoConfigOf",
-            "modifier": "Default",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "Chain",
-              "value": "TrusteeInfoConfig",
-              "isLinked": false
-            },
-            "fallback": "0x0000000000000000",
-            "documentation": [" trustee basal info config"]
-          },
-          {
-            "name": "TrusteeIntentionPropertiesOf",
-            "modifier": "Optional",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "(AccountId,Chain)",
-              "value": "TrusteeIntentionProps",
-              "isLinked": false
-            },
-            "fallback": "0x00",
-            "documentation": [" trustee property of a accountid and chain"]
-          },
-          {
-            "name": "TeamAddress",
-            "modifier": "Default",
-            "type": "AccountId",
-            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": []
-          },
-          {
-            "name": "CouncilAddress",
-            "modifier": "Default",
-            "type": "AccountId",
-            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": []
-          }
-        ],
-        "calls": [],
-        "events": [
-          {
-            "name": "NewTrustees",
-            "args": ["Chain", "u32", "Vec<AccountId>", "Bytes", "Bytes"],
-            "documentation": [" New Trustees for chain, chain, session number, accountid, hot_addr, cold_addr"]
-          }
-        ]
+        "prefix": "",
+        "storage": null,
+        "calls": null,
+        "events": null
       },
       {
         "name": "xfee_manager",
@@ -994,6 +871,20 @@
             "documentation": []
           },
           {
+            "name": "fix_withdrawal_state_by_trustees",
+            "args": [
+              {
+                "name": "withdrawal_id",
+                "type": "u32"
+              },
+              {
+                "name": "state",
+                "type": "ApplicationState"
+              }
+            ],
+            "documentation": []
+          },
+          {
             "name": "fix_withdrawal_state",
             "args": [
               {
@@ -1001,8 +892,8 @@
                 "type": "u32"
               },
               {
-                "name": "success",
-                "type": "bool"
+                "name": "state",
+                "type": "ApplicationState"
               }
             ],
             "documentation": []
@@ -1012,7 +903,7 @@
             "args": [
               {
                 "name": "item",
-                "type": "Vec<(u32,bool)>"
+                "type": "Vec<(u32,ApplicationState)>"
               }
             ],
             "documentation": []
@@ -1026,12 +917,12 @@
           },
           {
             "name": "WithdrawalApply",
-            "args": ["u32", "AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "TxState"],
+            "args": ["u32", "AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr"],
             "documentation": []
           },
           {
             "name": "WithdrawalFinish",
-            "args": ["u32", "bool"],
+            "args": ["u32", "ApplicationState"],
             "documentation": []
           }
         ]
@@ -1067,6 +958,16 @@
               {
                 "name": "ext",
                 "type": "Memo"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "revoke_withdraw",
+            "args": [
+              {
+                "name": "id",
+                "type": "u32"
               }
             ],
             "documentation": []
@@ -1223,6 +1124,13 @@
             },
             "fallback": "0x00000000",
             "documentation": [" Total blocks that each active validator missed in the current session."]
+          },
+          {
+            "name": "MissedBlockSeverity",
+            "modifier": "Default",
+            "type": "u32",
+            "fallback": "0x00000000",
+            "documentation": [" The higher the severity, the more slash for missed blocks."]
           }
         ],
         "calls": [
@@ -1341,28 +1249,6 @@
             "documentation": [" Register to be an intention."]
           },
           {
-            "name": "setup_trustee",
-            "args": [
-              {
-                "name": "chain",
-                "type": "Chain"
-              },
-              {
-                "name": "about",
-                "type": "Text"
-              },
-              {
-                "name": "hot_entity",
-                "type": "TrusteeEntity"
-              },
-              {
-                "name": "cold_entity",
-                "type": "TrusteeEntity"
-              }
-            ],
-            "documentation": []
-          },
-          {
             "name": "set_sessions_per_era",
             "args": [
               {
@@ -1391,6 +1277,16 @@
               }
             ],
             "documentation": [" The ideal number of validators."]
+          },
+          {
+            "name": "set_missed_blocks_severity",
+            "args": [
+              {
+                "name": "new",
+                "type": "Compact<u32>"
+              }
+            ],
+            "documentation": [" The severity of missed blocks per session."]
           },
           {
             "name": "force_new_era",
@@ -1840,7 +1736,7 @@
             "type": {
               "hasher": "Blake2_256",
               "key": "H256",
-              "value": "Address",
+              "value": "BitcoinAddress",
               "isLinked": false
             },
             "fallback": "0x00",
@@ -1851,7 +1747,7 @@
             "modifier": "Optional",
             "type": {
               "hasher": "Blake2_256",
-              "key": "Address",
+              "key": "BitcoinAddress",
               "value": "Vec<DepositCache>",
               "isLinked": false
             },
@@ -1913,13 +1809,6 @@
             "type": "u32",
             "fallback": "0x00000000",
             "documentation": [" max withdraw account count in bitcoin withdrawal transaction"]
-          },
-          {
-            "name": "LastTrusteeSessionNumber",
-            "modifier": "Default",
-            "type": "u32",
-            "fallback": "0x00000000",
-            "documentation": []
           }
         ],
         "calls": [
@@ -1975,8 +1864,18 @@
                 "type": "u32"
               },
               {
-                "name": "success",
-                "type": "bool"
+                "name": "state",
+                "type": "ApplicationState"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_btc_withdrawal_fee_by_trustees",
+            "args": [
+              {
+                "name": "fee",
+                "type": "Balance"
               }
             ],
             "documentation": []
@@ -2042,7 +1941,7 @@
             "documentation": [" create withdraw tx, who proposal, withdrawal list id"]
           },
           {
-            "name": "UpdateSignWithdrawTx",
+            "name": "SignWithdrawalProposal",
             "args": ["AccountId", "bool"],
             "documentation": [" Sign withdraw tx"]
           },
@@ -2052,14 +1951,9 @@
             "documentation": [" WithdrawalFatalErr, tx hash, Proposal hash,"]
           },
           {
-            "name": "DropWithdrawTx",
+            "name": "DropWithdrawalProposal",
             "args": ["u32", "u32", "Vec<u32>"],
             "documentation": [" reject_count, sum_count, withdrawal id list"]
-          },
-          {
-            "name": "Bind",
-            "args": ["H256", "AddrStr", "AccountId", "BindStatus"],
-            "documentation": [" tx hash, input addr, account addr, bind state (init|update)"]
           }
         ]
       },
@@ -2112,6 +2006,210 @@
             "name": "Claimed",
             "args": ["AccountId", "EthereumAddress", "Balance"],
             "documentation": [" Someone claimed some DOTs."]
+          }
+        ]
+      },
+      {
+        "name": "xbridge_features",
+        "prefix": "XBridgeFeatures",
+        "storage": [
+          {
+            "name": "TrusteeMultiSigAddr",
+            "modifier": "Default",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "Chain",
+              "value": "AccountId",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "documentation": []
+          },
+          {
+            "name": "TrusteeInfoConfigOf",
+            "modifier": "Default",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "Chain",
+              "value": "TrusteeInfoConfig",
+              "isLinked": false
+            },
+            "fallback": "0x0000000000000000",
+            "documentation": [" trustee basal info config"]
+          },
+          {
+            "name": "TrusteeSessionInfoLen",
+            "modifier": "Default",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "Chain",
+              "value": "u32",
+              "isLinked": false
+            },
+            "fallback": "0x00000000",
+            "documentation": [
+              " when generate trustee, auto generate a new session number, increase the newest trustee addr, can't modify by user"
+            ]
+          },
+          {
+            "name": "BitcoinTrusteeSessionInfoOf",
+            "modifier": "Optional",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "u32",
+              "value": "BitcoinTrusteeSessionInfo",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" all bitcoin session trustee addr"]
+          },
+          {
+            "name": "BitcoinTrusteeIntentionPropertiesOf",
+            "modifier": "Optional",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "AccountId",
+              "value": "BitcoinTrusteeIntentionProps",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" properties for bitcoin trustees"]
+          },
+          {
+            "name": "BitcoinCrossChainBinding",
+            "modifier": "Default",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "AccountId",
+              "value": "Vec<BitcoinAddress>",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [" account deposit accountid, chain => multi deposit addr"]
+          },
+          {
+            "name": "BitcoinCrossChainOf",
+            "modifier": "Optional",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "BitcoinAddress",
+              "value": "(AccountId,Option<AccountId>)",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": [
+              " account deposit addr => (accountid, option(channel accountid))  (channel is a validator)"
+            ]
+          },
+          {
+            "name": "EthereumCrossChainBinding",
+            "modifier": "Default",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "AccountId",
+              "value": "Vec<EthereumAddress>",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": []
+          },
+          {
+            "name": "EthereumCrossChainOf",
+            "modifier": "Optional",
+            "type": {
+              "hasher": "Blake2_256",
+              "key": "EthereumAddress",
+              "value": "(AccountId,Option<AccountId>)",
+              "isLinked": false
+            },
+            "fallback": "0x00",
+            "documentation": []
+          }
+        ],
+        "calls": [
+          {
+            "name": "setup_bitcoin_trustee",
+            "args": [
+              {
+                "name": "about",
+                "type": "Text"
+              },
+              {
+                "name": "hot_entity",
+                "type": "H264"
+              },
+              {
+                "name": "cold_entity",
+                "type": "H264"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "transition_trustee_session",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "new_trustees",
+                "type": "Vec<AccountId>"
+              }
+            ],
+            "documentation": [" use for trustee multisig addr"]
+          },
+          {
+            "name": "transition_trustee_session_by_root",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "new_trustees",
+                "type": "Vec<AccountId>"
+              }
+            ],
+            "documentation": []
+          },
+          {
+            "name": "set_trustee_info_config",
+            "args": [
+              {
+                "name": "chain",
+                "type": "Chain"
+              },
+              {
+                "name": "config",
+                "type": "TrusteeInfoConfig"
+              }
+            ],
+            "documentation": []
+          }
+        ],
+        "events": [
+          {
+            "name": "SetBitcoinTrusteeProps",
+            "args": ["AccountId", "BitcoinTrusteeIntentionProps"],
+            "documentation": []
+          },
+          {
+            "name": "BitcoinNewTrustees",
+            "args": ["u32", "BitcoinTrusteeSessionInfo"],
+            "documentation": []
+          },
+          {
+            "name": "BitcoinBinding",
+            "args": ["AccountId", "Option<AccountId>", "BitcoinAddress", "Option<AccountId>"],
+            "documentation": [
+              " Record binding info for bitcoin addr(channel) and ChainX AccountId, params: new binding accountid, old binding accountid, crosschain addr, channel"
+            ]
+          },
+          {
+            "name": "EthereumBinding",
+            "args": ["AccountId", "Option<AccountId>", "EthereumAddress", "Option<AccountId>"],
+            "documentation": [" Record binding info for ethereum addr(channel) and ChainX AccountId"]
           }
         ]
       },
@@ -2185,35 +2283,9 @@
             },
             "fallback": "0x00000000",
             "documentation": []
-          },
-          {
-            "name": "TrusteeMultiSigAddr",
-            "modifier": "Default",
-            "type": {
-              "hasher": "Blake2_256",
-              "key": "Chain",
-              "value": "AccountId",
-              "isLinked": false
-            },
-            "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "documentation": []
           }
         ],
         "calls": [
-          {
-            "name": "deploy",
-            "args": [
-              {
-                "name": "owners",
-                "type": "Vec<(AccountId,bool)>"
-              },
-              {
-                "name": "required_num",
-                "type": "u32"
-              }
-            ],
-            "documentation": []
-          },
           {
             "name": "execute",
             "args": [
@@ -2243,16 +2315,6 @@
             "documentation": []
           },
           {
-            "name": "is_owner_for",
-            "args": [
-              {
-                "name": "multi_sig_addr",
-                "type": "AccountId"
-              }
-            ],
-            "documentation": []
-          },
-          {
             "name": "remove_multi_sig_for",
             "args": [
               {
@@ -2265,34 +2327,6 @@
               }
             ],
             "documentation": []
-          },
-          {
-            "name": "transition_trustee_session",
-            "args": [
-              {
-                "name": "chain",
-                "type": "Chain"
-              },
-              {
-                "name": "new_trustees",
-                "type": "Vec<AccountId>"
-              }
-            ],
-            "documentation": [" use for trustee multisig addr"]
-          },
-          {
-            "name": "transition_trustee_session_by_root",
-            "args": [
-              {
-                "name": "chain",
-                "type": "Chain"
-              },
-              {
-                "name": "new_trustees",
-                "type": "Vec<AccountId>"
-              }
-            ],
-            "documentation": [" only for root!"]
           }
         ],
         "events": [
@@ -2308,28 +2342,13 @@
           },
           {
             "name": "Confirm",
-            "args": ["AccountId", "Hash", "u32", "u32"],
+            "args": ["AccountId", "Hash", "u32", "u64"],
             "documentation": [" confirm. addr, multisigid, yet_needed, owners_done"]
           },
           {
             "name": "RemoveMultiSigIdFor",
             "args": ["AccountId", "Hash"],
             "documentation": [" remove multisig id for a multisig addr"]
-          },
-          {
-            "name": "SetDeployFee",
-            "args": ["Balance"],
-            "documentation": [" set deploy fee, by Root"]
-          },
-          {
-            "name": "SetExecFee",
-            "args": ["Balance"],
-            "documentation": [" set exec fee, by Root"]
-          },
-          {
-            "name": "SetConfirmFee",
-            "args": ["Balance"],
-            "documentation": [" set confirm fee, by Root"]
           }
         ]
       }
