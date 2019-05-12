@@ -120,3 +120,4 @@ export { default as H520 } from './H520';
 export { default as BitcoinAddress } from './BitcoinAddress';
 export { default as BitcoinTrusteeIntentionProps } from './BitcoinTrusteeIntentionProps';
 export { default as BitcoinTrusteeSessionInfo } from './BitcoinTrusteeSessionInfo';
+export { default as ApplicationState } from './ApplicationState';
