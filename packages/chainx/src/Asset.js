@@ -61,6 +61,10 @@ export default class Asset {
     return this.api.tx.xprocess.withdraw(token, value, addr, ext);
   };
 
+  revokeWithdraw = id => {
+    return this.api.tx.xprocess.revokeWithdraw(id);
+  };
+
   createWithdrawTx = (withdrawalIdList, tx) => {
     return this.api.tx.xbitcoin.createWithdrawTx(withdrawalIdList, tx);
   };
