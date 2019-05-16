@@ -47,6 +47,10 @@ export default class Asset {
     return this.api.rpc.chainx.getMinimalWithdrawalValueByToken(token);
   };
 
+  getSdotClaims = address => {
+    return this.api.query.xBridgeOfSDOT.claims(address).then(result => (result.length ? result.toJSON() : undefined));
+  };
+
   /**
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xassets/assets/src/lib.rs#L146
    */
