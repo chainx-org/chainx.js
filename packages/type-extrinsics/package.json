@@ -1,10 +1,10 @@
 {
   "name": "@chainx/extrinsics",
-  "version": "2.11.1",
+  "version": "2.11.2",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/types": "^2.11.1",
+    "@chainx/types": "^2.11.2",
     "@polkadot/keyring": "^0.90.1",
     "@polkadot/util": "^0.90.1"
   }
