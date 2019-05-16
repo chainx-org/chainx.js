@@ -72,4 +72,8 @@ export default class Asset {
   signWithdrawTx = tx => {
     return this.api.tx.xbitcoin.signWithdrawTx(tx);
   };
+
+  claimSdot = (ethereumSignature, signData, inputData) => {
+    return this.api.tx.xsdot.claim(ethereumSignature, signData, inputData);
+  };
 }

@@ -121,3 +121,4 @@ export { default as BitcoinAddress } from './BitcoinAddress';
 export { default as BitcoinTrusteeIntentionProps } from './BitcoinTrusteeIntentionProps';
 export { default as BitcoinTrusteeSessionInfo } from './BitcoinTrusteeSessionInfo';
 export { default as ApplicationState } from './ApplicationState';
+export { default as EcdsaSignature } from './EcdsaSignature';
