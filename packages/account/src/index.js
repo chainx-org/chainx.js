@@ -175,8 +175,8 @@ class Account {
     return encodeAddress(pulickey);
   }
 
-  static decodeAddress(address) {
-    return u8aToHex(decodeAddress(address));
+  static decodeAddress(address, ignoreChecksum, prefix) {
+    return u8aToHex(decodeAddress(address, ignoreChecksum, prefix));
   }
 
   encodePkcs8(passphrase) {
