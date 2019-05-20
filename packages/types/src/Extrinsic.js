@@ -105,6 +105,11 @@ export default class Extrinsic extends Struct {
   get signature() {
     return this.get('signature');
   }
+
+  encodeMessage(address, nonce, acceleration, blockHash, era) {
+    return this.signature.encodeMessage(this.method, address, nonce, acceleration, blockHash, era);
+  }
+
   /**
    * @description Add an [[ExtrinsicSignature]] to the extrinsic (already generated)
    */

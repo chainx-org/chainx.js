@@ -156,6 +156,36 @@ export default class ExtrinsicSignature extends Struct {
       signingPayload.acceleration
     );
   }
+
+  encodeMessage(method, address, nonce, acceleration, blockHash, era = IMMORTAL_ERA) {
+    const signer = new Address(address);
+    const signingPayload = new SignaturePayload({
+      nonce,
+      method,
+      era,
+      blockHash,
+      acceleration,
+    });
+
+    this.injectMessage(signer, signingPayload.nonce, signingPayload.era, signingPayload.acceleration);
+
+    return signingPayload.encode();
+  }
+
+  injectMessage(signer, nonce, era, acceleration) {
+    this.set('era', era);
+    this.set('nonce', nonce);
+    this.set('acceleration', acceleration);
+    this.set('signer', signer);
+    return this;
+  }
+
+  appendSignature(_signature) {
+    const signature = new Signature(_signature);
+    this.set('signature', signature);
+    return this;
+  }
+
   /**
    * @description Encodes the value as a Uint8Array as per the parity-codec specifications
    * @param isBare true when the value has none of the type-specific prefixes (internal)

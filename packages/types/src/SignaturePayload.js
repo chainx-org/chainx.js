@@ -85,11 +85,17 @@ export default class SignaturePayload extends Struct {
    * @description Sign the payload with the keypair
    */
   sign(signerPair) {
-    const u8a = this.toU8a();
-    const encoded = u8a.length > 256 ? blake2AsU8a(u8a) : u8a;
+    const encoded = this.encode();
 
     this._signature = signerPair.sign(encoded);
 
     return this._signature;
+  }
+
+  encode() {
+    const u8a = this.toU8a();
+    const encoded = u8a.length > 256 ? blake2AsU8a(u8a) : u8a;
+
+    return encoded;
   }
 }

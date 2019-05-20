@@ -4,6 +4,8 @@
 import { Extrinsic } from '@chainx/types';
 import Account from '@chainx/account';
 
+const IMMORTAL_ERA = new Uint8Array([0]);
+
 export default class SubmittableExtrinsic extends Extrinsic {
   constructor(api, extrinsic, broadcasts) {
     super(extrinsic);
@@ -53,7 +55,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
   getFee(address, { nonce, acceleration = 1, blockHash = this._api.genesisHash } = {}) {
     let noncePromise;
     if (!nonce) {
-      noncePromise = this._api.query.system.accountNonce(address);
+      noncePromise = this.getNonce(address);
     } else {
       noncePromise = Promise.resolve(nonce);
     }
@@ -66,6 +68,10 @@ export default class SubmittableExtrinsic extends Extrinsic {
       .then(data => {
         return acceleration * data;
       });
+  }
+
+  getNonce(address) {
+    return this._api.query.system.accountNonce(address);
   }
 
   signAndSend(_signerPair, _options, callback) {
@@ -86,7 +92,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
 
     let noncePromise;
     if (!options.nonce) {
-      noncePromise = this._api.query.system.accountNonce(signerPair.publicKey());
+      noncePromise = this.getNonce(signerPair.publicKey());
     } else {
       noncePromise = Promise.resolve(options.nonce);
     }
@@ -154,8 +160,18 @@ export default class SubmittableExtrinsic extends Extrinsic {
     }
   }
 
-  sign(signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash } = {}) {
+  sign(signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era } = {}) {
     super.sign(signerPair, nonce, acceleration, blockHash);
+    return this;
+  }
+
+  encodeMessage(address, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era = IMMORTAL_ERA } = {}) {
+    return super.encodeMessage(address, nonce, acceleration, blockHash, era);
+  }
+
+  appendSignature(signature) {
+    this.signature.appendSignature(signature);
+
     return this;
   }
 }
