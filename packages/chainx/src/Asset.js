@@ -27,10 +27,6 @@ export default class Asset {
     return this.api.rpc.chainx.verifyAddressValidity(...args);
   };
 
-  getAccountByBTCAddress = (...args) => {
-    return this.api.rpc.chainx.getAccountByBTCAddress(...args);
-  };
-
   getAddressByAccount = (...args) => {
     return this.api.rpc.chainx.getAddressByAccount(...args);
   };
