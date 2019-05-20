@@ -31,14 +31,6 @@ export default class Asset {
     return this.api.rpc.chainx.getAddressByAccount(...args);
   };
 
-  getTrusteeSessionInfo = Chain => {
-    return this.api.rpc.chainx.getTrusteeSessionInfo(Chain);
-  };
-
-  getWithdrawTx = Chain => {
-    return this.api.rpc.chainx.getWithdrawTx(Chain);
-  };
-
   getMinimalWithdrawalValueByToken = token => {
     return this.api.rpc.chainx.getMinimalWithdrawalValueByToken(token);
   };
@@ -63,14 +55,6 @@ export default class Asset {
 
   revokeWithdraw = id => {
     return this.api.tx.xprocess.revokeWithdraw(id);
-  };
-
-  createWithdrawTx = (withdrawalIdList, tx) => {
-    return this.api.tx.xbitcoin.createWithdrawTx(withdrawalIdList, tx);
-  };
-
-  signWithdrawTx = tx => {
-    return this.api.tx.xbitcoin.signWithdrawTx(tx);
   };
 
   claimSdot = (ethereumSignature, signData, inputData) => {

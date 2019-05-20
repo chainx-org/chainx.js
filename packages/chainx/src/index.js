@@ -7,6 +7,7 @@ import Stake from './Stake';
 import Asset from './Asset';
 import Chain from './Chain';
 import Trade from './Trade';
+import Trustee from './Trustee';
 
 class ChainX {
   constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [] } = {}) {
@@ -58,6 +59,10 @@ class ChainX {
     return this._trade;
   }
 
+  get trustee() {
+    return this._trustee;
+  }
+
   get networkType() {
     return this.chainProperties && this.chainProperties.network ? this.chainProperties.network : null;
   }
@@ -91,6 +96,7 @@ class ChainX {
     this._asset = new Asset(this);
     this._chain = new Chain(this);
     this._trade = new Trade(this);
+    this._trustee = new Trustee(this);
 
     this._api.on('disconnected', () => {
       this.emit('disconnected');

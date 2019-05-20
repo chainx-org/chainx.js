@@ -31,10 +31,6 @@ export default class Stake {
     return this.api.query.session.nextKeyFor(address).then(result => (result.length ? result.toJSON() : undefined));
   };
 
-  getTrusteeInfoByAccount = (...args) => {
-    return this.api.rpc.chainx.getTrusteeInfoByAccount(...args);
-  };
-
   /**
    * 注册节点
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L237
@@ -89,13 +85,6 @@ export default class Stake {
    */
   unfreeze = (target, revocationIndex) => {
     return this.api.tx.xstaking.unfreeze(target, revocationIndex);
-  };
-
-  /**
-   * 设置信托
-   */
-  setupBitcoinTrustee = (about, hotEntity, coldEntity) => {
-    return this.api.tx.xbridgeFeatures.setupBitcoinTrustee(about, hotEntity, coldEntity);
   };
 
   /**
