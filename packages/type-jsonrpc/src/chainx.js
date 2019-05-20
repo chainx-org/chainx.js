@@ -132,7 +132,7 @@ const getTrusteeSessionInfo = {
   type: 'RawJSON',
 };
 
-const getMinimalWithdrawalValueByToken = {
+const getWithdrawalLimitByToken = {
   description: '',
   params: [createParam('token', 'Token')],
   type: 'RawJSON',
@@ -170,6 +170,6 @@ export default {
     getFeeByCallAndLength: createMethod(section, 'getFeeByCallAndLength', getFeeByCallAndLength),
     getWithdrawTx: createMethod(section, 'getWithdrawTx', getWithdrawTx),
     getTrusteeSessionInfo: createMethod(section, 'getTrusteeSessionInfo', getTrusteeSessionInfo),
-    getMinimalWithdrawalValueByToken: createMethod(section, 'getMinimalWithdrawalValueByToken', getMinimalWithdrawalValueByToken),
+    getWithdrawalLimitByToken: createMethod(section, 'getWithdrawalLimitByToken', getWithdrawalLimitByToken),
   },
 };
