@@ -34,13 +34,19 @@ export default class SubmittableExtrinsic extends Extrinsic {
           index = extrinsics.map(ext => ext.hash.toHex()).indexOf(this.hash.toHex());
           if (index !== -1) {
             events = allEvents.filter(({ phase }) => phase.type === 'ApplyExtrinsic' && phase.value.eqn(index));
-            result = events.length ? events[events.length - 1].event.data.method : eventName;
+            result = events.length ? events[events.length - 1].event.data.method : '';
           }
         }
         statusCb(null, {
           result,
           index,
-          events: events && events.map(event => event.toJSON()),
+          events:
+            events &&
+            events.map(event => {
+              const o = event.toJSON();
+              o.method = event.event.data.method;
+              return o;
+            }),
           txHash: this.hash.toHex(),
           blockHash: blockHash && blockHash.toJSON(),
           broadcast: broadcast,
