@@ -18,12 +18,8 @@ describe('chainx.js', () => {
     //   '0xf85681a385012a05f200830f424094eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee80b0355074646d6a7764374b4c5a533344596a5239524739367a577352654d6235463448574a7434334e61484c53526e6542018080',
     //   '0x355074646d6a7764374b4c5a533344596a5239524739367a577352654d6235463448574a7434334e61484c53526e6542'
     // );
-
     // chainx.asset.getSdotClaims('0x007e917588d7a1392c3604501e00a73565d06845').then(data => {
     //   console.log(data);
     // });
-
-    const e = chainx.asset.transfer(chainx.account.from('qweqwe').address(), 'BTC', 100000, 'eqweq');
-    console.log(e);
   });
 });

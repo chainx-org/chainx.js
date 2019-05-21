@@ -9,6 +9,8 @@ import Chain from './Chain';
 import Trade from './Trade';
 import Trustee from './Trustee';
 
+Account.setNet('mainnet');
+
 class ChainX {
   constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [] } = {}) {
     this._broadcast = broadcast;
