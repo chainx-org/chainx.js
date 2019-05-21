@@ -1,7 +1,7 @@
 import ChainX from '../index';
 
 describe('chainx.js', () => {
-  const chainx = new ChainX('wss://w1.chainx.org/ws');
+  const chainx = new ChainX('ws://47.99.192.159:8091');
   jest.setTimeout(30000);
 
   beforeEach(async () => {
