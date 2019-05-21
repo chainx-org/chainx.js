@@ -19,12 +19,13 @@ describe('chainx.js', () => {
       '0x355074646d6a7764374b4c5a533344596a5239524739367a577352654d6235463448574a7434334e61484c53526e6542'
     );
 
-    a.signAndSend(chainx.account.from('Alice'), (e, r) => {
+    a.signAndSend(chainx.account.from('xxx'), (e, r) => {
       console.log(e, r);
     });
 
-    chainx.asset.getSdotClaims(chainx.account.from('Alice').address).then(s => console.log(s));
+    chainx.asset.getSdotClaims(chainx.account.from('xxxx').address).then(s => console.log(s));
     chainx.asset.getWithdrawalLimitByToken('BTC').then(s => console.log(s));
+    chainx.asset.getAddressByAccount(chainx.account.from('xxxx').address(), 'Bitcoin').then(s => console.log(s));
     // chainx.asset.getSdotClaims('0x007e917588d7a1392c3604501e00a73565d06845').then(data => {
     //   console.log(data);
     // });

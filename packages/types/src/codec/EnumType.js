@@ -165,7 +165,8 @@ export default class Enum extends Base {
    * @description Converts the Object to JSON, typically used for RPC transfers
    */
   toJSON() {
-    return this._isBasic ? this._index : { [this.type]: this.raw.toJSON() };
+    // this._index 改为 this.type
+    return this._isBasic ? this.type : { [this.type]: this.raw.toJSON() };
   }
   /**
    * @description Returns the number representation for the value
