@@ -2,12 +2,11 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import {
-  v0SStorageFunctionModifier as StorageFunctionModifier,
-  v0SStorageFunctionType as StorageFunctionType,
+  v4SStorageFunctionModifier as StorageFunctionModifier,
+  v4SStorageFunctionType as StorageFunctionType,
 } from '@chainx/types/Metadata';
 import { Text, Vector } from '@chainx/types';
 import createFunction from './createFunction';
-
 // Small helper function to factorize code on this page.
 const createRuntimeFunction = (method, key, { documentation, type }) =>
   createFunction(
@@ -20,8 +19,8 @@ const createRuntimeFunction = (method, key, { documentation, type }) =>
       toJSON: () => key,
     },
     {
-      isUnhashed: true,
       key,
+      skipHashing: true,
     }
   );
 export const code = createRuntimeFunction('code', ':code', {
