@@ -6,23 +6,23 @@ import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
 import Text from '../../Text';
 import { flattenUniq, validateTypes } from '../util';
-import { MetadataCall } from '../v1/Calls';
-import { MetadataEvent } from '../v1/Events';
+import { FunctionMetadata } from './Calls';
+import { EventMetadata } from './Events';
 import { StorageFunctionMetadata } from './Storage';
 /**
- * @name MetadataModule
+ * @name ModuleMetadata
  * @description
  * The definition of a module in the system
  */
-export class MetadataModule extends Struct {
+export class ModuleMetadata extends Struct {
   constructor(value) {
     super(
       {
         name: Text,
         prefix: Text,
         storage: Option.with(Vector.with(StorageFunctionMetadata)),
-        calls: Option.with(Vector.with(MetadataCall)),
-        events: Option.with(Vector.with(MetadataEvent)),
+        calls: Option.with(Vector.with(FunctionMetadata)),
+        events: Option.with(Vector.with(EventMetadata)),
       },
       value
     );
@@ -67,7 +67,7 @@ export default class MetadataV2 extends Struct {
   constructor(value) {
     super(
       {
-        modules: Vector.with(MetadataModule),
+        modules: Vector.with(ModuleMetadata),
       },
       value
     );

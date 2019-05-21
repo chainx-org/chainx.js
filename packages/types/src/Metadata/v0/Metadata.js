@@ -9,10 +9,7 @@ import { flattenUniq, validateTypes } from '../util';
 import { OuterDispatchMetadata } from './Calls';
 import { OuterEventMetadata } from './Events';
 import { RuntimeModuleMetadata } from './Modules';
-
-// Decodes the runtime metadata as passed through from the `state_getMetadata` call. This
-// file is probably best understood from the bottom-up, i.e. start reading right at the
-// end and work up. (Just so we don't use before definition)
+// Decodes the runtime metadata as passed through from the `state_getMetadata` call.
 /**
  * @name MetadataV0
  * @description
@@ -53,7 +50,7 @@ export default class MetadataV0 extends Struct {
     return this.get('outerDispatch').calls;
   }
   /**
-   * @description Wrapped [[OuterEventMetadataEvent]]
+   * @description Wrapped [[OuterEventEventMetadata]]
    */
   get events() {
     return this.get('outerEvent').events;
@@ -65,17 +62,17 @@ export default class MetadataV0 extends Struct {
     return this.get('modules');
   }
   get argNames() {
-    return this.modules.map(module =>
-      module.module.call.functions.map(fn => fn.arguments.map(argument => argument.type.toString()))
+    return this.modules.map(modul =>
+      modul.module.call.functions.map(fn => fn.args.map(argument => argument.type.toString()))
     );
   }
   get eventNames() {
-    return this.events.map(module => module.events.map(event => event.arguments.map(argument => argument.toString())));
+    return this.events.map(modul => modul.events.map(event => event.args.map(argument => argument.toString())));
   }
   get storageNames() {
-    return this.modules.map(module =>
-      module.storage.isSome
-        ? module.storage
+    return this.modules.map(modul =>
+      modul.storage.isSome
+        ? modul.storage
             .unwrap()
             .functions.map(fn =>
               fn.type.isMap

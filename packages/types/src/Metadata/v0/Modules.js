@@ -8,7 +8,6 @@ import Text from '../../Text';
 import Type from '../../Type';
 import U16 from '../../U16';
 import { StorageMetadata } from './Storage';
-
 export class FunctionArgumentMetadata extends Struct {
   constructor(value) {
     super(
@@ -38,14 +37,21 @@ export class FunctionMetadata extends Struct {
       {
         id: U16,
         name: Text,
-        arguments: Vector.with(FunctionArgumentMetadata),
+        args: Vector.with(FunctionArgumentMetadata),
         documentation: Vector.with(Text),
       },
       value
     );
   }
   /**
+   * @description The arguments of [[Type]]
+   */
+  get args() {
+    return this.get('args');
+  }
+  /**
    * @description The [[FunctionArgumentMetadata]] for arguments
+   * @deprecated Use `.args` instead
    */
   get arguments() {
     return this.get('arguments');
@@ -110,7 +116,7 @@ export class ModuleMetadata extends Struct {
     );
   }
   /**
-   * @description The calls as [[CallMetadata]]
+   * @description The calls as [[FunctionMetadata]]
    */
   get call() {
     return this.get('call');

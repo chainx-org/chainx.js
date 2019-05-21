@@ -89,6 +89,7 @@ export { default as ValidatorPrefs } from './ValidatorPrefs';
 export { default as Vote } from './Vote';
 export { default as VoteThreshold } from './VoteThreshold';
 export { default as VoteIndex } from './VoteIndex';
+export { default as StorageHasher } from './StorageHasher';
 
 export { default as Token } from './Token';
 export { default as Acceleration } from './Acceleration';

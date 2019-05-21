@@ -6,23 +6,23 @@ import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
 import Text from '../../Text';
 import { flattenUniq, validateTypes } from '../util';
-import { MetadataCall } from '../v1/Calls';
-import { MetadataEvent } from '../v1/Events';
+import { FunctionMetadata } from './Calls';
+import { EventMetadata } from './Events';
 import { StorageFunctionMetadata } from './Storage';
 /**
- * @name MetadataModule
+ * @name ModuleMetadata
  * @description
  * The definition of a module in the system
  */
-export class MetadataModule extends Struct {
+export class ModuleMetadata extends Struct {
   constructor(value) {
     super(
       {
         name: Text,
         prefix: Text,
         storage: Option.with(Vector.with(StorageFunctionMetadata)),
-        calls: Option.with(Vector.with(MetadataCall)),
-        events: Option.with(Vector.with(MetadataEvent)),
+        calls: Option.with(Vector.with(FunctionMetadata)),
+        events: Option.with(Vector.with(EventMetadata)),
       },
       value
     );
@@ -67,7 +67,7 @@ export default class MetadataV4 extends Struct {
   constructor(value) {
     super(
       {
-        modules: Vector.with(MetadataModule),
+        modules: Vector.with(ModuleMetadata),
       },
       value
     );
@@ -92,13 +92,19 @@ export default class MetadataV4 extends Struct {
     return this.modules.map(mod =>
       mod.storage.isNone
         ? []
-        : mod.storage
-            .unwrap()
-            .map(fn =>
-              fn.type.isMap
-                ? [fn.type.asMap.key.toString(), fn.type.asMap.value.toString()]
-                : [fn.type.asType.toString()]
-            )
+        : mod.storage.unwrap().map(fn => {
+            if (fn.type.isMap) {
+              return [fn.type.asMap.key.toString(), fn.type.asMap.value.toString()];
+            } else if (fn.type.isDoubleMap) {
+              return [
+                fn.type.asDoubleMap.key1.toString(),
+                fn.type.asDoubleMap.key2.toString(),
+                fn.type.asDoubleMap.value.toString(),
+              ];
+            } else {
+              return [fn.type.asType.toString()];
+            }
+          })
     );
   }
   /**

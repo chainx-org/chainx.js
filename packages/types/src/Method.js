@@ -5,11 +5,12 @@ import { assert, isHex, isObject, isU8a, hexToU8a } from '@polkadot/util';
 import { getTypeDef, getTypeClass } from './codec/createType';
 import Struct from './codec/Struct';
 import U8aFixed from './codec/U8aFixed';
-import { FunctionMetadata } from './Metadata/v0/Modules';
+
 const FN_UNKNOWN = {
   method: 'unknown',
   section: 'unknown',
 };
+
 const injected = {};
 /**
  * @name MethodIndex
@@ -49,7 +50,7 @@ export default class Method extends Struct {
    * @param _meta - Metadata to use, so that `injectMethods` lookup is not
    * necessary.
    */
-  static decodeMethod(value, _meta) {
+  static decodeMethod(value = new Uint8Array(), _meta) {
     if (isHex(value)) {
       return Method.decodeMethod(hexToU8a(value), _meta);
     } else if (isU8a(value)) {
@@ -77,18 +78,12 @@ export default class Method extends Struct {
         callIndex,
       };
     }
-    console.error(`Method: cannot decode value '${value}' of type ${typeof value}`);
-    return {
-      args: new Uint8Array(),
-      argsDef: {},
-      meta: new FunctionMetadata(),
-      callIndex: new Uint8Array([255, 255]),
-    };
+    throw new Error(`Method: Cannot decode value '${value}' of type ${typeof value}`);
   }
   // If the extrinsic function has an argument of type `Origin`, we ignore it
   static filterOrigin(meta) {
     // FIXME should be `arg.type !== Origin`, but doesn't work...
-    return meta ? meta.arguments.filter(({ type }) => type.toString() !== 'Origin') : [];
+    return meta ? meta.args.filter(({ type }) => type.toString() !== 'Origin') : [];
   }
   // We could only inject the meta (see injectMethods below) and then do a
   // meta-only lookup via
@@ -150,7 +145,7 @@ export default class Method extends Struct {
    * @description `true` if the `Origin` type is on the method (extrinsic method)
    */
   get hasOrigin() {
-    const firstArg = this.meta.arguments[0];
+    const firstArg = this.meta.args[0];
     return !!firstArg && firstArg.type.toString() === 'Origin';
   }
   /**
@@ -158,5 +153,11 @@ export default class Method extends Struct {
    */
   get meta() {
     return this._meta;
+  }
+  /**
+   * @description Returns the base runtime type name for this instance
+   */
+  toRawType() {
+    return 'Call';
   }
 }

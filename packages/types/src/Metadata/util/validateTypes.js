@@ -1,10 +1,11 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { assert, isUndefined } from '@polkadot/util';
+import { isUndefined } from '@polkadot/util';
 import { getTypeDef, TypeDefInfo } from '../../codec/createType';
 import flattenUniq from './flattenUniq';
-export default function validateTypes(types) {
+import { getTypeRegistry } from '../../codec';
+export default function validateTypes(types, throwError) {
   const extractTypes = types => {
     return types.map(type => {
       const decoded = getTypeDef(type);
@@ -22,7 +23,14 @@ export default function validateTypes(types) {
       }
     });
   };
-  const allTypes = require('../../index');
-  const missing = flattenUniq(extractTypes(types)).filter(type => isUndefined(allTypes[type]));
-  assert(missing.length === 0, `Unknown types found, no types for ${missing}`);
+  const typeRegistry = getTypeRegistry();
+  const missing = flattenUniq(extractTypes(types)).filter(type => isUndefined(typeRegistry.get(type)));
+  if (missing.length !== 0) {
+    const message = `Unknown types found, no types for ${missing}`;
+    if (throwError) {
+      throw new Error(message);
+    } else {
+      console.error(message);
+    }
+  }
 }

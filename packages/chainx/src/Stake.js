@@ -36,7 +36,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L237
    */
   register = name => {
-    return this.api.tx.xstaking.register(name);
+    return this.api.tx.xStaking.register(name);
   };
 
   /**
@@ -44,7 +44,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L107
    */
   nominate = (target, value, memo) => {
-    return this.api.tx.xstaking.nominate(target, value, memo);
+    return this.api.tx.xStaking.nominate(target, value, memo);
   };
 
   /**
@@ -52,7 +52,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L130
    */
   unnominate = (target, value, memo) => {
-    return this.api.tx.xstaking.unnominate(target, value, memo);
+    return this.api.tx.xStaking.unnominate(target, value, memo);
   };
 
   /**
@@ -60,7 +60,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L207
    */
   refresh = (url, desireToRun, nextKey, about) => {
-    return this.api.tx.xstaking.refresh(url, desireToRun, nextKey, about);
+    return this.api.tx.xStaking.refresh(url, desireToRun, nextKey, about);
   };
 
   /**
@@ -68,7 +68,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L207
    */
   voteClaim = target => {
-    return this.api.tx.xstaking.claim(target);
+    return this.api.tx.xStaking.claim(target);
   };
 
   /**
@@ -76,7 +76,7 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/tokens/src/lib.rs#L186
    */
   depositClaim = token => {
-    return this.api.tx.xtokens.claim(token);
+    return this.api.tx.xTokens.claim(token);
   };
 
   /**
@@ -84,13 +84,13 @@ export default class Stake {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xmining/staking/src/lib.rs#L165
    */
   unfreeze = (target, revocationIndex) => {
-    return this.api.tx.xstaking.unfreeze(target, revocationIndex);
+    return this.api.tx.xStaking.unfreeze(target, revocationIndex);
   };
 
   /**
    * 切换投票
    */
   renominate = (from, to, value, memo) => {
-    return this.api.tx.xstaking.renominate(from, to, value, memo);
+    return this.api.tx.xStaking.renominate(from, to, value, memo);
   };
 }

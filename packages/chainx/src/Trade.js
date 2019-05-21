@@ -20,7 +20,7 @@ export default class Trade {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xdex/spot/src/lib.rs#L104
    */
   putOrder = (pairid, ordertype, direction, amount, price) => {
-    return this.api.tx.xspot.putOrder(pairid, ordertype, direction, amount, price);
+    return this.api.tx.xSpot.putOrder(pairid, ordertype, direction, amount, price);
   };
 
   /**
@@ -28,6 +28,6 @@ export default class Trade {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xdex/spot/src/lib.rs#L116
    */
   cancelOrder = (pairid, index) => {
-    return this.api.tx.xspot.cancelOrder(pairid, index);
+    return this.api.tx.xSpot.cancelOrder(pairid, index);
   };
 }

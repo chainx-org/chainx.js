@@ -8,6 +8,7 @@ import Struct from './codec/Struct';
 import ExtrinsicSignature from './ExtrinsicSignature';
 import Hash from './Hash';
 import Method from './Method';
+
 /**
  * @name Extrinsic
  * @description

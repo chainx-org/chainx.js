@@ -1,13 +1,21 @@
-// Copyright 2017-2018 @polkadot/types authors & contributors
+// Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { isUndefined, stringCamelCase, u8aToHex, hexToBn } from '@polkadot/util';
+import { assert, isUndefined, stringCamelCase, u8aToHex } from '@polkadot/util';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import U8aFixed from './codec/U8aFixed';
 import { getTypeClass, getTypeDef } from './codec/createType';
-
+import Null from './Null';
+import U32 from './U32';
 const EventTypes = {};
+
+/**
+ * @name EventIndex
+ * @description
+ * The Substrate EventIndex representation as a [[U32]].
+ */
+export class EventIndex extends U32 {}
 /**
  * @name EventData
  * @description
@@ -47,18 +55,14 @@ export class EventData extends Tuple {
   }
 }
 /**
- * @name EventIndex
+ * @name EventId
  * @description
  * This follows the same approach as in [[Method]], we have the `[sectionIndex, methodIndex]` pairing
  * that indicates the actual event fired
  */
-export class EventIndex extends U8aFixed {
+export class EventId extends U8aFixed {
   constructor(value) {
     super(value, 16);
-  }
-
-  toJSON() {
-    return hexToBn(this.toHex(), { isLe: true, isNegative: true }).toNumber();
   }
 }
 /**
@@ -74,18 +78,21 @@ export default class Event extends Struct {
     const { DataType, value } = Event.decodeEvent(_value);
     super(
       {
-        index: EventIndex,
+        index: EventId,
         data: DataType,
       },
       value
     );
   }
-  static decodeEvent(value) {
+  static decodeEvent(value = new Uint8Array()) {
+    if (!value.length) {
+      return {
+        DataType: Null,
+      };
+    }
     const index = value.subarray(0, 2);
     const DataType = EventTypes[index.toString()];
-    if (isUndefined(DataType)) {
-      throw new Error(`Unable to decode event for index ${u8aToHex(index)}`);
-    }
+    assert(!isUndefined(DataType), `Unable to decode event for index ${u8aToHex(index)}`);
     return {
       DataType,
       value: {
@@ -97,20 +104,22 @@ export default class Event extends Struct {
   // This is called/injected by the API on init, allowing a snapshot of
   // the available system events to be used in lookups
   static injectMetadata(metadata) {
-    metadata.events.forEach((section, sectionIndex) => {
-      const sectionName = stringCamelCase(section.name.toString());
-      section.events.forEach((meta, methodIndex) => {
-        const methodName = meta.name.toString();
-        const eventIndex = new Uint8Array([sectionIndex, methodIndex]);
-        const typeDef = meta.arguments.map(arg => getTypeDef(arg));
-        const Types = typeDef.map(getTypeClass);
-        EventTypes[eventIndex.toString()] = class EventData extends EventData {
-          constructor(value) {
-            super(Types, value, typeDef, meta, sectionName, methodName);
-          }
-        };
+    metadata.asV4.modules
+      .filter(section => section.events.isSome)
+      .forEach((section, sectionIndex) => {
+        const sectionName = stringCamelCase(section.name.toString());
+        section.events.unwrap().forEach((meta, methodIndex) => {
+          const methodName = meta.name.toString();
+          const eventIndex = new Uint8Array([sectionIndex, methodIndex]);
+          const typeDef = meta.args.map(arg => getTypeDef(arg));
+          const Types = typeDef.map(getTypeClass);
+          EventTypes[eventIndex.toString()] = class extends EventData {
+            constructor(value) {
+              super(Types, value, typeDef, meta, sectionName, methodName);
+            }
+          };
+        });
       });
-    });
   }
   /**
    * @description The wrapped [[EventData]]
@@ -119,7 +128,7 @@ export default class Event extends Struct {
     return this.get('data');
   }
   /**
-   * @description The [[EventIndex]], identifying the raw event
+   * @description The [[EventId]], identifying the raw event
    */
   get index() {
     return this.get('index');
@@ -147,16 +156,5 @@ export default class Event extends Struct {
    */
   get typeDef() {
     return this.data.typeDef;
-  }
-
-  // event to json
-  toJSON() {
-    const desc = this.meta.toJSON();
-    return {
-      index: this.index.toJSON(),
-      method: this.method,
-      desc: desc && desc.documentation && desc.documentation.join('\n'),
-      data: this.data.toJSON(),
-    };
   }
 }

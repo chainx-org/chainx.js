@@ -43,21 +43,21 @@ export default class Asset {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xassets/assets/src/lib.rs#L146
    */
   transfer = (dest, token, value, memo) => {
-    return this.api.tx.xassets.transfer(dest, token, value, memo);
+    return this.api.tx.xAssets.transfer(dest, token, value, memo);
   };
 
   /**
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xassets/process/src/lib.rs#L63
    */
   withdraw = (token, value, addr, ext) => {
-    return this.api.tx.xprocess.withdraw(token, value, addr, ext);
+    return this.api.tx.withdrawal.withdraw(token, value, addr, ext);
   };
 
   revokeWithdraw = id => {
-    return this.api.tx.xprocess.revokeWithdraw(id);
+    return this.api.tx.withdrawal.revokeWithdraw(id);
   };
 
   claimSdot = (ethereumSignature, signData, inputData) => {
-    return this.api.tx.xsdot.claim(ethereumSignature, signData, inputData);
+    return this.api.tx.xBridgeOfSdot.claim(ethereumSignature, signData, inputData);
   };
 }

@@ -12,7 +12,7 @@ export class EventMetadata extends Struct {
     super(
       {
         name: Text,
-        arguments: Vector.with(Type),
+        args: Vector.with(Type),
         documentation: Vector.with(Text),
       },
       value
@@ -21,8 +21,15 @@ export class EventMetadata extends Struct {
   /**
    * @description The arguments of [[Type]]
    */
+  get args() {
+    return this.get('args');
+  }
+  /**
+   * @description The arguments of [[Type]]
+   * @deprecated Use `.args` instead
+   */
   get arguments() {
-    return this.get('arguments');
+    return this.args;
   }
   /**
    * @description The [[Text]] documentation
@@ -44,7 +51,7 @@ export class EventMetadata extends Struct {
     return this.get('name');
   }
 }
-export class OuterEventMetadataEvent extends Tuple {
+export class OuterEventEventMetadata extends Tuple {
   constructor(value) {
     super(
       {
@@ -72,13 +79,13 @@ export class OuterEventMetadata extends Struct {
     super(
       {
         name: Text,
-        events: Vector.with(OuterEventMetadataEvent),
+        events: Vector.with(OuterEventEventMetadata),
       },
       value
     );
   }
   /**
-   * @description The [[OuterEventMetadataEvent]]
+   * @description The [[OuterEventEventMetadata]]
    */
   get events() {
     return this.get('events');

@@ -16,17 +16,17 @@ export default class Trustee {
   };
 
   createWithdrawTx = (withdrawalIdList, tx) => {
-    return this.api.tx.xbitcoin.createWithdrawTx(withdrawalIdList, tx);
+    return this.api.tx.xBridgeOfBtc.createWithdrawTx(withdrawalIdList, tx);
   };
 
   signWithdrawTx = tx => {
-    return this.api.tx.xbitcoin.signWithdrawTx(tx);
+    return this.api.tx.xBridgeOfBtc.signWithdrawTx(tx);
   };
 
   /**
    * 设置信托
    */
   setupBitcoinTrustee = (about, hotEntity, coldEntity) => {
-    return this.api.tx.xbridgeFeatures.setupBitcoinTrustee(about, hotEntity, coldEntity);
+    return this.api.tx.xBridgeFeatures.setupBitcoinTrustee(about, hotEntity, coldEntity);
   };
 }
