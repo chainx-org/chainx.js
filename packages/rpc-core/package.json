@@ -1,13 +1,13 @@
 {
   "name": "@chainx/rpc-core",
-  "version": "2.12.0-z.3",
+  "version": "2.12.0-z.4",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/jsonrpc": "^2.12.0-2.12.0-rc.0.0",
+    "@chainx/jsonrpc": "^2.12.0-z.4",
     "@chainx/rpc-provider": "^2.12.0-2.12.0-rc.0.0",
-    "@chainx/storage": "^2.12.0-z.3",
-    "@chainx/types": "^2.12.0-z.3",
+    "@chainx/storage": "^2.12.0-z.4",
+    "@chainx/types": "^2.12.0-z.4",
     "@polkadot/util": "^0.90.1"
   }
 }
