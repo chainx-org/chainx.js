@@ -60,6 +60,12 @@ const getIntentions = {
   type: 'RawJSON',
 };
 
+const getIntentionsByAccount = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey')],
+  type: 'RawJSON',
+};
+
 const getPseduIntentions = {
   description: '',
   params: [],
@@ -158,6 +164,7 @@ export default {
     getWithdrawalListByAccount: createMethod(section, 'getWithdrawalListByAccount', getWithdrawalListByAccount),
     getNominationRecords: createMethod(section, 'getNominationRecords', getNominationRecords),
     getIntentions: createMethod(section, 'getIntentions', getIntentions),
+    getIntentionsByAccount: createMethod(section, 'getIntentionsByAccount', getIntentionsByAccount),
     getPseduIntentions: createMethod(section, 'getPseduIntentions', getPseduIntentions),
     getPseduNominationRecords: createMethod(section, 'getPseduNominationRecords', getPseduNominationRecords),
     getTradingPairs: createMethod(section, 'getTradingPairs', getTradingPairs),

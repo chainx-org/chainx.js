@@ -11,6 +11,10 @@ export default class Stake {
     return this.api.rpc.chainx.getIntentions(...args);
   };
 
+  getIntentionsByAccount = (...args) => {
+    return this.api.rpc.chainx.getIntentionsByAccount(...args);
+  };
+
   getPseduIntentions = (...args) => {
     return this.api.rpc.chainx.getPseduIntentions(...args);
   };
