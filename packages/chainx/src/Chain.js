@@ -36,12 +36,11 @@ class Chain {
     };
   }
 
-  async getBlockNumber() {
+  async getHeader() {
     await this.isRpcReady();
 
-    return this.api.rpc.chain.getHeader().then(header => {
-      return header.get('number').toString();
-    });
+    const result = await this.api.rpc.chain.getHeader();
+    return result._raw;
   }
 
   getMinimumPeriod() {
