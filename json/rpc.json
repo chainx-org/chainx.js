@@ -639,6 +639,24 @@
         "section": "chainx",
         "type": "RawJSON"
       },
+      "getIntentionByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getIntentionByAccount",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
       "getPseduIntentions": {
         "description": "",
         "isDeprecated": false,
@@ -888,13 +906,13 @@
         "section": "chainx",
         "type": "RawJSON"
       },
-      "getMinimalWithdrawalValueByToken": {
+      "getWithdrawalLimitByToken": {
         "description": "",
         "isDeprecated": false,
         "isHidden": false,
         "isSigned": false,
         "isSubscription": false,
-        "method": "getMinimalWithdrawalValueByToken",
+        "method": "getWithdrawalLimitByToken",
         "params": [
           {
             "isOptional": false,
