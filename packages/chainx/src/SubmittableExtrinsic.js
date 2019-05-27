@@ -115,7 +115,8 @@ export default class SubmittableExtrinsic extends Extrinsic {
 
   send(statusCb) {
     if (!statusCb || !this._api.hasSubscriptions) {
-      return this._api.rpc.author.submitExtrinsic(this);
+      this._api.rpc.author.submitExtrinsic(this);
+      return this.hash.toHex();
     }
     try {
       this.submitBroadcast();
