@@ -109,6 +109,8 @@ export default class SubmittableExtrinsic extends Extrinsic {
         submittableExtrinsic.send(callback);
       })
       .catch(callback);
+
+    return this.hash.toHex();
   }
 
   send(statusCb) {
