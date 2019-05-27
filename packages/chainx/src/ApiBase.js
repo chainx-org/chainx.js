@@ -108,20 +108,29 @@ export default class ApiBase {
 
   init() {
     let isReady = false;
-    this._rpcBase._provider.on('disconnected', () => {
-      this.emit('disconnected');
-    });
-    this._rpcBase._provider.on('error', error => {
-      this.emit('error', error);
-    });
-    this._rpcBase._provider.on('connected', async () => {
-      this.emit('connected');
-      const hasMeta = await this.loadMeta();
-      if (hasMeta && !isReady) {
-        isReady = true;
-        this.emit('ready', this);
-      }
-    });
+    if (this._rpcBase._provider.hasSubscriptions) {
+      this._rpcBase._provider.on('disconnected', () => {
+        this.emit('disconnected');
+      });
+      this._rpcBase._provider.on('error', error => {
+        this.emit('error', error);
+      });
+      this._rpcBase._provider.on('connected', async () => {
+        this.emit('connected');
+        const hasMeta = await this.loadMeta();
+        if (hasMeta && !isReady) {
+          isReady = true;
+          this.emit('ready', this);
+        }
+      });
+    } else {
+      this.loadMeta().then(hasMeta => {
+        if (hasMeta && !isReady) {
+          isReady = true;
+          this.emit('ready', this);
+        }
+      });
+    }
   }
 
   async loadMeta() {

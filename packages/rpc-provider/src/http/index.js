@@ -58,7 +58,7 @@ export default class HttpProvider {
    * @description HTTP Provider does not have 'on' emitters. WebSockets should be used instead.
    */
   on(type, sub) {
-    l.error(`HTTP Provider does not have 'on' emitters, use WebSockets instead`);
+    l.warn(`HTTP Provider does not have 'on' emitters, use WebSockets instead`);
   }
   /**
    * @summary Send HTTP POST Request with Body to configured HTTP Endpoint.

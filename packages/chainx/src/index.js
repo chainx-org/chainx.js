@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3';
-import { WsProvider } from '@chainx/rpc-provider';
+import { WsProvider, HttpProvider } from '@chainx/rpc-provider';
 import Account from '@chainx/account';
 
 import ApiBase from './ApiBase';
@@ -119,4 +119,5 @@ class ChainX {
   };
 }
 
+export { ApiBase, WsProvider, HttpProvider };
 export default ChainX;

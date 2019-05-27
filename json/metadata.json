@@ -123,6 +123,44 @@
               },
               "fallback": "0x00",
               "documentation": [" Events deposited for the current block."]
+            },
+            {
+              "name": "EventCount",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "EventIndex"
+              },
+              "fallback": "0x00000000",
+              "documentation": [" The number of events in the `Events<T>` list."]
+            },
+            {
+              "name": "EventTopics",
+              "modifier": "Default",
+              "type": {
+                "DoubleMapType": {
+                  "hasher": "Blake2_256",
+                  "key1": "Null",
+                  "key2": "Hash",
+                  "value": "Vec<(BlockNumber,EventIndex)>",
+                  "key2Hasher": "blake2_256"
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [
+                " Mapping between a topic (represented by T::Hash) and a vector of indexes",
+                " of events in the `<Events<T>>` list.",
+                "",
+                " The first key serves no purpose. This field is declared as double_map just",
+                " for convenience of using `remove_prefix`.",
+                "",
+                " All topic vectors have deterministic storage locations depending on the topic. This",
+                " allows light-clients to leverage the changes trie storage tracking mechanism and",
+                " in case of changes fetch the list of events of interest.",
+                "",
+                " The value has the type `(T::BlockNumber, EventIndex)` because if we used only just",
+                " the `EventIndex` then in case if the topic has the same contents on the next block",
+                " no notification will be triggered thus the event might be lost."
+              ]
             }
           ],
           "calls": null,
@@ -424,6 +462,20 @@
               "documentation": [" The next key for a given validator."]
             },
             {
+              "name": "KeyFilterMap",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "SessionKey",
+                  "value": "AccountId",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
+            },
+            {
               "name": "NextSessionLength",
               "modifier": "Optional",
               "type": {
@@ -434,19 +486,6 @@
             }
           ],
           "calls": [
-            {
-              "name": "set_key",
-              "args": [
-                {
-                  "name": "key",
-                  "type": "SessionKey"
-                }
-              ],
-              "documentation": [
-                " Sets the session key of `_validator` to `_key`. This doesn't take effect until the next",
-                " session."
-              ]
-            },
             {
               "name": "set_length",
               "args": [
@@ -530,7 +569,7 @@
               "type": {
                 "PlainType": "u32"
               },
-              "fallback": "0x64000000",
+              "fallback": "0x0c000000",
               "documentation": []
             }
           ],
@@ -970,20 +1009,6 @@
               "documentation": []
             },
             {
-              "name": "fix_withdrawal_state_by_trustees",
-              "args": [
-                {
-                  "name": "withdrawal_id",
-                  "type": "u32"
-                },
-                {
-                  "name": "state",
-                  "type": "ApplicationState"
-                }
-              ],
-              "documentation": []
-            },
-            {
               "name": "fix_withdrawal_state",
               "args": [
                 {
@@ -1135,6 +1160,15 @@
               "documentation": [" The length of the bonding duration in blocks for intention."]
             },
             {
+              "name": "MaximumIntentionCount",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x00000000",
+              "documentation": [" Maximum number of intentions."]
+            },
+            {
               "name": "SessionsPerEpoch",
               "modifier": "Default",
               "type": {
@@ -1151,15 +1185,6 @@
               },
               "fallback": "0x0000000000000000",
               "documentation": [" The current era index."]
-            },
-            {
-              "name": "Intentions",
-              "modifier": "Default",
-              "type": {
-                "PlainType": "Vec<AccountId>"
-              },
-              "fallback": "0x00",
-              "documentation": [" All the accounts with a desire to stake."]
             },
             {
               "name": "NextSessionsPerEra",
@@ -1203,18 +1228,18 @@
               "documentation": []
             },
             {
-              "name": "IntentionProfiles",
+              "name": "Intentions",
               "modifier": "Default",
               "type": {
                 "MapType": {
                   "hasher": "Blake2_256",
                   "key": "AccountId",
                   "value": "IntentionProfs",
-                  "isLinked": false
+                  "isLinked": true
                 }
               },
               "fallback": "0x000000000000000000000000000000000000000000000000",
-              "documentation": []
+              "documentation": [" All the accounts with a desire to stake."]
             },
             {
               "name": "NominationRecords",
@@ -1426,6 +1451,16 @@
                 }
               ],
               "documentation": [" The severity of missed blocks per session."]
+            },
+            {
+              "name": "set_maximum_intention_count",
+              "args": [
+                {
+                  "name": "new",
+                  "type": "Compact<u32>"
+                }
+              ],
+              "documentation": [" The maximum number of intentions."]
             },
             {
               "name": "force_new_era",
