@@ -118,7 +118,8 @@ export default class SubmittableExtrinsic extends Extrinsic {
     try {
       this.submitBroadcast();
     } catch {}
-    return this._api.rpc.author.submitAndWatchExtrinsic(this, this.checkStatus(statusCb));
+    this._api.rpc.author.submitAndWatchExtrinsic(this, this.checkStatus(statusCb));
+    return this.hash.toHex();
   }
 
   submitBroadcast(params) {
