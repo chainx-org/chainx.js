@@ -103,71 +103,72 @@ export default class SubmittableExtrinsic extends Extrinsic {
       noncePromise = Promise.resolve(options.nonce);
     }
 
-    noncePromise
+    return noncePromise
       .then(nonce => {
         const submittableExtrinsic = this.sign(signerPair, { ...options, nonce });
-        submittableExtrinsic.send(callback);
+        return submittableExtrinsic.send(callback);
       })
       .catch(callback);
-
-    return this.hash.toHex();
   }
 
-  send(statusCb) {
+  async send(statusCb) {
+    let promise;
     if (!statusCb || !this._api.hasSubscriptions) {
-      this._api.rpc.author.submitExtrinsic(this);
-      return this.hash.toHex();
-    }
-    try {
+      promise = this._api.rpc.author.submitExtrinsic(this);
       this.submitBroadcast();
-    } catch {}
-    this._api.rpc.author.submitAndWatchExtrinsic(this, this.checkStatus(statusCb));
+    } else {
+      promise = this._api.rpc.author.submitAndWatchExtrinsic(this, this.checkStatus(statusCb));
+      this.submitBroadcast();
+    }
+    await promise;
     return this.hash.toHex();
   }
 
-  submitBroadcast(params) {
-    if (!this._broadcasts.length) return;
-    const id = Math.random();
-    const requireMessage = `{"id":5,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":[${params}]}`;
-    const fromHttp = httpurl => {
-      return fetch(httpurl, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: requireMessage,
-      }).then(r => r.json());
-    };
+  submitBroadcast() {
+    try {
+      if (!this._broadcasts.length) return;
+      const id = Math.random();
+      const requireMessage = `{"id":312893,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":["${this.toHex()}"]}`;
+      const fromHttp = httpurl => {
+        return fetch(httpurl, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: requireMessage,
+        }).then(r => r.json());
+      };
 
-    const fromWs = wsurl => {
-      return new Promise((resolve, reject) => {
-        const ws = new WebSocket(wsurl);
-        ws.onmessage = m => {
-          try {
-            const data = JSON.parse(m.data);
-            if (data.id === id) f;
-            resolve(data);
-            ws.close();
-          } catch (err) {
-            reject(err);
-          }
-        };
-        ws.onopen = () => {
-          ws.send(requireMessage);
-        };
-      });
-    };
+      const fromWs = wsurl => {
+        return new Promise((resolve, reject) => {
+          const ws = new WebSocket(wsurl);
+          ws.onmessage = m => {
+            try {
+              const data = JSON.parse(m.data);
+              if (data.id === id) f;
+              resolve(data);
+              ws.close();
+            } catch (err) {
+              reject(err);
+            }
+          };
+          ws.onopen = () => {
+            ws.send(requireMessage);
+          };
+        });
+      };
 
-    for (const url of this._broadcasts) {
-      const isHttp = /^(http:\/\/|https:\/\/)/.test(url);
+      for (const url of this._broadcasts) {
+        const isHttp = /^(http:\/\/|https:\/\/)/.test(url);
 
-      if (isHttp) {
-        fromHttp(url);
-      } else {
-        fromWs(url);
+        if (isHttp) {
+          fromHttp(url);
+        } else {
+          fromWs(url);
+        }
       }
-    }
+    } catch (err) {}
   }
 
   sign(signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era } = {}) {
