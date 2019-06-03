@@ -9,8 +9,8 @@
     "@chainx/rpc-rx": "^2.13.0-alpha.4",
     "@chainx/storage": "^2.12.0",
     "@chainx/types": "^2.12.0",
-    "@polkadot/keyring": "^0.90.1",
-    "@polkadot/util": "^0.90.1",
+    "@polkadot/keyring": "^0.91.1",
+    "@polkadot/util": "^0.91.1",
     "eventemitter3": "^3.1.0",
     "rxjs": "^6.3.3"
   }

@@ -3,7 +3,7 @@
   "version": "2.12.0",
   "main": "index.js",
   "dependencies": {
-    "@polkadot/util": "^0.34.37",
+    "@polkadot/util": "^0.91.1",
     "blakejs": "^1.1.0",
     "crypto-browserify": "^3.12.0",
     "pbkdf2": "^3.0.17",

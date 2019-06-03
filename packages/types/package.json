@@ -3,8 +3,8 @@
   "version": "2.12.0",
   "main": "index.js",
   "dependencies": {
-    "@polkadot/keyring": "^0.90.1",
-    "@polkadot/util": "^0.90.1",
+    "@polkadot/keyring": "^0.91.1",
+    "@polkadot/util": "^0.91.1",
     "bitcoinjs-lib": "^4.0.2",
     "bn.js": "^4.11.8"
   }
