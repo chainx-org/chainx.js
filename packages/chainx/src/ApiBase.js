@@ -36,6 +36,10 @@ export default class ApiBase {
     );
   }
 
+  get isReady() {
+    return this._isReady;
+  }
+
   get genesisHash() {
     assert(!isUndefined(this._genesisHash), INIT_ERROR);
     return this._genesisHash;
