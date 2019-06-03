@@ -69,14 +69,9 @@ export default class ApiBase {
     return this._query;
   }
 
-  get getStorage$() {
-    assert(!isUndefined(this._getStorage$), INIT_ERROR);
-    return this._getStorage$;
-  }
-
-  get subscribeStorage$() {
-    assert(!isUndefined(this._subscribeStorage$), INIT_ERROR);
-    return this._subscribeStorage$;
+  get query$() {
+    assert(!isUndefined(this._query$), INIT_ERROR);
+    return this._query$;
   }
 
   get rpc() {
@@ -143,10 +138,8 @@ export default class ApiBase {
       const extrinsics = extrinsicsFromMeta(this.runtimeMetadata);
       const storage = storageFromMeta(this.runtimeMetadata);
       this._extrinsics = this.decorateExtrinsics(extrinsics);
-
-      this._getStorage$ = this.decorateGetStorage(storage, true);
       this._query = this.decorateGetStorage(storage, false);
-      this._subscribeStorage$ = this.decorateSubscribeStorage(storage);
+      this._query$ = this.decorateSubscribeStorage(storage);
       Event.injectMetadata(this.runtimeMetadata);
       Method.injectMethods(extrinsics);
 
@@ -171,23 +164,6 @@ export default class ApiBase {
       output.callIndex = input.callIndex;
     }
     return output;
-  }
-
-  /**
-   * 解析 tx
-   */
-  decorateExtrinsics(extrinsics) {
-    return Object.keys(extrinsics).reduce((result, sectionName) => {
-      const section = extrinsics[sectionName];
-      result[sectionName] = Object.keys(section).reduce((result, methodName) => {
-        const method = section[methodName];
-        const decorated = (...args) =>
-          new SubmittableExtrinsic(this, new Extrinsic({ method: method(...args) }), this.broadcast);
-        result[methodName] = this.decorateFunctionMeta(method, decorated);
-        return result;
-      }, {});
-      return result;
-    }, {});
   }
 
   /**

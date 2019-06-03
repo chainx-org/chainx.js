@@ -274,4 +274,21 @@ export default class WsProvider {
       }
     });
   }
+
+  disconnect() {
+    if (isNull(this.websocket)) {
+      throw new Error('Cannot disconnect on a non-open websocket');
+    }
+
+    // switch off autoConnect, we are in manual mode now
+    this.autoConnect = false;
+
+    // 1000 - Normal closure; the connection successfully completed
+    this.websocket.close(1000);
+    this.websocket = null;
+  }
+
+  clone() {
+    return new WsProvider(this.endpoint);
+  }
 }

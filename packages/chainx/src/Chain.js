@@ -65,7 +65,7 @@ class Chain {
         return combineLatest(
           of(header),
           of(blockHash.toString()),
-          this.api.subscribeStorage$.timestamp.now.at(blockHash).pipe(map(data => data.toNumber()))
+          this.api.query$.timestamp.now.at(blockHash).pipe(map(data => data.toNumber()))
         );
       }),
       map(([header, hash, now]) => {

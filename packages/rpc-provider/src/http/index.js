@@ -93,4 +93,12 @@ export default class HttpProvider {
     l.error(ERROR_SUBSCRIBE);
     throw new Error(ERROR_SUBSCRIBE);
   }
+
+  clone() {
+    return new HttpProvider(this.endpoint);
+  }
+
+  disconnect() {
+    // noop
+  }
 }
