@@ -1,5 +1,5 @@
 import EventEmitter from 'eventemitter3';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, of } from 'rxjs/operators';
 import Rpc from '@chainx/rpc-core';
 import { assert, isFunction, isObject, isUndefined, logger } from '@polkadot/util';
 import { setAddressPrefix } from '@polkadot/keyring/address';
@@ -200,22 +200,33 @@ export default class ApiBase {
         const method = section[methodName];
         const decorated = arg => {
           return this.rpc$.state.subscribeStorage([[method, arg]]).pipe(
-            // errors can occur in the case of malformed methods + args
-            catchError(() => of([])),
             // state_storage returns an array of values, since we have just subscribed to
             // a single entry, we pull that from the array and return it as-is
             map((result = []) => result[0])
           );
         };
 
-        decorated.at = (hash, arg) =>
-          this.rpc$.state.getStorage([method, arg], hash).pipe(
-            // same as above (for single result), in the case of errors on creation, return `undefined`
-            catchError(() => of())
-          );
+        decorated.at = (hash, arg) => this.rpc$.state.getStorage([method, arg], hash);
 
         result[methodName] = this.decorateFunctionMeta(method, decorated);
 
+        return result;
+      }, {});
+      return result;
+    }, {});
+  }
+
+  /**
+   * 解析 tx
+   */
+  decorateExtrinsics(extrinsics) {
+    return Object.keys(extrinsics).reduce((result, sectionName) => {
+      const section = extrinsics[sectionName];
+      result[sectionName] = Object.keys(section).reduce((result, methodName) => {
+        const method = section[methodName];
+        const decorated = (...args) =>
+          new SubmittableExtrinsic(this, new Extrinsic({ method: method(...args) }), this.broadcast);
+        result[methodName] = this.decorateFunctionMeta(method, decorated);
         return result;
       }, {});
       return result;
