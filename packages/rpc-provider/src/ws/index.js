@@ -276,7 +276,7 @@ export default class WsProvider {
   }
 
   disconnect() {
-    if (isNull(this.websocket)) {
+    if (!this.websocket) {
       throw new Error('Cannot disconnect on a non-open websocket');
     }
 

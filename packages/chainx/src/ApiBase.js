@@ -132,6 +132,10 @@ export default class ApiBase {
     }
   }
 
+  disconnect() {
+    this._rpcBase._provider.disconnect();
+  }
+
   async loadMeta() {
     try {
       this._runtimeMetadata = await this._rpcBase.state.getMetadata();
