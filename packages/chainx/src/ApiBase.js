@@ -152,8 +152,12 @@ export default class ApiBase {
       Method.injectMethods(extrinsics);
 
       // 设置网络类型
-      if (this._chainProperties && this._chainProperties.network && NET_PREFIX[this._chainProperties.network]) {
-        setAddressPrefix(NET_PREFIX[this._chainProperties.network]);
+      if (
+        this._chainProperties &&
+        this._chainProperties.network_type &&
+        NET_PREFIX[this._chainProperties.network_type]
+      ) {
+        setAddressPrefix(NET_PREFIX[this._chainProperties.network_type]);
       }
 
       return true;

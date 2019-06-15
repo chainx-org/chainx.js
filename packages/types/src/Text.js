@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { isFunction, isString, stringToU8a, u8aToString, u8aToHex } from '@polkadot/util';
+import { assert, isString, stringToU8a, u8aToString, u8aToHex } from '@polkadot/util';
 import Compact from './codec/Compact';
 /**
  * @name Text
@@ -19,26 +19,54 @@ import Compact from './codec/Compact';
 export default class Text extends String {
   constructor(value = '') {
     super(Text.decodeText(value));
+    // 奇怪的编码
+    if (value instanceof Uint8Array && stringToU8a(this.toString()).length !== value.length) {
+      this._rawU8a = Text.decodeU8a(value);
+    }
   }
+
+  static decodeU8a(value) {
+    if (!value.length) {
+      return Uint8Array.from([]);
+    }
+
+    const [offset, length] = Compact.decodeU8a(value);
+    const total = offset + length.toNumber();
+
+    assert(
+      total <= value.length,
+      `Text: required length less than remainder, expected at least ${total}, found ${value.length}`
+    );
+
+    return value.subarray(offset, total);
+  }
+
   static decodeText(value) {
     if (isString(value)) {
       return value.toString();
     } else if (value instanceof Uint8Array) {
+      if (!value.length) {
+        return '';
+      }
+
       const [offset, length] = Compact.decodeU8a(value);
-      return u8aToString(value.subarray(offset, offset + length.toNumber()));
-    } else if (isFunction(value.toString)) {
-      return value.toString();
+      const total = offset + length.toNumber();
+
+      assert(
+        total <= value.length,
+        `Text: required length less than remainder, expected at least ${total}, found ${value.length}`
+      );
+
+      return u8aToString(value.subarray(offset, total));
     }
+
     return `${value}`;
   }
   /**
    * @description The length of the value when encoded as a Uint8Array
    */
   get encodedLength() {
-    // 兼容中文
-    // const length = this.toU8a().length;
-    const length = stringToU8a(this.toString()).length;
-    return length + Compact.encodeU8a(length).length;
+    return this.toU8a().length;
   }
   /**
    * @description The length of the value
@@ -71,6 +99,9 @@ export default class Text extends String {
    * @param isBare true when the value has none of the type-specific prefixes (internal)
    */
   toU8a(isBare) {
+    if (this._rawU8a) {
+      return isBare ? this._rawU8a : Compact.addLengthPrefix(this._rawU8a);
+    }
     const encoded = stringToU8a(this.toString());
     return isBare ? encoded : Compact.addLengthPrefix(encoded);
   }
