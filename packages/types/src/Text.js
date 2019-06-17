@@ -21,7 +21,6 @@ export default class Text extends String {
     super(Text.decodeText(value));
     // 奇怪的编码
     if (value instanceof Uint8Array) {
-      console.log(value);
       this._rawU8a = Text.decodeU8a(value);
     }
   }

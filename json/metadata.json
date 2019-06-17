@@ -427,6 +427,15 @@
               "documentation": [" Timestamp when current session started."]
             },
             {
+              "name": "SessionTotalMissedBlocksCount",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x00000000",
+              "documentation": [" Total missed blocks count in the last session."]
+            },
+            {
               "name": "ForcingNewSession",
               "modifier": "Optional",
               "type": {
@@ -585,6 +594,16 @@
               "documentation": [" Set the number of sessions in an grandpa."]
             },
             {
+              "name": "set_finalized_height",
+              "args": [
+                {
+                  "name": "height",
+                  "type": "BlockNumber"
+                }
+              ],
+              "documentation": []
+            },
+            {
               "name": "report_misbehavior",
               "args": [
                 {
@@ -665,7 +684,16 @@
                 "PlainType": "SwitchStore"
               },
               "fallback": "0x00000000",
-              "documentation": []
+              "documentation": [" Emergency control"]
+            },
+            {
+              "name": "MethodCallWeight",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "BTreeMap<Text,u64>"
+              },
+              "fallback": "0x00000000",
+              "documentation": [" Each callable method in runtime normally has a different weight."]
             },
             {
               "name": "ProducerFeeProportion",
@@ -674,7 +702,7 @@
                 "PlainType": "(u32,u32)"
               },
               "fallback": "0x0000000000000000",
-              "documentation": []
+              "documentation": [" How much fee of a block should be rewarded to the block producer."]
             },
             {
               "name": "TransactionBaseFee",
@@ -715,6 +743,30 @@
                 }
               ],
               "documentation": [" first version, when add more SWITCH, should use new switch"]
+            },
+            {
+              "name": "set_method_call_weight",
+              "args": [
+                {
+                  "name": "method",
+                  "type": "Bytes"
+                },
+                {
+                  "name": "weight",
+                  "type": "u64"
+                }
+              ],
+              "documentation": [" Set a new weight for a method."]
+            },
+            {
+              "name": "remove_method_call_weight",
+              "args": [
+                {
+                  "name": "method",
+                  "type": "Bytes"
+                }
+              ],
+              "documentation": [" Remove a method weight."]
             }
           ],
           "events": [
@@ -1826,6 +1878,22 @@
                 }
               ],
               "documentation": []
+            },
+            {
+              "name": "refund_locked",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                }
+              ],
+              "documentation": [
+                " Refund the accumulative locked asset due to the loss of accuracy of Self::convert_base_to_quote()."
+              ]
             }
           ],
           "events": [
@@ -2611,6 +2679,89 @@
               "name": "RemoveMultiSigIdFor",
               "args": ["AccountId", "Hash"],
               "documentation": [" remove multisig id for a multisig addr"]
+            }
+          ]
+        },
+        {
+          "name": "xfisher",
+          "prefix": "XFisher",
+          "storage": [
+            {
+              "name": "Reported",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(BlockNumber,AccountId)",
+                  "value": "Null",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [" If the validator has been reported the double sign misbehavior at a certain height."]
+            },
+            {
+              "name": "Fishermen",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "Vec<AccountId>"
+              },
+              "fallback": "0x00",
+              "documentation": [" Qualified accounts to report the double signer."]
+            }
+          ],
+          "calls": [
+            {
+              "name": "report_double_signer",
+              "args": [
+                {
+                  "name": "double_signer",
+                  "type": "Address"
+                },
+                {
+                  "name": "height",
+                  "type": "BlockNumber"
+                },
+                {
+                  "name": "fst_header",
+                  "type": "(RawHeader,u64,H512)"
+                },
+                {
+                  "name": "snd_header",
+                  "type": "(RawHeader,u64,H512)"
+                }
+              ],
+              "documentation": [
+                " Report the double sign misbehavior by fisherman.",
+                " the header is tuple of (pre_header(Vec<u8>), signature(64Bytes), slot(u64))"
+              ]
+            },
+            {
+              "name": "register_fisherman",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" Add a new fisherman."]
+            },
+            {
+              "name": "remove_fisherman",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" Remove a fisherman."]
+            }
+          ],
+          "events": [
+            {
+              "name": "SlashDoubleSigner",
+              "args": ["BlockNumber", "AccountId", "Balance"],
+              "documentation": []
             }
           ]
         }

@@ -123,3 +123,4 @@ export { default as BitcoinTrusteeIntentionProps } from './BitcoinTrusteeIntenti
 export { default as BitcoinTrusteeSessionInfo } from './BitcoinTrusteeSessionInfo';
 export { default as ApplicationState } from './ApplicationState';
 export { default as EcdsaSignature } from './EcdsaSignature';
+export { default as RawHeader } from './RawHeader';
