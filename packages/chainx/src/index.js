@@ -117,5 +117,6 @@ class ChainX {
   };
 }
 
-export { ApiBase, WsProvider, HttpProvider };
+export { ApiBase, WsProvider, HttpProvider, Account };
+
 export default ChainX;
