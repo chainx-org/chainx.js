@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { Extrinsic } from '@chainx/types';
 import Account from '@chainx/account';
+import { WsProvider, HttpProvider } from '@chainx/rpc-provider';
 
 const IMMORTAL_ERA = new Uint8Array([0]);
 
@@ -127,35 +128,15 @@ export default class SubmittableExtrinsic extends Extrinsic {
   submitBroadcast() {
     try {
       if (!this._broadcasts.length) return;
-      const id = Math.random();
-      const requireMessage = `{"id":312893,"jsonrpc":"2.0","method":"author_submitExtrinsic","params":["${this.toHex()}"]}`;
       const fromHttp = httpurl => {
-        return fetch(httpurl, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: requireMessage,
-        }).then(r => r.json());
+        const httpSend = new HttpProvider(httpurl);
+        return httpSend.send('author_submitExtrinsic', [this.toHex()]);
       };
 
       const fromWs = wsurl => {
-        return new Promise((resolve, reject) => {
-          const ws = new WebSocket(wsurl);
-          ws.onmessage = m => {
-            try {
-              const data = JSON.parse(m.data);
-              if (data.id === id) f;
-              resolve(data);
-              ws.close();
-            } catch (err) {
-              reject(err);
-            }
-          };
-          ws.onopen = () => {
-            ws.send(requireMessage);
-          };
+        const wsSend = new WsProvider(wsurl);
+        return wsSend.send('author_submitExtrinsic', [this.toHex()], data => {
+          wsSend.disconnect();
         });
       };
 
