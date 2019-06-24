@@ -31,8 +31,8 @@ export default class Asset {
     return this.api.rpc.chainx.getAddressByAccount(...args);
   };
 
-  getWithdrawalLimitByToken = token => {
-    return this.api.rpc.chainx.getWithdrawalLimitByToken(token);
+  getWithdrawalLimitByToken = (...args) => {
+    return this.api.rpc.chainx.getWithdrawalLimitByToken(...args);
   };
 
   getSdotClaims = address => {

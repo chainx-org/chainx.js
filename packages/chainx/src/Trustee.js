@@ -3,16 +3,16 @@ export default class Trustee {
     this.api = chainx.api;
   }
 
-  getTrusteeSessionInfo = Chain => {
-    return this.api.rpc.chainx.getTrusteeSessionInfo(Chain);
+  getTrusteeSessionInfo = (...args) => {
+    return this.api.rpc.chainx.getTrusteeSessionInfo(...args);
   };
 
   getTrusteeInfoByAccount = (...args) => {
     return this.api.rpc.chainx.getTrusteeInfoByAccount(...args);
   };
 
-  getWithdrawTx = Chain => {
-    return this.api.rpc.chainx.getWithdrawTx(Chain);
+  getWithdrawTx = (...args) => {
+    return this.api.rpc.chainx.getWithdrawTx(...args);
   };
 
   createWithdrawTx = (withdrawalIdList, tx) => {

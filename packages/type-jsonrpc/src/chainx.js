@@ -13,44 +13,64 @@ const getBlockByNumber = {
 
 const getCertByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey')],
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getAssetsByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey'), createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [
+    createParam('accountId', 'PublicKey'),
+    createParam('u32', 'u32'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getAssets = {
   description: '',
-  params: [createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [createParam('u32', 'u32'), createParam('u32', 'u32'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 // @todo xrecords 类型
 const getVerifyAddress = {
   description: '',
-  params: [createParam('xassets', 'Token'), createParam('xrecords', 'Text'), createParam('xassets', 'Memo')],
+  params: [
+    createParam('xassets', 'Token'),
+    createParam('xrecords', 'Text'),
+    createParam('xassets', 'Memo'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getWithdrawalList = {
   description: '',
-  params: [createParam('chain', 'Chain'), createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [
+    createParam('chain', 'Chain'),
+    createParam('u32', 'u32'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getWithdrawalListByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey'), createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [
+    createParam('accountId', 'PublicKey'),
+    createParam('u32', 'u32'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getNominationRecords = {
   description: '',
-  params: [createParam('accountId', 'PublicKey')],
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
@@ -62,85 +82,112 @@ const getIntentions = {
 
 const getIntentionByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey')],
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getPseduIntentions = {
   description: '',
-  params: [],
+  params: [createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getPseduNominationRecords = {
   description: '',
-  params: [createParam('accountId', 'PublicKey')],
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getTradingPairs = {
   description: '',
-  params: [],
+  params: [createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getQuotations = {
   description: '',
-  params: [createParam('tradingPairIndex', 'TradingPairIndex'), createParam('u32', 'u32')],
+  params: [
+    createParam('tradingPairIndex', 'TradingPairIndex'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getOrders = {
   description: '',
-  params: [createParam('accountId', 'PublicKey'), createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [
+    createParam('accountId', 'PublicKey'),
+    createParam('u32', 'u32'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getDepositList = {
   description: '',
-  params: [createParam('chain', 'Chain'), createParam('u32', 'u32'), createParam('u32', 'u32')],
+  params: [
+    createParam('chain', 'Chain'),
+    createParam('u32', 'u32'),
+    createParam('u32', 'u32'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getAddressByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey'), createParam('chain', 'Chain')],
+  params: [
+    createParam('accountId', 'PublicKey'),
+    createParam('chain', 'Chain'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getTrusteeInfoByAccount = {
   description: '',
-  params: [createParam('accountId', 'PublicKey')],
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const verifyAddressValidity = {
   description: '',
-  params: [createParam('string', 'Text'), createParam('string', 'Text'), createParam('string', 'Text')],
+  params: [
+    createParam('string', 'Text'),
+    createParam('string', 'Text'),
+    createParam('string', 'Text'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getFeeByCallAndLength = {
   description: '',
-  params: [createParam('string', 'Text'), createParam('length', 'u64')],
+  params: [
+    createParam('string', 'Text'),
+    createParam('length', 'u64'),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
 const getWithdrawTx = {
   description: '',
-  params: [createParam('chain', 'Chain')],
+  params: [createParam('chain', 'Chain'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getTrusteeSessionInfo = {
   description: '',
-  params: [createParam('chain', 'Chain')],
+  params: [createParam('chain', 'Chain'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
 const getWithdrawalLimitByToken = {
   description: '',
-  params: [createParam('token', 'Token')],
+  params: [createParam('token', 'Token'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
