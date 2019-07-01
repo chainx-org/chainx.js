@@ -62,17 +62,15 @@ class Chain {
         return combineLatest(of(header), this.api.rpc$.chain.getBlockHash(header.blockNumber));
       }),
       switchMap(([header, blockHash]) => {
-        return combineLatest(
-          of(header),
-          of(blockHash.toString()),
-          this.api.query$.timestamp.now.at(blockHash).pipe(map(data => data.toNumber()))
-        );
+        return combineLatest(of(header), of(blockHash.toString()), this.api.rpc$.chain.getBlock(blockHash));
       }),
-      map(([header, hash, now]) => {
+      map(([header, hash, block]) => {
+        const estrinsics = block.block.extrinsics;
         return {
           number: header.blockNumber.toNumber(),
           hash,
-          now,
+          now: estrinsics[0] && estrinsics[0].method.toJSON().args.now,
+          producer: estrinsics[1] && estrinsics[1].method.toJSON().args.producer,
         };
       }),
       drr()
