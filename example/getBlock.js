@@ -4,7 +4,7 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
 
 (async () => {
   // 使用 http 连接
-  const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'));
+  const api = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'));
   // 使用 websocket 连接
   // const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'))
 
