@@ -1,8 +1,10 @@
 const { ApiBase, HttpProvider, WsProvider } = require('chainx.js');
+const { Observable, timer } = require('rxjs');
+const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
 
 (async () => {
   // 使用 http 连接
-  const api = new ApiBase(new HttpProvider('https://w1.chainx.org/rpc'));
+  const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'));
   // 使用 websocket 连接
   // const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'))
 
@@ -44,9 +46,38 @@ const { ApiBase, HttpProvider, WsProvider } = require('chainx.js');
     return transfers;
   }
 
-  const transfers = await getTransfers(35689);
+  // 错误重试
+  const getTransfersWithRetry = async function getTransfersWithRetry(blockNumber) {
+    return new Observable(async subscriber => {
+      try {
+        const result = await getTransfers(blockNumber);
+        subscriber.next(result);
+        subscriber.complete();
+      } catch (error) {
+        if (!subscriber.closed) {
+          console.log(error);
+          subscriber.error(error);
+        }
+      }
+    })
+      .pipe(
+        timeout(5000),
+        retryWhen(errors => {
+          console.log('发生了一个错误，等待重试');
+          return errors.pipe(delayWhen(val => timer(5000)));
+        })
+      )
+      .toPromise();
+  };
 
-  // websocket 断开连接
-  // api.provider.disConnect()
-  console.log(JSON.stringify(transfers));
+  api.rpc$.chain.subscribeNewHead().subscribe(data => {
+    const blockNumber = data.blockNumber.toNumber();
+    getTransfersWithRetry(blockNumber)
+      .then(() => {
+        console.log(blockNumber, 'success');
+      })
+      .catch(error => {
+        console.log(error, blockNumber);
+      });
+  });
 })();

@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "chainx.js": "^2.13.0-beta.2",
+    "rxjs": "^6.5.2",
     "tweetnacl": "^1.0.1"
   }
 }
