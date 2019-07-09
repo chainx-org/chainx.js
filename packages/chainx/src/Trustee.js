@@ -7,6 +7,10 @@ export default class Trustee {
     return this.api.rpc.chainx.getTrusteeSessionInfo(...args);
   };
 
+  getDepositLimitByToken = (...args) => {
+    return this.api.rpc.chainx.getDepositLimitByToken(...args);
+  };
+
   getTrusteeInfoByAccount = (...args) => {
     return this.api.rpc.chainx.getTrusteeInfoByAccount(...args);
   };
