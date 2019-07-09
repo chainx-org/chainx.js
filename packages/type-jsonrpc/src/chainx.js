@@ -181,6 +181,12 @@ const getWithdrawTx = {
 
 const getTrusteeSessionInfo = {
   description: '',
+  params: [createParam('chain', 'Chain'), createParam('u32', 'U32'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
+const getDepositLimitByToken = {
+  description: '',
   params: [createParam('chain', 'Chain'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
@@ -225,5 +231,6 @@ export default {
     getWithdrawTx: createMethod(section, 'getWithdrawTx', getWithdrawTx),
     getTrusteeSessionInfo: createMethod(section, 'getTrusteeSessionInfo', getTrusteeSessionInfo),
     getWithdrawalLimitByToken: createMethod(section, 'getWithdrawalLimitByToken', getWithdrawalLimitByToken),
+    getDepositLimitByToken: createMethod(section, 'getDepositLimitByToken', getDepositLimitByToken),
   },
 };

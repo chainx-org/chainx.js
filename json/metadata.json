@@ -820,6 +820,24 @@
               "documentation": [" asset info for every token, key is token token"]
             },
             {
+              "name": "AssetLimitProps",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "BTreeMap<AssetLimit,bool>",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00000000",
+              "documentation": [
+                " asset extend limit properties, set asset \"can do\", example, `CanTransfer`, `CanDestroyWithdrawal`",
+                " notice if not set AssetLimit, default is true for this limit",
+                " if want let limit make sense, must set false for the limit"
+              ]
+            },
+            {
               "name": "AssetBalance",
               "modifier": "Default",
               "type": {
@@ -887,6 +905,24 @@
               "documentation": [" revoke asset, mark this asset is invalid"]
             },
             {
+              "name": "modify_asset_info",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "token_name",
+                  "type": "Option<Token>"
+                },
+                {
+                  "name": "desc",
+                  "type": "Option<Desc>"
+                }
+              ],
+              "documentation": []
+            },
+            {
               "name": "set_balance",
               "args": [
                 {
@@ -903,6 +939,38 @@
                 }
               ],
               "documentation": [" set free token for an account"]
+            },
+            {
+              "name": "set_asset_limit_props",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "props",
+                  "type": "BTreeMap<AssetLimit,bool>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "modify_asset_limit",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "limit",
+                  "type": "AssetLimit"
+                },
+                {
+                  "name": "can_do",
+                  "type": "bool"
+                }
+              ],
+              "documentation": []
             },
             {
               "name": "transfer",
@@ -1185,6 +1253,15 @@
               "documentation": [" Minimum number of staking participants before emergency conditions are imposed."]
             },
             {
+              "name": "MinimumCandidateThreshold",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "(Balance,Balance)"
+              },
+              "fallback": "0x00000000000000000000000000000000",
+              "documentation": [" Minimum value (self_bonded, total_bonded) to be a candidate of validator election."]
+            },
+            {
               "name": "SessionsPerEra",
               "modifier": "Default",
               "type": {
@@ -1237,6 +1314,15 @@
               },
               "fallback": "0x0000000000000000",
               "documentation": [" The current era index."]
+            },
+            {
+              "name": "DistributionRatio",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "(u32,u32)"
+              },
+              "fallback": "0x0100000001000000",
+              "documentation": [" Allocation ratio of native asset and cross-chain assets."]
             },
             {
               "name": "NextSessionsPerEra",
@@ -1524,19 +1610,6 @@
               "documentation": [" The maximum number of intentions."]
             },
             {
-              "name": "force_new_era",
-              "args": [
-                {
-                  "name": "apply_rewards",
-                  "type": "bool"
-                }
-              ],
-              "documentation": [
-                " Force there to be a new era. This also forces a new session immediately after.",
-                " `apply_rewards` should be true for validators to get the session reward."
-              ]
-            },
-            {
               "name": "set_minimum_penalty",
               "args": [
                 {
@@ -1545,6 +1618,26 @@
                 }
               ],
               "documentation": [" Set the offline slash grace period."]
+            },
+            {
+              "name": "set_distribution_ratio",
+              "args": [
+                {
+                  "name": "new",
+                  "type": "(u32,u32)"
+                }
+              ],
+              "documentation": [" Set the distribution ratio between cross-chain assets and native assets."]
+            },
+            {
+              "name": "set_minimum_candidate_threshold",
+              "args": [
+                {
+                  "name": "new",
+                  "type": "(Balance,Balance)"
+                }
+              ],
+              "documentation": [" Set the minimum validator candidate threshold."]
             }
           ],
           "events": [
@@ -1552,6 +1645,11 @@
               "name": "Reward",
               "args": ["Balance", "Balance"],
               "documentation": [" All validators have been rewarded by the given balance."]
+            },
+            {
+              "name": "SessionReward",
+              "args": ["Balance", "Balance", "Balance", "Balance"],
+              "documentation": [" All rewards issued to all (psedu-)intentions."]
             },
             {
               "name": "MissedBlocksOfOfflineValidatorPerSession",
@@ -1649,6 +1747,17 @@
               },
               "fallback": "0x00000000000000000000000000000000",
               "documentation": []
+            },
+            {
+              "name": "DepositReward",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "Balance"
+              },
+              "fallback": "0xa086010000000000",
+              "documentation": [
+                " when deposit success, reward some pcx to user for claiming. Default is 100000 = 0.001 PCX; 0.001*100000000"
+              ]
             }
           ],
           "calls": [
@@ -1672,6 +1781,16 @@
                 {
                   "name": "value",
                   "type": "u32"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_deposit_reward",
+              "args": [
+                {
+                  "name": "value",
+                  "type": "Balance"
                 }
               ],
               "documentation": []
@@ -2016,6 +2135,23 @@
               "documentation": [" tx info for txhash"]
             },
             {
+              "name": "TxMarkFor",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "H256",
+                  "value": "Null",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [
+                " mark tx has been handled, in case re-handle this tx",
+                " do not need to remove after this tx is removed from ChainX"
+              ]
+            },
+            {
               "name": "InputAddrFor",
               "modifier": "Optional",
               "type": {
@@ -2107,6 +2243,15 @@
               "documentation": [" get BtcWithdrawalFee from genesis_config"]
             },
             {
+              "name": "BtcMinDeposit",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u64"
+              },
+              "fallback": "0xa086010000000000",
+              "documentation": [" min deposit value limit, default is 10w sotashi(0.001 BTC)"]
+            },
+            {
               "name": "MaxWithdrawalCount",
               "modifier": "Default",
               "type": {
@@ -2125,7 +2270,7 @@
                   "type": "Bytes"
                 }
               ],
-              "documentation": []
+              "documentation": [" if use `BlockHeader` struct would export in metadata, cause complex in front-end"]
             },
             {
               "name": "push_transaction",
@@ -2135,7 +2280,7 @@
                   "type": "Bytes"
                 }
               ],
-              "documentation": []
+              "documentation": [" if use `RelayTx` struct would export in metadata, cause complex in front-end"]
             },
             {
               "name": "create_withdraw_tx",
@@ -2162,15 +2307,49 @@
               "documentation": []
             },
             {
-              "name": "fix_withdrawal_state_by_trustees",
+              "name": "remove_tx_and_proposal",
               "args": [
                 {
-                  "name": "withdrawal_id",
-                  "type": "u32"
+                  "name": "txhash",
+                  "type": "Option<H256>"
                 },
                 {
-                  "name": "state",
-                  "type": "ApplicationState"
+                  "name": "drop_proposal",
+                  "type": "bool"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "remove_pending",
+              "args": [
+                {
+                  "name": "addr",
+                  "type": "BitcoinAddress"
+                },
+                {
+                  "name": "who",
+                  "type": "Option<AccountId>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_btc_withdrawal_fee",
+              "args": [
+                {
+                  "name": "fee",
+                  "type": "Balance"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_btc_deposit_limit",
+              "args": [
+                {
+                  "name": "value",
+                  "type": "Balance"
                 }
               ],
               "documentation": []
@@ -2186,25 +2365,39 @@
               "documentation": []
             },
             {
-              "name": "remove_tx_and_proposal",
+              "name": "set_btc_deposit_limit_by_trustees",
               "args": [
                 {
-                  "name": "txhash",
-                  "type": "Option<H256>"
-                },
-                {
-                  "name": "drop_proposal",
-                  "type": "bool"
+                  "name": "value",
+                  "type": "Balance"
                 }
               ],
               "documentation": []
             },
             {
-              "name": "set_btc_withdrawal_fee",
+              "name": "fix_withdrawal_state_by_trustees",
               "args": [
                 {
-                  "name": "fee",
-                  "type": "Balance"
+                  "name": "withdrawal_id",
+                  "type": "u32"
+                },
+                {
+                  "name": "state",
+                  "type": "ApplicationState"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "remove_pending_by_trustees",
+              "args": [
+                {
+                  "name": "addr",
+                  "type": "BitcoinAddress"
+                },
+                {
+                  "name": "who",
+                  "type": "Option<AccountId>"
                 }
               ],
               "documentation": []
@@ -2226,9 +2419,7 @@
             {
               "name": "Deposit",
               "args": ["AccountId", "Chain", "Token", "Balance", "Memo", "AddrStr", "Bytes", "TxState"],
-              "documentation": [
-                " who, Chain, Token, apply blockheader, balance, memo, Chain Addr, chain txid, apply height, TxState"
-              ]
+              "documentation": [" who, Chain, Token, balance, memo, Chain Addr, chain txid, chain TxState"]
             },
             {
               "name": "DepositPending",
@@ -2767,6 +2958,129 @@
               "name": "SlashDoubleSigner",
               "args": ["BlockNumber", "BlockNumber", "u64", "AccountId", "Balance"],
               "documentation": []
+            }
+          ]
+        },
+        {
+          "name": "xbridge_common",
+          "prefix": "XBridgeCommon",
+          "storage": [
+            {
+              "name": "CrossChainBinding",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(Token,AccountId)",
+                  "value": "AccountId",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
+            }
+          ],
+          "calls": null,
+          "events": [
+            {
+              "name": "ChannelBinding",
+              "args": ["Token", "AccountId", "AccountId"],
+              "documentation": []
+            }
+          ]
+        },
+        {
+          "name": "xbitcoin_lockup",
+          "prefix": "XBridgeOfBTCLockup",
+          "storage": [
+            {
+              "name": "LockedUpBTC",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(H256,u32)",
+                  "value": "(AccountId,u64,BitcoinAddress)",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [
+                " locked up btc is UTXO, using (txid, out_index) to represent it",
+                " use UTXO => (accountid, balance)"
+              ]
+            },
+            {
+              "name": "AddressLockedCoin",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "BitcoinAddress",
+                  "value": "u64",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x0000000000000000",
+              "documentation": [" sum value for single Bitcoin addr"]
+            },
+            {
+              "name": "LockedCoinLimit",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "(u64,u64)"
+              },
+              "fallback": "0x40420f000000000000ca9a3b00000000",
+              "documentation": [" single addr and ont output limit coin value, default limit is 0.01 BTC ~ 10 BTC"]
+            }
+          ],
+          "calls": [
+            {
+              "name": "push_transaction",
+              "args": [
+                {
+                  "name": "tx",
+                  "type": "Bytes"
+                }
+              ],
+              "documentation": [" if use `LockupRelayTx` struct would export in metadata, cause complex in front-end"]
+            },
+            {
+              "name": "release_lock",
+              "args": [
+                {
+                  "name": "utxos",
+                  "type": "Vec<(H256,u32)>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_locked_coin_limit",
+              "args": [
+                {
+                  "name": "limit",
+                  "type": "(u64,u64)"
+                }
+              ],
+              "documentation": []
+            }
+          ],
+          "events": [
+            {
+              "name": "Lock",
+              "args": ["AccountId", "u64", "H256", "u32", "Bytes"],
+              "documentation": [" accountid, value, txid, txoutput_index, output_btc_addr"]
+            },
+            {
+              "name": "Unlock",
+              "args": ["H256", "u32", "H256", "u32"],
+              "documentation": [" txid, input_index, input_outpoint_hash, input_outpoint_index"]
+            },
+            {
+              "name": "UnlockedFromRoot",
+              "args": ["H256", "u32"],
+              "documentation": [" use root to unlock UTXO"]
             }
           ]
         }
