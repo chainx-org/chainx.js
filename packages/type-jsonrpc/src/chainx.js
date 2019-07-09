@@ -181,7 +181,11 @@ const getWithdrawTx = {
 
 const getTrusteeSessionInfo = {
   description: '',
-  params: [createParam('chain', 'Chain'), createParam('u32', 'U32'), createParam('hash', 'Hash', { isOptional: true })],
+  params: [
+    createParam('chain', 'Chain'),
+    createParam('u32', 'U32', { isOptional: true }),
+    createParam('hash', 'Hash', { isOptional: true }),
+  ],
   type: 'RawJSON',
 };
 
