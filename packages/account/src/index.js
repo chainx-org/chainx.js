@@ -27,6 +27,8 @@ export const NET_PREFIX = {
   mainnet: 44,
 };
 
+setAddressPrefix(NET_PREFIX.mainnet);
+
 /**
  * 保持兼容 @polkadot/keyring/pair
  */
