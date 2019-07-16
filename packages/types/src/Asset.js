@@ -1,6 +1,10 @@
 import Struct from './codec/Struct';
+import Token from './Token';
+import Chain from './Chain';
+import Precision from './Precision';
+import Desc from './Desc';
 
-export class Asset extends Struct {
+export default class Asset extends Struct {
   constructor(value) {
     super(
       {
