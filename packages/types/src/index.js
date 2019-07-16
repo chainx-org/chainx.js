@@ -128,3 +128,4 @@ export { default as RawHeader } from './RawHeader';
 export { default as Asset } from './Asset';
 export { default as Precision } from './Precision';
 export { default as Desc } from './Desc';
+export { default as AssetLimit } from './AssetLimit';
