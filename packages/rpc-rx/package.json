@@ -1,15 +1,15 @@
 {
   "name": "@chainx/rpc-rx",
-  "version": "2.15.2",
+  "version": "2.16.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/rpc-core": "^2.15.2",
+    "@chainx/rpc-core": "^2.16.0",
     "@polkadot/util": "^0.91.1",
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
-    "@chainx/rpc-provider": "^2.15.0",
+    "@chainx/rpc-provider": "^2.16.0",
     "@polkadot/util": "^0.33.21",
     "eventemitter3": "^3.1.0"
   }

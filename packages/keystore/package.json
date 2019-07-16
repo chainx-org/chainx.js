@@ -1,6 +1,6 @@
 {
   "name": "@chainx/keystore",
-  "version": "2.15.0",
+  "version": "2.16.0",
   "main": "index.js",
   "dependencies": {
     "@polkadot/util": "^0.91.1",
