@@ -2,7 +2,9 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { Method } from '@chainx/types';
+import { getTypeClass, getTypeDef } from '@chainx/types/codec';
 import { assert, stringCamelCase } from '@polkadot/util';
+
 /**
  * From the metadata of a function in the module's storage, generate the function
  * that will return the an [[MethodFunction]].
@@ -15,6 +17,10 @@ import { assert, stringCamelCase } from '@polkadot/util';
 export default function createDescriptor(section, sectionIndex, methodIndex, callMetadata) {
   const callIndex = new Uint8Array([sectionIndex, methodIndex]);
   const expectedArgs = callMetadata.args;
+
+  // 检测未定义类型
+  expectedArgs.map(data => getTypeDef(data.type)).map(getTypeClass);
+
   const funcName = stringCamelCase(callMetadata.name.toString());
   const extrinsicFn = (...args) => {
     assert(

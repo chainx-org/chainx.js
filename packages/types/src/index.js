@@ -129,3 +129,6 @@ export { default as Asset } from './Asset';
 export { default as Precision } from './Precision';
 export { default as Desc } from './Desc';
 export { default as AssetLimit } from './AssetLimit';
+export { default as Key } from './StorageKey';
+export { default as CallSwitcher } from './CallSwitcher';
+export { default as TrusteeInfoConfig } from './TrusteeInfoConfig';
