@@ -70,14 +70,6 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
       .toPromise();
   };
 
-  api.rpc$.chain.subscribeNewHead().subscribe(data => {
-    const blockNumber = data.blockNumber.toNumber();
-    getTransfersWithRetry(blockNumber)
-      .then(() => {
-        console.log(blockNumber, 'success');
-      })
-      .catch(error => {
-        console.log(error, blockNumber);
-      });
-  });
+  await getTransfersWithRetry(5550);
+  console.log('over');
 })();
