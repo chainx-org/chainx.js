@@ -4,7 +4,7 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
 
 (async () => {
   // 使用 http 连接
-  const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'));
+  const api = new ApiBase(new WsProvider('wss://w1.chainx.org.cn/ws'));
   // 使用 websocket 连接
   // const api = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'))
 
@@ -13,6 +13,7 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
   async function getTransfers(blockNumber) {
     const blockHash = await api.rpc.chain.getBlockHash(blockNumber);
     const block = await api.rpc.chain.getBlock(blockHash);
+
     const estrinsics = block.block.extrinsics;
     const transfers = [];
 
@@ -70,14 +71,5 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
       .toPromise();
   };
 
-  api.rpc$.chain.subscribeNewHead().subscribe(data => {
-    const blockNumber = data.blockNumber.toNumber();
-    getTransfersWithRetry(blockNumber)
-      .then(() => {
-        console.log(blockNumber, 'success');
-      })
-      .catch(error => {
-        console.log(error, blockNumber);
-      });
-  });
+  getTransfersWithRetry(5550);
 })();

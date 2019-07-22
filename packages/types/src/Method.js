@@ -160,4 +160,12 @@ export default class Method extends Struct {
   toRawType() {
     return 'Call';
   }
+
+  toJSON() {
+    const meta = this.meta.toJSON();
+    return {
+      methodName: meta.name,
+      ...super.toJSON(),
+    };
+  }
 }

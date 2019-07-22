@@ -200,6 +200,11 @@ const getWithdrawalLimitByToken = {
   params: [createParam('token', 'Token'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
+const particularAccounts = {
+  description: '',
+  params: [],
+  type: 'RawJSON',
+};
 
 const section = 'chainx';
 
@@ -236,5 +241,6 @@ export default {
     getTrusteeSessionInfo: createMethod(section, 'getTrusteeSessionInfo', getTrusteeSessionInfo),
     getWithdrawalLimitByToken: createMethod(section, 'getWithdrawalLimitByToken', getWithdrawalLimitByToken),
     getDepositLimitByToken: createMethod(section, 'getDepositLimitByToken', getDepositLimitByToken),
+    particularAccounts: createMethod(section, 'particularAccounts', particularAccounts),
   },
 };

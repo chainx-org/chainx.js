@@ -132,3 +132,8 @@ export { default as AssetLimit } from './AssetLimit';
 export { default as Key } from './StorageKey';
 export { default as CallSwitcher } from './CallSwitcher';
 export { default as TrusteeInfoConfig } from './TrusteeInfoConfig';
+
+export { default as AddrType } from './AddrType';
+export { default as MultiSigPermission } from './MultiSigPermission';
+export { default as AddrInfo } from './AddrInfo';
+export { default as PendingState } from './PendingState';
