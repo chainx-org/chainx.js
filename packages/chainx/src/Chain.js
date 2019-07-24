@@ -55,6 +55,10 @@ class Chain {
     return this.api.rpc.system.properties();
   }
 
+  particularAccounts() {
+    return this.api.rpc.chainx.particularAccounts();
+  }
+
   subscribeNewHead() {
     return this.api.rpc$.chain.subscribeNewHead().pipe(
       filter(header => header && !!header.blockNumber),
