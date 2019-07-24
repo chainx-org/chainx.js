@@ -39,6 +39,7 @@ export default class Method extends Struct {
       decoded
     );
     this._meta = decoded.meta;
+    this._func = decoded.func;
   }
   /**
    * Decode input to pass into constructor.
@@ -57,11 +58,14 @@ export default class Method extends Struct {
       // The first 2 bytes are the callIndex
       const callIndex = value.subarray(0, 2);
       // Find metadata with callIndex
+      const func = Method.findFunction(callIndex);
+
       const meta = _meta || Method.findFunction(callIndex).meta;
       return {
         args: value.subarray(2),
         argsDef: Method.getArgsDef(meta),
         callIndex,
+        func,
         meta,
       };
     } else if (isObject(value) && value.callIndex && value.args) {
@@ -70,11 +74,14 @@ export default class Method extends Struct {
       // Get the correct lookupIndex
       const lookupIndex = callIndex instanceof MethodIndex ? callIndex.toU8a() : callIndex;
       // Find metadata with callIndex
+      const func = Method.findFunction(lookupIndex);
       const meta = _meta || Method.findFunction(lookupIndex).meta;
+
       return {
         args,
         argsDef: Method.getArgsDef(meta),
         meta,
+        func,
         callIndex,
       };
     }
@@ -162,9 +169,8 @@ export default class Method extends Struct {
   }
 
   toJSON() {
-    const meta = this.meta.toJSON();
     return {
-      methodName: meta.name,
+      methodName: `${this._func.section}|${this._func.method}`,
       ...super.toJSON(),
     };
   }

@@ -2,7 +2,7 @@ const Chainx = require('chainx.js').default;
 
 (async () => {
   // 目前只支持 websocket 链接
-  const chainx = new Chainx('wss://w1.chainx.org/ws', {
+  const chainx = new Chainx('wss://w1.chainx.org.cn/ws', {
     broadcast: ['wss://w1.chainx.org.cn/ws', 'https://w1.chainx.org.cn/rpc'],
   });
 
@@ -24,16 +24,17 @@ const Chainx = require('chainx.js').default;
   );
 
   // 查看 method 哈希
-  console.log('Function: ', extrinsic.method.toHex());
+  console.log(extrinsic.method.meta);
+  console.log('Function: ', extrinsic.method.toJSON());
 
   // 签名并发送交易，0x0000000000000000000000000000000000000000000000000000000000000000 是用于签名的私钥
-  extrinsic.signAndSend('0x0000000000000000000000000000000000000000000000000000000000000000', (error, response) => {
-    if (error) {
-      console.log(error);
-    } else if (response.status === 'Finalized') {
-      if (response.result === 'ExtrinsicSuccess') {
-        console.log('交易成功');
-      }
-    }
-  });
+  // extrinsic.signAndSend('0x0000000000000000000000000000000000000000000000000000000000000000', (error, response) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else if (response.status === 'Finalized') {
+  //     if (response.result === 'ExtrinsicSuccess') {
+  //       console.log('交易成功');
+  //     }
+  //   }
+  // });
 })();
