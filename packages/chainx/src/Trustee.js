@@ -52,7 +52,17 @@ export default class Trustee {
     return this.api.tx.xBridgeFeatures.transitionTrusteeSession(chain, new_trustees);
   };
 
-  removeMultiSigFor = (multi_sig_addr, multi_sig_id) => {};
+  removeMultiSigFor = (multi_sig_addr, multi_sig_id) => {
+    return this.api.tx.xMultiSig.removeMultiSigFor(multi_sig_addr, multi_sig_id);
+  };
+
+  confirm = (multi_sig_addr, multi_sig_id) => {
+    return this.api.tx.xMultiSig.confirm(multi_sig_addr, multi_sig_id);
+  };
+
+  execute = (multi_sig_addr, proposal) => {
+    return this.api.tx.xMultiSig.execute(multi_sig_addr, proposal);
+  };
 
   /**
    * 设置信托

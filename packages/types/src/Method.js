@@ -170,7 +170,7 @@ export default class Method extends Struct {
 
   toJSON() {
     return {
-      methodName: `${this._func.section}|${this._func.method}`,
+      methodName: `${this._func.section}::${this._func.method}`,
       ...super.toJSON(),
     };
   }
