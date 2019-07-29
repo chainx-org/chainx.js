@@ -7,7 +7,7 @@ import createParam from './create/param';
 
 const getBlockByNumber = {
   description: '',
-  params: [createParam('number', 'Number', { isOptional: true })],
+  params: [createParam('blockNumber', 'BlockNumber', { isOptional: true })],
   type: 'RawJSON',
 };
 
