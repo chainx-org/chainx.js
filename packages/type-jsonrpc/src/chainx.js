@@ -200,9 +200,16 @@ const getWithdrawalLimitByToken = {
   params: [createParam('token', 'Token'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
+
 const particularAccounts = {
   description: '',
   params: [],
+  type: 'RawJSON',
+};
+
+const getNextRenominateByAccount = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 
@@ -242,5 +249,6 @@ export default {
     getWithdrawalLimitByToken: createMethod(section, 'getWithdrawalLimitByToken', getWithdrawalLimitByToken),
     getDepositLimitByToken: createMethod(section, 'getDepositLimitByToken', getDepositLimitByToken),
     particularAccounts: createMethod(section, 'particularAccounts', particularAccounts),
+    getNextRenominateByAccount: createMethod(section, 'getNextRenominateByAccount', getNextRenominateByAccount),
   },
 };

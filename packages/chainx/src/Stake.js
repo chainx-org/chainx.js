@@ -23,6 +23,10 @@ export default class Stake {
     return this.api.rpc.chainx.getPseduNominationRecords(...args);
   };
 
+  getNextRenominateByAccount = (...args) => {
+    return this.api.rpc.chainx.getNextRenominateByAccount(...args);
+  };
+
   getBondingDuration = () => {
     return this.api.query.xStaking.bondingDuration().then(result => result.toJSON());
   };
