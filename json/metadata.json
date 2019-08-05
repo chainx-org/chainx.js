@@ -678,13 +678,13 @@
           "prefix": "XFeeManager",
           "storage": [
             {
-              "name": "Switch",
+              "name": "Switcher",
               "modifier": "Default",
               "type": {
-                "PlainType": "SwitchStore"
+                "PlainType": "BTreeMap<CallSwitcher,bool>"
               },
               "fallback": "0x00000000",
-              "documentation": [" Emergency control"]
+              "documentation": []
             },
             {
               "name": "MethodCallWeight",
@@ -693,7 +693,10 @@
                 "PlainType": "BTreeMap<Text,u64>"
               },
               "fallback": "0x00000000",
-              "documentation": [" Each callable method in runtime normally has a different weight."]
+              "documentation": [
+                " Emergency control",
+                " Each callable method in runtime normally has a different weight."
+              ]
             },
             {
               "name": "ProducerFeeProportion",
@@ -735,14 +738,28 @@
               "documentation": []
             },
             {
-              "name": "set_switch_store",
+              "name": "modify_switcher",
               "args": [
                 {
                   "name": "switch",
-                  "type": "SwitchStore"
+                  "type": "CallSwitcher"
+                },
+                {
+                  "name": "open",
+                  "type": "bool"
                 }
               ],
-              "documentation": [" first version, when add more SWITCH, should use new switch"]
+              "documentation": [" set open/close for switcher"]
+            },
+            {
+              "name": "set_switcher",
+              "args": [
+                {
+                  "name": "all_switcher",
+                  "type": "BTreeMap<CallSwitcher,bool>"
+                }
+              ],
+              "documentation": []
             },
             {
               "name": "set_method_call_weight",
@@ -905,24 +922,6 @@
               "documentation": [" revoke asset, mark this asset is invalid"]
             },
             {
-              "name": "modify_asset_info",
-              "args": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "token_name",
-                  "type": "Option<Token>"
-                },
-                {
-                  "name": "desc",
-                  "type": "Option<Desc>"
-                }
-              ],
-              "documentation": []
-            },
-            {
               "name": "set_balance",
               "args": [
                 {
@@ -939,6 +938,46 @@
                 }
               ],
               "documentation": [" set free token for an account"]
+            },
+            {
+              "name": "transfer",
+              "args": [
+                {
+                  "name": "dest",
+                  "type": "Address"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "value",
+                  "type": "Balance"
+                },
+                {
+                  "name": "memo",
+                  "type": "Memo"
+                }
+              ],
+              "documentation": [" transfer between account"]
+            },
+            {
+              "name": "modify_asset_info",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "token_name",
+                  "type": "Option<Token>"
+                },
+                {
+                  "name": "desc",
+                  "type": "Option<Desc>"
+                }
+              ],
+              "documentation": []
             },
             {
               "name": "set_asset_limit_props",
@@ -971,28 +1010,6 @@
                 }
               ],
               "documentation": []
-            },
-            {
-              "name": "transfer",
-              "args": [
-                {
-                  "name": "dest",
-                  "type": "Address"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "value",
-                  "type": "Balance"
-                },
-                {
-                  "name": "memo",
-                  "type": "Memo"
-                }
-              ],
-              "documentation": [" transfer between account"]
             }
           ],
           "events": [
@@ -1394,6 +1411,17 @@
               "documentation": []
             },
             {
+              "name": "UpperBoundFactor",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x0a000000",
+              "documentation": [
+                " The upper bound nominations of the intention that could absorb is up to the self-bonded."
+              ]
+            },
+            {
               "name": "EvilValidatorsPerSession",
               "modifier": "Default",
               "type": {
@@ -1401,6 +1429,29 @@
               },
               "fallback": "0x00",
               "documentation": [" Reported validators that did evil, reset per session."]
+            },
+            {
+              "name": "LastRenominationOf",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "AccountId",
+                  "value": "BlockNumber",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [" The height of user's last nomination."]
+            },
+            {
+              "name": "MaxUnbondEntriesPerIntention",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x0a000000",
+              "documentation": [" The maximum ongoing unbond entries simultaneously against per intention."]
             },
             {
               "name": "MinimumPenalty",
@@ -1501,7 +1552,7 @@
                   "type": "Memo"
                 }
               ],
-              "documentation": []
+              "documentation": [" Unbond the nomination."]
             },
             {
               "name": "claim",
@@ -1525,7 +1576,7 @@
                   "type": "u32"
                 }
               ],
-              "documentation": []
+              "documentation": [" Free the locked unnomination."]
             },
             {
               "name": "refresh",
@@ -1638,6 +1689,16 @@
                 }
               ],
               "documentation": [" Set the minimum validator candidate threshold."]
+            },
+            {
+              "name": "set_upper_bond_factor",
+              "args": [
+                {
+                  "name": "new",
+                  "type": "u32"
+                }
+              ],
+              "documentation": [" Set the factor of intention's total nomination upper bond."]
             }
           ],
           "events": [
@@ -1645,11 +1706,6 @@
               "name": "Reward",
               "args": ["Balance", "Balance"],
               "documentation": [" All validators have been rewarded by the given balance."]
-            },
-            {
-              "name": "SessionReward",
-              "args": ["Balance", "Balance", "Balance", "Balance"],
-              "documentation": [" All rewards issued to all (psedu-)intentions."]
             },
             {
               "name": "MissedBlocksOfOfflineValidatorPerSession",
@@ -1690,6 +1746,11 @@
               "name": "Unfreeze",
               "args": ["AccountId", "AccountId"],
               "documentation": []
+            },
+            {
+              "name": "SessionReward",
+              "args": ["Balance", "Balance", "Balance", "Balance"],
+              "documentation": [" All rewards issued to all (psedu-)intentions."]
             }
           ]
         },
@@ -1718,7 +1779,35 @@
                 "PlainType": "Vec<Token>"
               },
               "fallback": "0x00",
+              "documentation": [" Cross-chain assets that are able to participate in the assets mining."]
+            },
+            {
+              "name": "ClaimRestrictionOf",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "(u32,BlockNumber)",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x0a000000409d040000000000",
               "documentation": []
+            },
+            {
+              "name": "LastClaimOf",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,Token)",
+                  "value": "BlockNumber",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [" Block height of last claim for some cross miner per token."]
             },
             {
               "name": "PseduIntentionProfiles",
@@ -1783,7 +1872,9 @@
                   "type": "u32"
                 }
               ],
-              "documentation": []
+              "documentation": [
+                " Set the discount for converting the cross-chain asset to PCX based on the market value."
+              ]
             },
             {
               "name": "set_deposit_reward",
@@ -1791,6 +1882,20 @@
                 {
                   "name": "value",
                   "type": "Balance"
+                }
+              ],
+              "documentation": [" Set the reward for the newly issued cross-chain assets."]
+            },
+            {
+              "name": "set_claim_restriction",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "(u32,BlockNumber)"
                 }
               ],
               "documentation": []
@@ -2307,6 +2412,30 @@
               "documentation": []
             },
             {
+              "name": "fix_withdrawal_state_by_trustees",
+              "args": [
+                {
+                  "name": "withdrawal_id",
+                  "type": "u32"
+                },
+                {
+                  "name": "state",
+                  "type": "ApplicationState"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_btc_withdrawal_fee_by_trustees",
+              "args": [
+                {
+                  "name": "fee",
+                  "type": "Balance"
+                }
+              ],
+              "documentation": []
+            },
+            {
               "name": "remove_tx_and_proposal",
               "args": [
                 {
@@ -2316,20 +2445,6 @@
                 {
                   "name": "drop_proposal",
                   "type": "bool"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "remove_pending",
-              "args": [
-                {
-                  "name": "addr",
-                  "type": "BitcoinAddress"
-                },
-                {
-                  "name": "who",
-                  "type": "Option<AccountId>"
                 }
               ],
               "documentation": []
@@ -2355,16 +2470,6 @@
               "documentation": []
             },
             {
-              "name": "set_btc_withdrawal_fee_by_trustees",
-              "args": [
-                {
-                  "name": "fee",
-                  "type": "Balance"
-                }
-              ],
-              "documentation": []
-            },
-            {
               "name": "set_btc_deposit_limit_by_trustees",
               "args": [
                 {
@@ -2375,15 +2480,15 @@
               "documentation": []
             },
             {
-              "name": "fix_withdrawal_state_by_trustees",
+              "name": "remove_pending",
               "args": [
                 {
-                  "name": "withdrawal_id",
-                  "type": "u32"
+                  "name": "addr",
+                  "type": "BitcoinAddress"
                 },
                 {
-                  "name": "state",
-                  "type": "ApplicationState"
+                  "name": "who",
+                  "type": "Option<AccountId>"
                 }
               ],
               "documentation": []
