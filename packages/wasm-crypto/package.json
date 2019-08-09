@@ -1,6 +1,6 @@
 {
   "name": "@chainx/wasm-crypto",
-  "version": "0.10.1",
+  "version": "2.18.0",
   "author": "Jaco Greeff <jacogr@gmail.com>",
   "files": [
     "crypto-polyfill.js",

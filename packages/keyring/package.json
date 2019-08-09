@@ -1,6 +1,6 @@
 {
   "name": "@chainx/keyring",
-  "version": "0.91.1",
+  "version": "2.18.0",
   "description": "Keyring management",
   "main": "index.js",
   "publishConfig": {
@@ -28,8 +28,8 @@
   "homepage": "https://github.com/polkadot-js/common/tree/master/packages/keyring#readme",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@chainx/util": "^0.91.1",
-    "@chainx/util-crypto": "^0.91.1",
+    "@chainx/util": "^2.18.0",
+    "@chainx/util-crypto": "^2.18.0",
     "@types/bs58": "^4.0.0",
     "bs58": "^4.0.1"
   }
