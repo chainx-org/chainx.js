@@ -1,15 +1,15 @@
 {
   "name": "chainx.js",
-  "version": "2.19.1",
+  "version": "2.19.2",
   "main": "index.js",
   "dependencies": {
-    "@chainx/account": "^2.19.1",
-    "@chainx/extrinsics": "^2.19.1",
-    "@chainx/keyring": "^2.19.1",
+    "@chainx/account": "^2.19.2",
+    "@chainx/extrinsics": "^2.19.2",
+    "@chainx/keyring": "^2.19.2",
     "@chainx/rpc-provider": "^2.19.1",
-    "@chainx/rpc-rx": "^2.19.1",
-    "@chainx/storage": "^2.19.1",
-    "@chainx/types": "^2.19.1",
+    "@chainx/rpc-rx": "^2.19.2",
+    "@chainx/storage": "^2.19.2",
+    "@chainx/types": "^2.19.2",
     "@chainx/util": "^2.19.1",
     "eventemitter3": "^3.1.0",
     "rxjs": "^6.3.3"
