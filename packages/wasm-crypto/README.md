@@ -11,8 +11,8 @@ Install the package (also requires `@polkadot/util` for `TextEncoder` polyfills 
 Use it -
 
 ```js
-const { u8aToHex } = require('@polkadot/util');
-const { bio39Generate, bip39ToSeed, waitReady } = require('@polkadot/wasm-crypto');
+const { u8aToHex } = require('@chainx/util');
+const { bio39Generate, bip39ToSeed, waitReady } = require('@chainx/wasm-crypto');
 
 async function main () {
   // first wait until the WASM has been loaded (async init)

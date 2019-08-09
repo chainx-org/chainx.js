@@ -379,7 +379,7 @@ module.exports.ext_twox = function(arg0, arg1) {
   }
 };
 
-const { u8aToString } = require('@polkadot/util');
+const { u8aToString } = require('@chainx/util');
 
 // let cachedTextDecoder = new TextDecoder('utf-8');
 
@@ -407,7 +407,7 @@ module.exports.ext_bip39_generate = function(arg0) {
   return realRet;
 };
 
-const { stringToU8a } = require('@polkadot/util');
+const { stringToU8a } = require('@chainx/util');
 
 // let cachedTextEncoder = new TextEncoder('utf-8');
 

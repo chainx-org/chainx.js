@@ -2,10 +2,10 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-const { assert } = require('@polkadot/util');
+const { assert } = require('@chainx/util');
 const stubbed = require('./wasm');
 
-const INIT_ERRROR = '@polkadot/wasm-crypto has not been initialized';
+const INIT_ERRROR = '@chainx/wasm-crypto has not been initialized';
 
 const wrapReady = fn => (...params) => {
   assert(stubbed.isReady(), INIT_ERRROR);

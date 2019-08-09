@@ -1,1 +1,1 @@
-import '@polkadot/wasm-crypto/crypto-polyfill';
+import '@chainx/wasm-crypto/crypto-polyfill';
