@@ -10,14 +10,14 @@ import {
   naclKeypairFromSeed,
   naclSign,
   naclVerify,
-} from '@polkadot/util-crypto';
+} from '@chainx/util-crypto';
 
-import { encodeAddress, decodeAddress, setAddressPrefix } from '@polkadot/keyring/address';
-import defaults from '@polkadot/keyring/address/defaults';
-import { isHex, u8aToHex, bufferToU8a } from '@polkadot/util';
-import encodePkcs8 from '@polkadot/keyring/pair/encode';
-import decodePkcs8 from '@polkadot/keyring/pair/decode';
-import { PKCS8_HEADER } from '@polkadot/keyring/pair/defaults';
+import { encodeAddress, decodeAddress, setAddressPrefix } from '@chainx/keyring/address';
+import defaults from '@chainx/keyring/address/defaults';
+import { isHex, u8aToHex, bufferToU8a } from '@chainx/util';
+import encodePkcs8 from '@chainx/keyring/pair/encode';
+import decodePkcs8 from '@chainx/keyring/pair/decode';
+import { PKCS8_HEADER } from '@chainx/keyring/pair/defaults';
 
 import KeyStore from '@chainx/keystore';
 import u8aFrom from './u8aFrom';

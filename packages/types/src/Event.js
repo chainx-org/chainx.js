@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { assert, isUndefined, stringCamelCase, u8aToHex } from '@polkadot/util';
+import { assert, isUndefined, stringCamelCase, u8aToHex } from '@chainx/util';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import U8aFixed from './codec/U8aFixed';

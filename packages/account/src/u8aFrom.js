@@ -1,4 +1,4 @@
-import { isHex, hexToU8a, bufferToU8a, stringToU8a } from '@polkadot/util';
+import { isHex, hexToU8a, bufferToU8a, stringToU8a } from '@chainx/util';
 
 export default function u8aFrom(value, stringEncoding) {
   if (!value) {

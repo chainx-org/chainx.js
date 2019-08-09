@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { isHex, hexToU8a, u8aConcat } from '@polkadot/util';
+import { isHex, hexToU8a, u8aConcat } from '@chainx/util';
 import { MAGIC_ERROR, MAGIC_NUMBER } from './MagicNumber';
 import MetadataVersioned from './MetadataVersioned';
 /**

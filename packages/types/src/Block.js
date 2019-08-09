@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { blake2AsU8a } from '@polkadot/util-crypto';
+import { blake2AsU8a } from '@chainx/util-crypto';
 import Struct from './codec/Struct';
 import Extrinsics from './Extrinsics';
 import Hash from './Hash';

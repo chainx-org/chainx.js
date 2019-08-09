@@ -13,8 +13,8 @@ import {
   isHex,
   isNumber,
   isString,
-} from '@polkadot/util';
-import { DEFAULT_BITLENGTH } from '@polkadot/util/compact/defaults';
+} from '@chainx/util';
+import { DEFAULT_BITLENGTH } from '@chainx/util/compact/defaults';
 import Base from './Base';
 /**
  * @name Compact

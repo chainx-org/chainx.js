@@ -5,7 +5,7 @@ import interfaces from '@chainx/jsonrpc';
 import WsProvider from '@chainx/rpc-provider/ws';
 import { createType } from '@chainx/types/codec';
 
-import { ExtError, assert, isFunction, logger } from '@polkadot/util';
+import { ExtError, assert, isFunction, logger } from '@chainx/util';
 const l = logger('rpc-core');
 /**
  * @name Rpc
@@ -23,8 +23,8 @@ const l = logger('rpc-core');
  * <BR>
  *
  * ```javascript
- * import Api from '@polkadot/rpc-core';
- * import WsProvider from '@polkadot/rpc-provider/ws';
+ * import Api from '@chainx/rpc-core';
+ * import WsProvider from '@chainx/rpc-provider/ws';
  *
  * const provider = new WsProvider('ws://127.0.0.1:9944');
  * const api = new Api(provider);
@@ -56,7 +56,7 @@ export default class Rpc {
    * <BR>
    *
    * ```javascript
-   * import Api from '@polkadot/rpc-core';
+   * import Api from '@chainx/rpc-core';
    *
    * Api.signature({ name: 'test_method', params: [ { name: 'dest', type: 'Address' } ], type: 'Address' }); // => test_method (dest: Address): Address
    * ```

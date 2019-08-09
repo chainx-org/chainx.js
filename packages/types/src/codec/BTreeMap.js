@@ -1,4 +1,4 @@
-import { u8aConcat, u8aToU8a, u8aToHex } from '@polkadot/util';
+import { u8aConcat, u8aToU8a, u8aToHex } from '@chainx/util';
 import Compact from './Compact';
 import decodeU8a from './utils/decodeU8a';
 import U32 from '../U32';

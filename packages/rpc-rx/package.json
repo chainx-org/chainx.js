@@ -5,12 +5,12 @@
   "license": "MIT",
   "dependencies": {
     "@chainx/rpc-core": "^2.17.0",
-    "@polkadot/util": "^0.91.1",
+    "@chainx/util": "^0.91.1",
     "rxjs": "^6.3.3"
   },
   "devDependencies": {
     "@chainx/rpc-provider": "^2.17.0",
-    "@polkadot/util": "^0.33.21",
+    "@chainx/util": "^0.33.21",
     "eventemitter3": "^3.1.0"
   }
 }

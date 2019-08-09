@@ -12,7 +12,7 @@ import {
   isUndefined,
   u8aConcat,
   u8aToHex,
-} from '@polkadot/util';
+} from '@chainx/util';
 import Null from '../Null';
 import Base from './Base';
 /**

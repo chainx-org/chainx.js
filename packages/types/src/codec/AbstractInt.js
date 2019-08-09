@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import BN from 'bn.js';
-import { bnToBn, hexToBn, isHex, isString, isU8a, u8aToBn } from '@polkadot/util';
+import { bnToBn, hexToBn, isHex, isString, isU8a, u8aToBn } from '@chainx/util';
 export const DEFAULT_UINT_BITS = 64;
 /**
  * @name AbstractInt

@@ -1,8 +1,8 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { decodeAddress, encodeAddress } from '@polkadot/keyring';
-import { hexToU8a, isHex, isString, isU8a, u8aToU8a } from '@polkadot/util';
+import { decodeAddress, encodeAddress } from '@chainx/keyring';
+import { hexToU8a, isHex, isString, isU8a, u8aToU8a } from '@chainx/util';
 import U8aFixed from './codec/U8aFixed';
 /**
  * @name AccountId

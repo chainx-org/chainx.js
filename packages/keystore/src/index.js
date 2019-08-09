@@ -1,8 +1,8 @@
 const crypto = require('crypto-browserify');
 const blakejs = require('blakejs');
-import hasPrefix from '@polkadot/util/hex/hasPrefix';
-import stripPrefix from '@polkadot/util/hex/stripPrefix';
-import addPrefix from '@polkadot/util/hex/addPrefix';
+import hasPrefix from '@chainx/util/hex/hasPrefix';
+import stripPrefix from '@chainx/util/hex/stripPrefix';
+import addPrefix from '@chainx/util/hex/addPrefix';
 
 const iterations = 10240;
 

@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { Method } from '@chainx/types';
 import { getTypeClass, getTypeDef } from '@chainx/types/codec';
-import { assert, stringCamelCase } from '@polkadot/util';
+import { assert, stringCamelCase } from '@chainx/util';
 
 /**
  * From the metadata of a function in the module's storage, generate the function

@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@chainx/types": "^2.17.0",
-    "@polkadot/keyring": "^0.91.1",
-    "@polkadot/util": "^0.91.1"
+    "@chainx/keyring": "^0.91.1",
+    "@chainx/util": "^0.91.1"
   }
 }

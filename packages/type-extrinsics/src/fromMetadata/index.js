@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/extrinsics authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { stringCamelCase } from '@polkadot/util';
+import { stringCamelCase } from '@chainx/util';
 import extrinsics from '../';
 import createUnchecked from './createUnchecked';
 /**

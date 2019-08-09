@@ -2,8 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import BN from 'bn.js';
-import { decodeAddress, encodeAddress } from '@polkadot/keyring';
-import { bnToBn, bnToU8a, isBn, isNumber, isU8a, isHex, hexToU8a, u8aToHex } from '@polkadot/util';
+import { decodeAddress, encodeAddress } from '@chainx/keyring';
+import { bnToBn, bnToU8a, isBn, isNumber, isU8a, isHex, hexToU8a, u8aToHex } from '@chainx/util';
 import UInt from './codec/UInt';
 import U32 from './U32';
 export const ENUMSET_SIZE = new BN(64);

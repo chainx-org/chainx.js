@@ -1,5 +1,5 @@
-import { decodeAddress, encodeAddress } from '@polkadot/keyring';
-import { hexToU8a, isHex, isString, isU8a, u8aToU8a } from '@polkadot/util';
+import { decodeAddress, encodeAddress } from '@chainx/keyring';
+import { hexToU8a, isHex, isString, isU8a, u8aToU8a } from '@chainx/util';
 import U8aFixed from './codec/U8aFixed';
 
 export default class PublicKey extends U8aFixed {

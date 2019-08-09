@@ -8,7 +8,7 @@ import {
   v4SStorageFunctionModifier as StorageFunctionModifier,
   v4SStorageFunctionType as StorageFunctionType,
 } from '@chainx/types/Metadata';
-import { assert, isNull, isUndefined, stringLowerFirst, stringToU8a, u8aConcat } from '@polkadot/util';
+import { assert, isNull, isUndefined, stringLowerFirst, stringToU8a, u8aConcat } from '@chainx/util';
 import getHasher from './getHasher';
 
 /**

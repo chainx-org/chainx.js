@@ -1,8 +1,8 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { hexToU8a, isHex, isU8a, u8aToHex } from '@polkadot/util';
-import { blake2AsU8a } from '@polkadot/util-crypto';
+import { hexToU8a, isHex, isU8a, u8aToHex } from '@chainx/util';
+import { blake2AsU8a } from '@chainx/util-crypto';
 import Compact from './codec/Compact';
 import Struct from './codec/Struct';
 import ExtrinsicSignature from './ExtrinsicSignature';

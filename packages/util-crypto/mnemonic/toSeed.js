@@ -1,0 +1,40 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true,
+});
+exports.default = toSeed;
+
+var _bip = require('bip39');
+
+var _util = require('@chainx/util');
+
+var _wasmCrypto = require('@chainx/wasm-crypto');
+
+// Copyright 2017-2019 @polkadot/util-crypto authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+
+/**
+ * @name toSeed
+ * @summary Creates a valid seed from a mnemonic input
+ * @example
+ * <BR>
+ *
+ * ```javascript
+ * import { mnemonicGenerate, mnemonicToSeed, mnemonicValidate } from '@chainx/util-crypto';
+ *
+ * const mnemonic = mnemonicGenerate(); // => string
+ * const isValidMnemonic = mnemonicValidate(mnemonic); // => boolean
+ *
+ * if (isValidMnemonic) {
+ *   console.log(`Seed generated from mnemonic: ${mnemonicToSeed(mnemonic)}`); => u8a
+ * }
+ * ```
+ */
+function toSeed(mnemonic) {
+  let password = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  return (0, _wasmCrypto.isReady)()
+    ? (0, _wasmCrypto.bip39ToSeed)(mnemonic, password)
+    : (0, _util.bufferToU8a)((0, _bip.mnemonicToSeed)(mnemonic, password)).subarray(0, 32);
+}

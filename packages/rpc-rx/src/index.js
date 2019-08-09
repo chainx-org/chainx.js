@@ -4,7 +4,7 @@
 import EventEmitter from 'eventemitter3';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { map, publishReplay, refCount } from 'rxjs/operators';
-import { isFunction, isUndefined } from '@polkadot/util';
+import { isFunction, isUndefined } from '@chainx/util';
 
 import Rpc from '@chainx/rpc-core';
 
@@ -17,8 +17,8 @@ import Rpc from '@chainx/rpc-core';
  * <BR>
  *
  * ```javascript
- * import RpcRx from '@polkadot/rpc-rx';
- * import WsProvider from '@polkadot/rpc-provider/ws';
+ * import RpcRx from '@chainx/rpc-rx';
+ * import WsProvider from '@chainx/rpc-provider/ws';
  *
  * const provider = new WsProvider('http://127.0.0.1:9944');
  * const api = new RpcRx(provider);

@@ -1,8 +1,8 @@
 import EventEmitter from 'eventemitter3';
 import { catchError, map, of } from 'rxjs/operators';
 import Rpc from '@chainx/rpc-core';
-import { assert, isFunction, isObject, isUndefined, logger } from '@polkadot/util';
-import { setAddressPrefix } from '@polkadot/keyring/address';
+import { assert, isFunction, isObject, isUndefined, logger } from '@chainx/util';
+import { setAddressPrefix } from '@chainx/keyring/address';
 import { fromMetadata as extrinsicsFromMeta } from '@chainx/extrinsics';
 import { fromMetadata as storageFromMeta } from '@chainx/storage';
 import { typeRegistry as registry } from '@chainx/types/codec';

@@ -8,6 +8,6 @@
     "@chainx/rpc-provider": "^2.17.0",
     "@chainx/storage": "^2.17.0",
     "@chainx/types": "^2.17.0",
-    "@polkadot/util": "^0.91.1"
+    "@chainx/util": "^0.91.1"
   }
 }

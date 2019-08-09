@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/rpc-provider authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import logger from '@polkadot/util/logger';
+import logger from '@chainx/util/logger';
 import EventEmitter from 'eventemitter3';
 
 import './polyfill';
@@ -22,8 +22,8 @@ const l = logger('api-ws');
  * <BR>
  *
  * ```javascript
- * import Api from '@polkadot/api/promise';
- * import WsProvider from '@polkadot/rpc-provider/ws';
+ * import Api from '@chainx/api/promise';
+ * import WsProvider from '@chainx/rpc-provider/ws';
  *
  * const provider = new WsProvider('ws://127.0.0.1:9944');
  * const api = new Api(provider);

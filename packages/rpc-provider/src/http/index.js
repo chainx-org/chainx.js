@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/rpc-provider authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import logger from '@polkadot/util/logger';
+import logger from '@chainx/util/logger';
 
 import './polyfill';
 import assert from '../assert';
@@ -22,8 +22,8 @@ const l = logger('api-http');
  * <BR>
  *
  * ```javascript
- * import Api from '@polkadot/api/promise';
- * import HttpProvider from '@polkadot/rpc-provider/http';
+ * import Api from '@chainx/api/promise';
+ * import HttpProvider from '@chainx/rpc-provider/http';
  *
  * const provider = new HttpProvider('http://127.0.0.1:9933');
  * const api = new Api(provider);
