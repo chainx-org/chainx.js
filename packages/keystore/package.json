@@ -1,9 +1,9 @@
 {
   "name": "@chainx/keystore",
-  "version": "2.18.0",
+  "version": "2.19.0",
   "main": "index.js",
   "dependencies": {
-    "@chainx/util": "^2.18.0",
+    "@chainx/util": "^2.19.0",
     "blakejs": "^1.1.0",
     "crypto-browserify": "^3.12.0",
     "pbkdf2": "^3.0.17",
