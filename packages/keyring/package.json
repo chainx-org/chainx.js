@@ -1,12 +1,12 @@
 {
   "name": "@chainx/keyring",
-  "version": "2.19.2",
+  "version": "2.20.0",
   "description": "Keyring management",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@chainx/util": "^2.19.1",
-    "@chainx/util-crypto": "^2.19.2",
+    "@chainx/util": "^2.20.0",
+    "@chainx/util-crypto": "^2.20.0",
     "@types/bs58": "^4.0.0",
     "bs58": "^4.0.1"
   }
