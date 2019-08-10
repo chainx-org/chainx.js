@@ -76,7 +76,7 @@ const getNominationRecords = {
 
 const getIntentions = {
   description: '',
-  params: [],
+  params: [createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
 };
 

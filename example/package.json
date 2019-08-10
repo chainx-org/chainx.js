@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "chainx.js": "^2.19.1",
+    "chainx.js": "^2.19.2",
     "rxjs": "^6.5.2",
     "tweetnacl": "^1.0.1"
   }
