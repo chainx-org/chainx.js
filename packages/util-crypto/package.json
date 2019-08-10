@@ -1,12 +1,12 @@
 {
   "name": "@chainx/util-crypto",
-  "version": "2.20.0",
+  "version": "2.20.2",
   "description": "A collection of useful crypto utilities for @polkadot",
   "main": "index.js",
   "dependencies": {
     "@babel/runtime": "^7.4.5",
-    "@chainx/util": "^2.20.0",
-    "@chainx/wasm-crypto": "^2.20.0",
+    "@chainx/util": "^2.20.2",
+    "@chainx/wasm-crypto": "^2.20.2",
     "@types/bip39": "^2.4.2",
     "@types/pbkdf2": "^3.0.0",
     "@types/secp256k1": "^3.5.0",
