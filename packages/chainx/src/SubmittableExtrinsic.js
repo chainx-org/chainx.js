@@ -152,7 +152,13 @@ export default class SubmittableExtrinsic extends Extrinsic {
     } catch (err) {}
   }
 
-  sign(signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era } = {}) {
+  sign(_signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era } = {}) {
+    let signerPair;
+    if (typeof _signerPair === 'object' && _signerPair instanceof Account) {
+      signerPair = _signerPair;
+    } else {
+      signerPair = Account.from(_signerPair);
+    }
     super.sign(signerPair, nonce, acceleration, blockHash);
     return this;
   }

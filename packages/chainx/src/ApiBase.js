@@ -240,4 +240,11 @@ export default class ApiBase {
       return result;
     }, {});
   }
+
+  /**
+   * 从 method 获取 SubmittableExtrinsic
+   */
+  createExtrinsic(method) {
+    return new SubmittableExtrinsic(this, new Extrinsic({ method: method }), this.broadcast);
+  }
 }
