@@ -17,14 +17,14 @@ describe('mnemonicGenerate', () => {
   });
   it('generates a valid mnemonic (default strength)', () => {
     const mnemonic = (0, _generate.default)();
-    console.error(mnemonic);
+    console.debug(mnemonic);
     expect((0, _validate.default)(mnemonic)).toEqual(true);
   });
   [12, 15, 18, 21, 24].forEach(num => {
     it('generates a valid mnemonic ('.concat(num, ' words)'), () => {
       const mnemonic = (0, _generate.default)(num);
       const isValid = (0, _validate.default)(mnemonic);
-      console.error(mnemonic);
+      console.debug(mnemonic);
       expect(mnemonic.split(' ')).toHaveLength(num);
       expect(isValid).toEqual(true);
     });

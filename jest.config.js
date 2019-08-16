@@ -1,14 +1,13 @@
 module.exports = {
-  rootDir: '.',
+  rootDir: 'packages',
   modulePaths: ['<rootDir>'],
   moduleNameMapper: {
     '~(.*)$': '<rootDir>/$1',
   },
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['mjs', 'js', 'json', 'node'],
+  moduleFileExtensions: ['mjs', 'js', 'node'],
   transform: {
-    '.js': 'babel-jest',
+    '^.+\\.(js)$': 'babel-jest',
   },
-  testPathIgnorePatterns: ['/node_modules/', '/build/'],
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.js?$',
+  testRegex: ['(/__tests__/.*|(\\.|/)(test|spec))\\.js?$'],
 };

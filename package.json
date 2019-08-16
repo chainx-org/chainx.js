@@ -4,8 +4,8 @@
   "scripts": {
     "build": "yarn build:clear && babel-node ./scripts/build",
     "build:clear": "babel-node ./scripts/clearBuild",
-    "test": "jest",
-    "test:unit": "jest --testPathIgnorePatterns e2e",
+    "test": "NODE_ENV= jest",
+    "test:unit": "NODE_ENV= jest --testPathIgnorePatterns e2e",
     "build:metadata": "babel-node ./scripts/metadataJsonWrite",
     "build:rpc": "babel-node ./scripts/rpcJsonWrite",
     "release": "yarn build && yarn test:unit && lerna publish --registry=https://registry.npmjs.org/"
@@ -35,7 +35,8 @@
     "prettier": "^1.15.3",
     "regenerator-runtime": "^0.13.1",
     "rimraf": "^2.6.3",
-    "yargs": "^13.2.4"
+    "yargs": "^13.2.4",
+    "core-js": "^3.2.1"
   },
   "husky": {
     "hooks": {

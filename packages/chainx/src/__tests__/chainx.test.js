@@ -3,9 +3,7 @@ import Chainx from '../index';
 import { WsProvider } from '@chainx/rpc-provider';
 import { Extrinsic } from '@chainx/types';
 describe('chainx.js', () => {
-  // const
-  // const chainx = new ApiBase(new WsProvider('wss://w1.chainx.org/ws'));
-  const chainx = new Chainx('ws://39.96.178.97:8087');
+  const chainx = new Chainx('wss://w1.chainx.org.cn/ws');
 
   jest.setTimeout(30000);
 
@@ -13,12 +11,12 @@ describe('chainx.js', () => {
     await chainx.isRpcReady();
   });
 
-  it('test', async done => {
+  it('test', async () => {
     const accounts = await chainx.chain.particularAccounts();
-    console.error(accounts);
+    console.debug(accounts);
     const multiSigAddrInfo = await chainx.trustee.getMultiSigAddrInfo(accounts.trusteesAccount.Bitcoin);
-    console.error(multiSigAddrInfo);
+    console.debug(multiSigAddrInfo);
     const pendingListFor = await chainx.trustee.getPendingListFor(accounts.trusteesAccount.Bitcoin);
-    console.error(JSON.stringify(pendingListFor));
+    console.debug(JSON.stringify(pendingListFor));
   });
 });
