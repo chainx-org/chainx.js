@@ -68,6 +68,11 @@ export default class ApiBase {
     return this._runtimeVersion;
   }
 
+  get feeWeight() {
+    assert(!isUndefined(this._feeWeight), INIT_ERROR);
+    return this._feeWeight;
+  }
+
   get query() {
     assert(!isUndefined(this._query), INIT_ERROR);
     return this._query;
@@ -142,6 +147,7 @@ export default class ApiBase {
       this._runtimeVersion = await this._rpcBase.chain.getRuntimeVersion();
       this._chainProperties = await this._rpcBase.system.properties();
       this._genesisHash = await this._rpcBase.chain.getBlockHash(0);
+      this._feeWeight = await this._rpcBase.chainx.getFeeWeightMap();
 
       const extrinsics = extrinsicsFromMeta(this.runtimeMetadata);
       const storage = storageFromMeta(this.runtimeMetadata);

@@ -1,18 +1,18 @@
 import Struct from './codec/Struct';
 import Balance from './Balance';
-import U64 from './U64';
+import U128 from './U128';
 import BlockNumber from './BlockNumber';
 
 /**
- * @name IntentionProfs
+ * @name IntentionProfsV1
  * @description
  */
-export default class IntentionProfs extends Struct {
+export default class IntentionProfsV1 extends Struct {
   constructor(value) {
     super(
       {
         totalNomination: Balance,
-        lastTotalVoteWeight: U64,
+        lastTotalVoteWeight: U128,
         lastTotalVoteWeightUpdate: BlockNumber,
       },
       value

@@ -137,3 +137,12 @@ export { default as AddrType } from './AddrType';
 export { default as MultiSigPermission } from './MultiSigPermission';
 export { default as AddrInfo } from './AddrInfo';
 export { default as PendingState } from './PendingState';
+
+export { default as DepositVoteWeight } from './DepositVoteWeight';
+export { default as DepositVoteWeightV1 } from './DepositVoteWeightV1';
+export { default as IntentionProfs } from './IntentionProfs';
+export { default as IntentionProfsV1 } from './IntentionProfsV1';
+export { default as NominationRecord } from './NominationRecord';
+export { default as NominationRecordV1 } from './NominationRecordV1';
+export { default as PseduIntentionVoteWeight } from './PseduIntentionVoteWeight';
+export { default as PseduIntentionVoteWeightV1 } from './PseduIntentionVoteWeightV1';

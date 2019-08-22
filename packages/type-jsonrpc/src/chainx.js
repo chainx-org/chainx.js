@@ -213,6 +213,12 @@ const getNextRenominateByAccount = {
   type: 'RawJSON',
 };
 
+const getFeeWeightMap = {
+  description: '',
+  params: [],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -250,5 +256,6 @@ export default {
     getDepositLimitByToken: createMethod(section, 'getDepositLimitByToken', getDepositLimitByToken),
     particularAccounts: createMethod(section, 'particularAccounts', particularAccounts),
     getNextRenominateByAccount: createMethod(section, 'getNextRenominateByAccount', getNextRenominateByAccount),
+    getFeeWeightMap: createMethod(section, 'getFeeWeightMap', getFeeWeightMap),
   },
 };

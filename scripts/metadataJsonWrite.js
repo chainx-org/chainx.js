@@ -2,7 +2,7 @@ import Http from '@chainx/rpc-provider/http';
 import { Metadata } from '@chainx/types';
 import fs from 'fs';
 
-const HTTP_URL = 'http://47.99.192.159:8086';
+const HTTP_URL = 'http://47.101.192.115:8680';
 const METADATA_STATIC_PATH = './packages/types/src/Metadata/static.js';
 const METADATA_JSON_PATH = './json/metadata.json';
 

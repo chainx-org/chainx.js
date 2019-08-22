@@ -784,6 +784,26 @@
                 }
               ],
               "documentation": [" Remove a method weight."]
+            },
+            {
+              "name": "add_blocked_account",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" add an account into blocked list"]
+            },
+            {
+              "name": "remove_blocked_account",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" remove an account into blocked list"]
             }
           ],
           "events": [
@@ -1394,7 +1414,23 @@
                 }
               },
               "fallback": "0x000000000000000000000000000000000000000000000000",
-              "documentation": [" All the accounts with a desire to stake."]
+              "documentation": [" All the accounts with a desire to be a validator."]
+            },
+            {
+              "name": "IntentionsV1",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "AccountId",
+                  "value": "IntentionProfsV1",
+                  "isLinked": true
+                }
+              },
+              "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "documentation": [
+                " This is same with Intentions with the weight field extended from u64 to u128. Ref intention_profs! comments."
+              ]
             },
             {
               "name": "NominationRecords",
@@ -1409,6 +1445,22 @@
               },
               "fallback": "0x00",
               "documentation": []
+            },
+            {
+              "name": "NominationRecordsV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,AccountId)",
+                  "value": "NominationRecordV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [
+                " This is same with NominationRecords with the weight field extended from u64 to u128. Ref intention_profs! comments."
+              ]
             },
             {
               "name": "UpperBoundFactor",
@@ -1699,6 +1751,70 @@
                 }
               ],
               "documentation": [" Set the factor of intention's total nomination upper bond."]
+            },
+            {
+              "name": "set_nomination_record",
+              "args": [
+                {
+                  "name": "nominator",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "nominee",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new",
+                  "type": "NominationRecord"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_intention_profs",
+              "args": [
+                {
+                  "name": "intention",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new",
+                  "type": "IntentionProfs"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_nomination_record_v1",
+              "args": [
+                {
+                  "name": "nominator",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "nominee",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new",
+                  "type": "NominationRecordV1"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_intention_profs_v1",
+              "args": [
+                {
+                  "name": "intention",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new",
+                  "type": "IntentionProfsV1"
+                }
+              ],
+              "documentation": []
             }
           ],
           "events": [
@@ -1751,6 +1867,11 @@
               "name": "SessionReward",
               "args": ["Balance", "Balance", "Balance", "Balance"],
               "documentation": [" All rewards issued to all (psedu-)intentions."]
+            },
+            {
+              "name": "ClaimV1",
+              "args": ["u128", "u128", "Balance"],
+              "documentation": [" u128 version of Claim"]
             }
           ]
         },
@@ -1824,6 +1945,20 @@
               "documentation": []
             },
             {
+              "name": "PseduIntentionProfilesV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "PseduIntentionVoteWeightV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
+            },
+            {
               "name": "DepositRecords",
               "modifier": "Default",
               "type": {
@@ -1835,6 +1970,20 @@
                 }
               },
               "fallback": "0x00000000000000000000000000000000",
+              "documentation": []
+            },
+            {
+              "name": "DepositRecordsV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,Token)",
+                  "value": "DepositVoteWeightV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
               "documentation": []
             },
             {
@@ -1899,6 +2048,70 @@
                 }
               ],
               "documentation": []
+            },
+            {
+              "name": "set_deposit_record",
+              "args": [
+                {
+                  "name": "depositor",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "DepositVoteWeight"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_deposit_record_v1",
+              "args": [
+                {
+                  "name": "depositor",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "DepositVoteWeightV1"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_psedu_intention_profs",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "PseduIntentionVoteWeight"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_psedu_intention_profs_v1",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "PseduIntentionVoteWeightV1"
+                }
+              ],
+              "documentation": []
             }
           ],
           "events": [
@@ -1910,6 +2123,11 @@
             {
               "name": "DepositorClaim",
               "args": ["AccountId", "Token", "u64", "u64", "Balance"],
+              "documentation": []
+            },
+            {
+              "name": "DepositorClaimV1",
+              "args": ["AccountId", "Token", "u128", "u128", "Balance"],
               "documentation": []
             }
           ]

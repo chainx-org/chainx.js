@@ -66,11 +66,27 @@ export default class SubmittableExtrinsic extends Extrinsic {
     } else {
       noncePromise = Promise.resolve(nonce);
     }
+
+    const feeWeightMap = Object.keys(this._api.feeWeight.feeWeight).reduce((r, k) => {
+      r[k.toLowerCase().replace(/[\W_]/g, '')] = this._api.feeWeight.feeWeight[k];
+      return r;
+    }, {});
+
+    const baseFee = this._api.feeWeight.transactionBaseFee;
+    const byteFee = this._api.feeWeight.transactionByteFee;
+
+    const methodName = this.method
+      .toJSON()
+      .methodName.toLowerCase()
+      .replace(/[\W_]/g, '');
+
+    const weight = feeWeightMap[methodName];
+
     return noncePromise
       .then(nonce => {
         const extrinsic = new Extrinsic({ method: this.method.toHex() });
         extrinsic.sign(Account.from(' '), nonce, acceleration, blockHash);
-        return this._api.rpc.chainx.getFeeByCallAndLength(this.method.toHex(), extrinsic.toU8a().length);
+        return (baseFee * weight + byteFee * extrinsic.toU8a().length) * acceleration;
       })
       .then(data => {
         return acceleration * data;
