@@ -66,7 +66,18 @@ export default class SubmittableExtrinsic extends Extrinsic {
     } else {
       noncePromise = Promise.resolve(nonce);
     }
+    return noncePromise
+      .then(nonce => {
+        const extrinsic = new Extrinsic({ method: this.method.toHex() });
+        extrinsic.sign(Account.from(' '), nonce, acceleration, blockHash);
+        return this._api.rpc.chainx.getFeeByCallAndLength(this.method.toHex(), extrinsic.toU8a().length);
+      })
+      .then(data => {
+        return acceleration * data;
+      });
+  }
 
+  getFeeSync({ nonce = 1, acceleration = 1, blockHash = this._api.genesisHash } = {}) {
     const feeWeightMap = Object.keys(this._api.feeWeight.feeWeight).reduce((r, k) => {
       r[k.toLowerCase().replace(/[\W_]/g, '')] = this._api.feeWeight.feeWeight[k];
       return r;
@@ -82,15 +93,11 @@ export default class SubmittableExtrinsic extends Extrinsic {
 
     const weight = feeWeightMap[methodName];
 
-    return noncePromise
-      .then(nonce => {
-        const extrinsic = new Extrinsic({ method: this.method.toHex() });
-        extrinsic.sign(Account.from(' '), nonce, acceleration, blockHash);
-        return (baseFee * weight + byteFee * extrinsic.toU8a().length) * acceleration;
-      })
-      .then(data => {
-        return acceleration * data;
-      });
+    const extrinsic = new Extrinsic({ method: this.method.toHex() });
+
+    extrinsic.sign(Account.from(' '), nonce, acceleration, blockHash);
+
+    return (baseFee * weight + byteFee * extrinsic.toU8a().length) * acceleration;
   }
 
   getNonce(address) {
