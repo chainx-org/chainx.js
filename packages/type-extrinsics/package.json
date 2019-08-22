@@ -1,11 +1,11 @@
 {
   "name": "@chainx/extrinsics",
-  "version": "2.20.2",
+  "version": "2.21.0-alpha.0",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/keyring": "^2.20.2",
-    "@chainx/types": "^2.20.2",
+    "@chainx/keyring": "^2.21.0-alpha.0",
+    "@chainx/types": "^2.21.0-alpha.0",
     "@chainx/util": "^2.20.2"
   }
 }

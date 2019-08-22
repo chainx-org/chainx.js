@@ -1,6 +1,6 @@
 {
   "name": "@chainx/util-crypto",
-  "version": "2.20.2",
+  "version": "2.21.0-alpha.0",
   "description": "A collection of useful crypto utilities for @polkadot",
   "main": "index.js",
   "dependencies": {
