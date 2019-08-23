@@ -7,8 +7,16 @@ export default class Stake {
     return this.api.rpc.chainx.getNominationRecords(...args);
   };
 
+  getNominationRecordsV1 = (...args) => {
+    return this.api.rpc.chainx.getNominationRecordsV1(...args);
+  };
+
   getIntentions = (...args) => {
     return this.api.rpc.chainx.getIntentions(...args);
+  };
+
+  getIntentionsV1 = (...args) => {
+    return this.api.rpc.chainx.getIntentionsV1(...args);
   };
 
   getIntentionByAccount = (...args) => {
@@ -19,8 +27,16 @@ export default class Stake {
     return this.api.rpc.chainx.getPseduIntentions(...args);
   };
 
+  getPseduIntentionsV1 = (...args) => {
+    return this.api.rpc.chainx.getPseduIntentionsV1(...args);
+  };
+
   getPseduNominationRecords = (...args) => {
     return this.api.rpc.chainx.getPseduNominationRecords(...args);
+  };
+
+  getPseduNominationRecordsV1 = (...args) => {
+    return this.api.rpc.chainx.getPseduNominationRecordsV1(...args);
   };
 
   getNextRenominateByAccount = (...args) => {

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "chainx.js": "^2.20.2",
+    "@polkadot/api": "0.90.0-beta.22",
     "rxjs": "^6.5.2",
     "tweetnacl": "^1.0.1"
   }

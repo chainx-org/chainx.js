@@ -74,7 +74,19 @@ const getNominationRecords = {
   type: 'RawJSON',
 };
 
+const getNominationRecordsV1 = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const getIntentions = {
+  description: '',
+  params: [createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
+const getIntentionsV1 = {
   description: '',
   params: [createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
@@ -92,7 +104,19 @@ const getPseduIntentions = {
   type: 'RawJSON',
 };
 
+const getPseduIntentionsV1 = {
+  description: '',
+  params: [createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const getPseduNominationRecords = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
+const getPseduNominationRecordsV1 = {
   description: '',
   params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
   type: 'RawJSON',
@@ -238,10 +262,14 @@ export default {
     getWithdrawalList: createMethod(section, 'getWithdrawalList', getWithdrawalList),
     getWithdrawalListByAccount: createMethod(section, 'getWithdrawalListByAccount', getWithdrawalListByAccount),
     getNominationRecords: createMethod(section, 'getNominationRecords', getNominationRecords),
+    getNominationRecordsV1: createMethod(section, 'getNominationRecordsV1', getNominationRecordsV1),
     getIntentions: createMethod(section, 'getIntentions', getIntentions),
+    getIntentionsV1: createMethod(section, 'getIntentionsV1', getIntentionsV1),
     getIntentionByAccount: createMethod(section, 'getIntentionByAccount', getIntentionByAccount),
     getPseduIntentions: createMethod(section, 'getPseduIntentions', getPseduIntentions),
+    getPseduIntentionsV1: createMethod(section, 'getPseduIntentionsV1', getPseduIntentionsV1),
     getPseduNominationRecords: createMethod(section, 'getPseduNominationRecords', getPseduNominationRecords),
+    getPseduNominationRecordsV1: createMethod(section, 'getPseduNominationRecordsV1', getPseduNominationRecordsV1),
     getTradingPairs: createMethod(section, 'getTradingPairs', getTradingPairs),
     getQuotations: createMethod(section, 'getQuotations', getQuotations),
     getOrders: createMethod(section, 'getOrders', getOrders),
