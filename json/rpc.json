@@ -448,8 +448,8 @@
         "params": [
           {
             "isOptional": true,
-            "name": "number",
-            "type": "Number"
+            "name": "blockNumber",
+            "type": "BlockNumber"
           }
         ],
         "pubsub": ["", "", ""],
@@ -468,6 +468,11 @@
             "isOptional": false,
             "name": "accountId",
             "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -496,6 +501,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -519,6 +529,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -547,6 +562,11 @@
             "isOptional": false,
             "name": "xassets",
             "type": "Memo"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -575,6 +595,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -603,6 +628,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -621,6 +651,34 @@
             "isOptional": false,
             "name": "accountId",
             "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getNominationRecordsV1": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getNominationRecordsV1",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -634,7 +692,31 @@
         "isSigned": false,
         "isSubscription": false,
         "method": "getIntentions",
-        "params": [],
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getIntentionsV1": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getIntentionsV1",
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
@@ -651,6 +733,11 @@
             "isOptional": false,
             "name": "accountId",
             "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -664,7 +751,31 @@
         "isSigned": false,
         "isSubscription": false,
         "method": "getPseduIntentions",
-        "params": [],
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getPseduIntentionsV1": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getPseduIntentionsV1",
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
@@ -681,6 +792,34 @@
             "isOptional": false,
             "name": "accountId",
             "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getPseduNominationRecordsV1": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getPseduNominationRecordsV1",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -694,7 +833,13 @@
         "isSigned": false,
         "isSubscription": false,
         "method": "getTradingPairs",
-        "params": [],
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
@@ -716,6 +861,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -744,6 +894,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -772,6 +927,11 @@
             "isOptional": false,
             "name": "u32",
             "type": "u32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -795,6 +955,11 @@
             "isOptional": false,
             "name": "chain",
             "type": "Chain"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -813,6 +978,11 @@
             "isOptional": false,
             "name": "accountId",
             "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -841,6 +1011,11 @@
             "isOptional": false,
             "name": "string",
             "type": "Text"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -864,6 +1039,11 @@
             "isOptional": false,
             "name": "length",
             "type": "u64"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -882,6 +1062,11 @@
             "isOptional": false,
             "name": "chain",
             "type": "Chain"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -900,6 +1085,16 @@
             "isOptional": false,
             "name": "chain",
             "type": "Chain"
+          },
+          {
+            "isOptional": true,
+            "name": "u32",
+            "type": "U32"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
         "pubsub": ["", "", ""],
@@ -918,8 +1113,83 @@
             "isOptional": false,
             "name": "token",
             "type": "Token"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
           }
         ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getDepositLimitByToken": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getDepositLimitByToken",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "chain",
+            "type": "Chain"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "particularAccounts": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "particularAccounts",
+        "params": [],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getNextRenominateByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getNextRenominateByAccount",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getFeeWeightMap": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getFeeWeightMap",
+        "params": [],
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
