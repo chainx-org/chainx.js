@@ -43,6 +43,10 @@ export default class Stake {
     return this.api.rpc.chainx.getNextRenominateByAccount(...args);
   };
 
+  getStakingDividendByAccount = (...args) => {
+    return this.api.rpc.chainx.getStakingDividendByAccount(...args);
+  };
+
   getBondingDuration = () => {
     return this.api.query.xStaking.bondingDuration().then(result => result.toJSON());
   };

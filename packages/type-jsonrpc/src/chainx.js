@@ -243,6 +243,18 @@ const getFeeWeightMap = {
   type: 'RawJSON',
 };
 
+const getStakingDividendByAccount = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
+const getCrossMiningDividendByAccount = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -285,5 +297,11 @@ export default {
     particularAccounts: createMethod(section, 'particularAccounts', particularAccounts),
     getNextRenominateByAccount: createMethod(section, 'getNextRenominateByAccount', getNextRenominateByAccount),
     getFeeWeightMap: createMethod(section, 'getFeeWeightMap', getFeeWeightMap),
+    getStakingDividendByAccount: createMethod(section, 'getStakingDividendByAccount', getStakingDividendByAccount),
+    getCrossMiningDividendByAccount: createMethod(
+      section,
+      'getCrossMiningDividendByAccount',
+      getCrossMiningDividendByAccount
+    ),
   },
 };

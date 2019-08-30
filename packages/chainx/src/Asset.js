@@ -31,6 +31,10 @@ export default class Asset {
     return this.api.rpc.chainx.getAddressByAccount(...args);
   };
 
+  getCrossMiningDividendByAccount = (...args) => {
+    return this.api.rpc.chainx.getCrossMiningDividendByAccount(...args);
+  };
+
   getWithdrawalLimitByToken = (...args) => {
     return this.api.rpc.chainx.getWithdrawalLimitByToken(...args);
   };
