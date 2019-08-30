@@ -98,6 +98,12 @@ const getIntentionByAccount = {
   type: 'RawJSON',
 };
 
+const getIntentionByAccountV1 = {
+  description: '',
+  params: [createParam('accountId', 'PublicKey'), createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const getPseduIntentions = {
   description: '',
   params: [createParam('hash', 'Hash', { isOptional: true })],
@@ -278,6 +284,7 @@ export default {
     getIntentions: createMethod(section, 'getIntentions', getIntentions),
     getIntentionsV1: createMethod(section, 'getIntentionsV1', getIntentionsV1),
     getIntentionByAccount: createMethod(section, 'getIntentionByAccount', getIntentionByAccount),
+    getIntentionByAccountV1: createMethod(section, 'getIntentionByAccountV1', getIntentionByAccountV1),
     getPseduIntentions: createMethod(section, 'getPseduIntentions', getPseduIntentions),
     getPseduIntentionsV1: createMethod(section, 'getPseduIntentionsV1', getPseduIntentionsV1),
     getPseduNominationRecords: createMethod(section, 'getPseduNominationRecords', getPseduNominationRecords),

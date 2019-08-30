@@ -1815,6 +1815,16 @@
                 }
               ],
               "documentation": []
+            },
+            {
+              "name": "remove_zombie_intentions",
+              "args": [
+                {
+                  "name": "zombies",
+                  "type": "Vec<AccountId>"
+                }
+              ],
+              "documentation": [" Remove the zombie intentions."]
             }
           ],
           "events": [
@@ -1872,6 +1882,11 @@
               "name": "ClaimV1",
               "args": ["u128", "u128", "Balance"],
               "documentation": [" u128 version of Claim"]
+            },
+            {
+              "name": "RemoveZombieIntentions",
+              "args": ["Vec<AccountId>"],
+              "documentation": []
             }
           ]
         },
