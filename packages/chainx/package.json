@@ -1,10 +1,10 @@
 {
   "name": "chainx.js",
-  "version": "2.21.0-y.1",
+  "version": "2.21.0-y.2",
   "main": "index.js",
   "dependencies": {
     "@chainx/account": "^2.21.0-alpha.0",
-    "@chainx/extrinsics": "^2.21.0-y.1",
+    "@chainx/extrinsics": "^2.21.0-y.2",
     "@chainx/keyring": "^2.21.0-alpha.0",
     "@chainx/rpc-provider": "^2.20.2",
     "@chainx/rpc-rx": "^2.21.0-y.1",
