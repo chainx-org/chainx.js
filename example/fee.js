@@ -9,6 +9,6 @@ const Chainx = require('chainx.js').default;
 
   const e = chainx.asset.transfer('5Pjajd12o9hVixBPRPHZEdjsrct3NZp9Ge7QP4PiSivQrBZa', 'PCX', '1000', '转账 PCX');
 
-  console.log(e.getFeeSync({ nonce: 63 }));
-  console.log(await e.getFee('5Pe5PDRspz5MmTPyas1vkEQKBs5LMGuxijfzyTPByWkVvv8u'));
+  console.log(e.getFeeSync({ nonce: 65 }));
+  console.log(await e.getFee('5SBvx5YnPKxCikZiLZmhY2sARoMw2nF9d2vxboU26NzM1ZWd'));
 })();

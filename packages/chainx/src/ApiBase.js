@@ -9,6 +9,7 @@ import { typeRegistry as registry } from '@chainx/types/codec';
 import { Event, Method, Extrinsic } from '@chainx/types';
 import RpcRx from '@chainx/rpc-rx';
 import { NET_PREFIX } from '@chainx/account';
+import { getTypeClass, getTypeDef } from '@chainx/types/codec';
 
 import SubmittableExtrinsic from './SubmittableExtrinsic';
 
@@ -147,8 +148,15 @@ export default class ApiBase {
       this._runtimeVersion = await this._rpcBase.chain.getRuntimeVersion();
       this._chainProperties = await this._rpcBase.system.properties();
       this._genesisHash = await this._rpcBase.chain.getBlockHash(0);
-      this._feeWeight = await this._rpcBase.chainx.getFeeWeightMap();
 
+      try {
+        this._feeWeight = await this._rpcBase.chainx.getFeeWeightMap();
+      } catch {
+        // 老版本兼容
+        this._feeWeight = null;
+      }
+
+      this.checkTypeDefine();
       const extrinsics = extrinsicsFromMeta(this.runtimeMetadata);
       const storage = storageFromMeta(this.runtimeMetadata);
       this._extrinsics = this.decorateExtrinsics(extrinsics);
@@ -182,6 +190,23 @@ export default class ApiBase {
       output.callIndex = input.callIndex;
     }
     return output;
+  }
+
+  checkTypeDefine() {
+    // 检测未定义类型
+    try {
+      for (const module of this.runtimeMetadata.asV4.modules) {
+        if (module.calls.isSome) {
+          for (const callMetadata of module.calls.unwrap()) {
+            const expectedArgs = callMetadata.args;
+            expectedArgs.map(data => getTypeDef(data.type)).map(getTypeClass);
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      l.error(`缺少必要的类型定义，可能会出现未知错误！！Unable to determine type!!`);
+    }
   }
 
   /**

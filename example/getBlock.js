@@ -71,6 +71,8 @@ const { timeout, retryWhen, delayWhen, take } = require('rxjs/operators');
       .toPromise();
   };
 
-  console.log(JSON.stringify(await getTransfersWithRetry(5550)));
-  console.log('over');
+  for (let i = 0; i < 1000; i++) {
+    const n = 5550 + i;
+    console.log(n, JSON.stringify(await getTransfersWithRetry(n)));
+  }
 })();

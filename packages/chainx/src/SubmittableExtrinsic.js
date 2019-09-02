@@ -70,7 +70,11 @@ export default class SubmittableExtrinsic extends Extrinsic {
       .then(nonce => {
         const extrinsic = new Extrinsic({ method: this.method.toHex() });
         extrinsic.sign(Account.from(' '), nonce, acceleration, blockHash);
-        return this._api.rpc.chainx.getFeeByCallAndLength(this.method.toHex(), extrinsic.toU8a().length);
+        try {
+          return this.getFeeSync({ nonce: nonce.toNumber() });
+        } catch {
+          return this._api.rpc.chainx.getFeeByCallAndLength(this.method.toHex(), extrinsic.toU8a().length);
+        }
       })
       .then(data => {
         return acceleration * data;
@@ -78,6 +82,9 @@ export default class SubmittableExtrinsic extends Extrinsic {
   }
 
   getFeeSync({ nonce = 1, acceleration = 1, blockHash = this._api.genesisHash } = {}) {
+    if (!this._api.feeWeight) {
+      throw new Error('need fee map');
+    }
     const feeWeightMap = Object.keys(this._api.feeWeight.feeWeight).reduce((r, k) => {
       r[k.toLowerCase().replace(/[\W_]/g, '')] = this._api.feeWeight.feeWeight[k];
       return r;
