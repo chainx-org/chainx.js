@@ -744,6 +744,29 @@
         "section": "chainx",
         "type": "RawJSON"
       },
+      "getIntentionByAccountV1": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getIntentionByAccountV1",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
       "getPseduIntentions": {
         "description": "",
         "isDeprecated": false,
@@ -1190,6 +1213,70 @@
         "isSubscription": false,
         "method": "getFeeWeightMap",
         "params": [],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getStakingDividendByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getStakingDividendByAccount",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getExtrinsicsEventsByBlockHash": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getExtrinsicsEventsByBlockHash",
+        "params": [
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "getCrossMiningDividendByAccount": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "getCrossMiningDividendByAccount",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "accountId",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": true,
+            "name": "hash",
+            "type": "Hash"
+          }
+        ],
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"

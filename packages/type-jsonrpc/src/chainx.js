@@ -261,6 +261,12 @@ const getCrossMiningDividendByAccount = {
   type: 'RawJSON',
 };
 
+const getExtrinsicsEventsByBlockHash = {
+  description: '',
+  params: [createParam('hash', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -305,6 +311,11 @@ export default {
     getNextRenominateByAccount: createMethod(section, 'getNextRenominateByAccount', getNextRenominateByAccount),
     getFeeWeightMap: createMethod(section, 'getFeeWeightMap', getFeeWeightMap),
     getStakingDividendByAccount: createMethod(section, 'getStakingDividendByAccount', getStakingDividendByAccount),
+    getExtrinsicsEventsByBlockHash: createMethod(
+      section,
+      'getExtrinsicsEventsByBlockHash',
+      getExtrinsicsEventsByBlockHash
+    ),
     getCrossMiningDividendByAccount: createMethod(
       section,
       'getCrossMiningDividendByAccount',
