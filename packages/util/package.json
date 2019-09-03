@@ -1,6 +1,6 @@
 {
   "name": "@chainx/util",
-  "version": "2.20.2",
+  "version": "2.21.0-y.3",
   "description": "A collection of useful utilities for @polkadot",
   "main": "index.js",
   "dependencies": {
