@@ -1,6 +1,6 @@
 {
   "name": "@chainx/wasm-crypto",
-  "version": "2.21.0-y.3",
+  "version": "2.21.0-y.4",
   "main": "index.js",
   "peerDependencies": {
     "@chainx/util": "*"

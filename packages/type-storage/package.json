@@ -1,11 +1,11 @@
 {
   "name": "@chainx/storage",
-  "version": "2.21.0-y.3",
+  "version": "2.21.0-y.4",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/types": "^2.21.0-y.3",
-    "@chainx/util": "^2.21.0-y.3",
-    "@chainx/util-crypto": "^2.21.0-y.3"
+    "@chainx/types": "^2.21.0-y.4",
+    "@chainx/util": "^2.21.0-y.4",
+    "@chainx/util-crypto": "^2.21.0-y.4"
   }
 }
