@@ -162,7 +162,14 @@ export default class ApiBase {
       this._extrinsics = this.decorateExtrinsics(extrinsics);
       this._query = this.decorateGetStorage(storage, false);
       this._query$ = this.decorateSubscribeStorage(storage);
-      Event.injectMetadata(this.runtimeMetadata);
+      try {
+        Event.injectMetadata(this.runtimeMetadata);
+      } catch (error) {
+        console.log(error);
+        l.error(
+          `缺少必要的类型定义，可能会出现未知错误，请尽快升级 chainx.js ！！Unable to determine type, Please upgrade as soon as possible!!`
+        );
+      }
       Method.injectMethods(extrinsics);
 
       // 设置网络类型
@@ -205,7 +212,9 @@ export default class ApiBase {
       }
     } catch (error) {
       console.log(error);
-      l.error(`缺少必要的类型定义，可能会出现未知错误！！Unable to determine type!!`);
+      l.error(
+        `缺少必要的类型定义，可能会出现未知错误！！Unable to determine type, Please upgrade as soon as possible!!`
+      );
     }
   }
 
