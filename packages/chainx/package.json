@@ -1,6 +1,6 @@
 {
   "name": "chainx.js",
-  "version": "2.21.0-y.5",
+  "version": "2.21.0-y.6",
   "main": "index.js",
   "dependencies": {
     "@chainx/account": "^2.21.0-y.5",
