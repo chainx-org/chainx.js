@@ -10,7 +10,7 @@ import Trade from './Trade';
 import Trustee from './Trustee';
 
 class ChainX {
-  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [] } = {}) {
+  constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [], ignoreCheckType = false } = {}) {
     this._broadcast = broadcast;
     this._eventemitter = new EventEmitter();
     if (!Array.isArray(broadcast)) {
@@ -24,7 +24,7 @@ class ChainX {
         }
       }
     }
-    this.setProvider(wsUrlOrProvider, broadcast);
+    this.setProvider(wsUrlOrProvider, { broadcast, ignoreCheckType });
   }
 
   get broadcast() {
@@ -81,7 +81,7 @@ class ChainX {
     this._eventemitter.emit(type, ...args);
   }
 
-  setProvider(wsUrlOrProvider, broadcast) {
+  setProvider(wsUrlOrProvider, { broadcast, ignoreCheckType }) {
     if (typeof wsUrlOrProvider === 'string') {
       this._provider = new WsProvider(wsUrlOrProvider);
     } else if (wsUrlOrProvider instanceof WsProvider) {
@@ -90,7 +90,7 @@ class ChainX {
       throw new Error('invalid parameter');
     }
 
-    this._api = new ApiBase(this._provider, broadcast);
+    this._api = new ApiBase(this._provider, { broadcast, ignoreCheckType });
 
     this._stake = new Stake(this);
     this._asset = new Asset(this);

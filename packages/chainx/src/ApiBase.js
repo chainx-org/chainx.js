@@ -18,10 +18,11 @@ const l = logger('chainx-api');
 const INIT_ERROR = `Api needs to be initialised before using, listen on 'ready'`;
 
 export default class ApiBase {
-  constructor(provider = {}, broadcast = []) {
+  constructor(provider = {}, { broadcast = [], ignoreCheckType = false } = {}) {
     const options = isObject(provider) && isFunction(provider.send) ? { provider } : provider;
 
     this._broadcast = broadcast;
+    this._ignoreCheckType = ignoreCheckType;
     this._eventemitter = new EventEmitter();
     this._rpcBase = new Rpc(options.provider);
     this._rpc$ = new RpcRx(this._rpcBase);
@@ -162,14 +163,20 @@ export default class ApiBase {
       this._extrinsics = this.decorateExtrinsics(extrinsics);
       this._query = this.decorateGetStorage(storage, false);
       this._query$ = this.decorateSubscribeStorage(storage);
+
       try {
         Event.injectMetadata(this.runtimeMetadata);
       } catch (error) {
-        console.log(error);
-        l.error(
-          `缺少必要的类型定义，可能会出现未知错误，请尽快升级 chainx.js ！！Unable to determine type, Please upgrade as soon as possible!!`
-        );
+        if (!this._ignoreCheckType) {
+          throw error;
+        } else {
+          console.log(error);
+          l.error(
+            `缺少必要的类型定义，可能会出现未知错误，请尽快升级 chainx.js ！！Unable to determine type, Please upgrade as soon as possible!!`
+          );
+        }
       }
+
       Method.injectMethods(extrinsics);
 
       // 设置网络类型
@@ -211,10 +218,14 @@ export default class ApiBase {
         }
       }
     } catch (error) {
-      console.log(error);
-      l.error(
-        `缺少必要的类型定义，可能会出现未知错误！！Unable to determine type, Please upgrade as soon as possible!!`
-      );
+      if (!this._ignoreCheckType) {
+        throw error;
+      } else {
+        console.log(error);
+        l.error(
+          `缺少必要的类型定义，可能会出现未知错误，请尽快升级 chainx.js ！！Unable to determine type, Please upgrade as soon as possible!!`
+        );
+      }
     }
   }
 

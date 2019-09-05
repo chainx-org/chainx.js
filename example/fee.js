@@ -2,7 +2,7 @@ const Chainx = require('chainx.js').default;
 
 (async () => {
   // 目前只支持 websocket 链接
-  const chainx = new Chainx('ws://47.101.192.115:8681');
+  const chainx = new Chainx('ws://47.101.192.115:8681', { ignoreCheckType: false });
 
   // 等待异步的初始化
   await chainx.isRpcReady();
