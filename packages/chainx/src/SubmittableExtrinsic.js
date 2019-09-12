@@ -121,7 +121,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
       options = _options || {};
     }
 
-    if (typeof _signerPair === 'object' && _signerPair instanceof Account) {
+    if (typeof _signerPair === 'object' && typeof _signerPair.sign === 'function') {
       signerPair = _signerPair;
     } else {
       signerPair = Account.from(_signerPair);
@@ -184,7 +184,7 @@ export default class SubmittableExtrinsic extends Extrinsic {
 
   sign(_signerPair, { nonce, acceleration = 1, blockHash = this._api.genesisHash, era } = {}) {
     let signerPair;
-    if (typeof _signerPair === 'object' && _signerPair instanceof Account) {
+    if (typeof _signerPair === 'object' && typeof _signerPair.sign === 'function') {
       signerPair = _signerPair;
     } else {
       signerPair = Account.from(_signerPair);
