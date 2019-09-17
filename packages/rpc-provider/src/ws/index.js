@@ -95,7 +95,9 @@ export default class WsProvider {
   }
 
   onSocketClose = event => {
-    l.error(`disconnected from ${this.endpoint}::${event.code}: ${event.reason}`);
+    l.error(
+      `disconnected from ${this.endpoint}::${event.code}: ${event.reason}${this.autoConnect ? ', will reconnect.' : ''}`
+    );
     this._isConnected = false;
     this.emit('disconnected');
     if (this.autoConnect) {
