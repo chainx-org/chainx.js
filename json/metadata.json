@@ -784,26 +784,6 @@
                 }
               ],
               "documentation": [" Remove a method weight."]
-            },
-            {
-              "name": "add_blocked_account",
-              "args": [
-                {
-                  "name": "who",
-                  "type": "AccountId"
-                }
-              ],
-              "documentation": [" add an account into blocked list"]
-            },
-            {
-              "name": "remove_blocked_account",
-              "args": [
-                {
-                  "name": "who",
-                  "type": "AccountId"
-                }
-              ],
-              "documentation": [" remove an account into blocked list"]
             }
           ],
           "events": [
@@ -1414,23 +1394,7 @@
                 }
               },
               "fallback": "0x000000000000000000000000000000000000000000000000",
-              "documentation": [" All the accounts with a desire to be a validator."]
-            },
-            {
-              "name": "IntentionsV1",
-              "modifier": "Default",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "AccountId",
-                  "value": "IntentionProfsV1",
-                  "isLinked": true
-                }
-              },
-              "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
-              "documentation": [
-                " This is same with Intentions with the weight field extended from u64 to u128. Ref intention_profs! comments."
-              ]
+              "documentation": [" All the accounts with a desire to stake."]
             },
             {
               "name": "NominationRecords",
@@ -1447,33 +1411,6 @@
               "documentation": []
             },
             {
-              "name": "NominationRecordsV1",
-              "modifier": "Optional",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "(AccountId,AccountId)",
-                  "value": "NominationRecordV1",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x00",
-              "documentation": [
-                " This is same with NominationRecords with the weight field extended from u64 to u128. Ref intention_profs! comments."
-              ]
-            },
-            {
-              "name": "UpperBoundFactor",
-              "modifier": "Default",
-              "type": {
-                "PlainType": "u32"
-              },
-              "fallback": "0x0a000000",
-              "documentation": [
-                " The upper bound nominations of the intention that could absorb is up to the self-bonded."
-              ]
-            },
-            {
               "name": "EvilValidatorsPerSession",
               "modifier": "Default",
               "type": {
@@ -1481,29 +1418,6 @@
               },
               "fallback": "0x00",
               "documentation": [" Reported validators that did evil, reset per session."]
-            },
-            {
-              "name": "LastRenominationOf",
-              "modifier": "Optional",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "AccountId",
-                  "value": "BlockNumber",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x00",
-              "documentation": [" The height of user's last nomination."]
-            },
-            {
-              "name": "MaxUnbondEntriesPerIntention",
-              "modifier": "Default",
-              "type": {
-                "PlainType": "u32"
-              },
-              "fallback": "0x0a000000",
-              "documentation": [" The maximum ongoing unbond entries simultaneously against per intention."]
             },
             {
               "name": "MinimumPenalty",
@@ -1604,7 +1518,7 @@
                   "type": "Memo"
                 }
               ],
-              "documentation": [" Unbond the nomination."]
+              "documentation": []
             },
             {
               "name": "claim",
@@ -1628,7 +1542,7 @@
                   "type": "u32"
                 }
               ],
-              "documentation": [" Free the locked unnomination."]
+              "documentation": []
             },
             {
               "name": "refresh",
@@ -1741,90 +1655,6 @@
                 }
               ],
               "documentation": [" Set the minimum validator candidate threshold."]
-            },
-            {
-              "name": "set_upper_bond_factor",
-              "args": [
-                {
-                  "name": "new",
-                  "type": "u32"
-                }
-              ],
-              "documentation": [" Set the factor of intention's total nomination upper bond."]
-            },
-            {
-              "name": "set_nomination_record",
-              "args": [
-                {
-                  "name": "nominator",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "nominee",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "new",
-                  "type": "NominationRecord"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_intention_profs",
-              "args": [
-                {
-                  "name": "intention",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "new",
-                  "type": "IntentionProfs"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_nomination_record_v1",
-              "args": [
-                {
-                  "name": "nominator",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "nominee",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "new",
-                  "type": "NominationRecordV1"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_intention_profs_v1",
-              "args": [
-                {
-                  "name": "intention",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "new",
-                  "type": "IntentionProfsV1"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "remove_zombie_intentions",
-              "args": [
-                {
-                  "name": "zombies",
-                  "type": "Vec<AccountId>"
-                }
-              ],
-              "documentation": [" Remove the zombie intentions."]
             }
           ],
           "events": [
@@ -1877,16 +1707,6 @@
               "name": "SessionReward",
               "args": ["Balance", "Balance", "Balance", "Balance"],
               "documentation": [" All rewards issued to all (psedu-)intentions."]
-            },
-            {
-              "name": "ClaimV1",
-              "args": ["u128", "u128", "Balance"],
-              "documentation": [" u128 version of Claim"]
-            },
-            {
-              "name": "RemoveZombieIntentions",
-              "args": ["Vec<AccountId>"],
-              "documentation": []
             }
           ]
         },
@@ -1915,35 +1735,7 @@
                 "PlainType": "Vec<Token>"
               },
               "fallback": "0x00",
-              "documentation": [" Cross-chain assets that are able to participate in the assets mining."]
-            },
-            {
-              "name": "ClaimRestrictionOf",
-              "modifier": "Default",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "Token",
-                  "value": "(u32,BlockNumber)",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x0a000000409d040000000000",
               "documentation": []
-            },
-            {
-              "name": "LastClaimOf",
-              "modifier": "Optional",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "(AccountId,Token)",
-                  "value": "BlockNumber",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x00",
-              "documentation": [" Block height of last claim for some cross miner per token."]
             },
             {
               "name": "PseduIntentionProfiles",
@@ -1960,20 +1752,6 @@
               "documentation": []
             },
             {
-              "name": "PseduIntentionProfilesV1",
-              "modifier": "Optional",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "Token",
-                  "value": "PseduIntentionVoteWeightV1",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x00",
-              "documentation": []
-            },
-            {
               "name": "DepositRecords",
               "modifier": "Default",
               "type": {
@@ -1985,20 +1763,6 @@
                 }
               },
               "fallback": "0x00000000000000000000000000000000",
-              "documentation": []
-            },
-            {
-              "name": "DepositRecordsV1",
-              "modifier": "Optional",
-              "type": {
-                "MapType": {
-                  "hasher": "Blake2_256",
-                  "key": "(AccountId,Token)",
-                  "value": "DepositVoteWeightV1",
-                  "isLinked": false
-                }
-              },
-              "fallback": "0x00",
               "documentation": []
             },
             {
@@ -2036,9 +1800,7 @@
                   "type": "u32"
                 }
               ],
-              "documentation": [
-                " Set the discount for converting the cross-chain asset to PCX based on the market value."
-              ]
+              "documentation": []
             },
             {
               "name": "set_deposit_reward",
@@ -2046,84 +1808,6 @@
                 {
                   "name": "value",
                   "type": "Balance"
-                }
-              ],
-              "documentation": [" Set the reward for the newly issued cross-chain assets."]
-            },
-            {
-              "name": "set_claim_restriction",
-              "args": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "new",
-                  "type": "(u32,BlockNumber)"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_deposit_record",
-              "args": [
-                {
-                  "name": "depositor",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "new",
-                  "type": "DepositVoteWeight"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_deposit_record_v1",
-              "args": [
-                {
-                  "name": "depositor",
-                  "type": "AccountId"
-                },
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "new",
-                  "type": "DepositVoteWeightV1"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_psedu_intention_profs",
-              "args": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "new",
-                  "type": "PseduIntentionVoteWeight"
-                }
-              ],
-              "documentation": []
-            },
-            {
-              "name": "set_psedu_intention_profs_v1",
-              "args": [
-                {
-                  "name": "token",
-                  "type": "Token"
-                },
-                {
-                  "name": "new",
-                  "type": "PseduIntentionVoteWeightV1"
                 }
               ],
               "documentation": []
@@ -2138,11 +1822,6 @@
             {
               "name": "DepositorClaim",
               "args": ["AccountId", "Token", "u64", "u64", "Balance"],
-              "documentation": []
-            },
-            {
-              "name": "DepositorClaimV1",
-              "args": ["AccountId", "Token", "u128", "u128", "Balance"],
               "documentation": []
             }
           ]
