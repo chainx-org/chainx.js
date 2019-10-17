@@ -17,8 +17,9 @@ export { default as Vector } from './Vector';
 // Convenience base classes, used as "anything of this type" bases
 export { default as U8a } from './U8a';
 export { default as UInt } from './UInt';
-export { default as typeRegistry } from './typeRegistry';
 // Type management helper functions
-export { default as createType, getTypeClass, getTypeDef, TypeDefInfo } from './createType';
+// export { default as createType, getTypeClass, getTypeDef, TypeDefInfo } from './createType';
 
 export { default as BTreeMap } from './BTreeMap';
+
+export * from './create';

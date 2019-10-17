@@ -4,19 +4,21 @@
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
-import Text from '../../Text';
-import { flattenUniq, validateTypes } from '../util';
+import { StorageFunctionMetadata } from './Storage';
 import { FunctionMetadata } from './Calls';
 import { EventMetadata } from './Events';
-import { StorageFunctionMetadata } from './Storage';
+import Text from '../../Text';
+
 /**
- * @name ModuleMetadata
+ * @name ModuleMetadataV5
  * @description
  * The definition of a module in the system
  */
 export class ModuleMetadata extends Struct {
   constructor(value) {
-    console.log(JSON.stringify([...value.slice(0, 256)]));
+    // console.log(JSON.stringify([...value.slice(0, 256)]));
+
+    console.log(value, '哈哈哈哈');
 
     super(
       {
@@ -28,6 +30,7 @@ export class ModuleMetadata extends Struct {
       },
       value
     );
+    console.log(this.name, '哦哦哦哦哦');
   }
   /**
    * @description the module calls
@@ -60,12 +63,13 @@ export class ModuleMetadata extends Struct {
     return this.get('storage');
   }
 }
+
 /**
- * @name MetadataV4
+ * @name MetadataV5
  * @description
  * The runtime metadata as a decoded structure
  */
-export default class MetadataV4 extends Struct {
+export default class MetadataV5 extends Struct {
   constructor(value) {
     super(
       {
@@ -79,42 +83,5 @@ export default class MetadataV4 extends Struct {
    */
   get modules() {
     return this.get('modules');
-  }
-  get callNames() {
-    return this.modules.map(mod =>
-      mod.calls.isNone ? [] : mod.calls.unwrap().map(fn => fn.args.map(arg => arg.type.toString()))
-    );
-  }
-  get eventNames() {
-    return this.modules.map(mod =>
-      mod.events.isNone ? [] : mod.events.unwrap().map(event => event.args.map(arg => arg.toString()))
-    );
-  }
-  get storageNames() {
-    return this.modules.map(mod =>
-      mod.storage.isNone
-        ? []
-        : mod.storage.unwrap().map(fn => {
-            if (fn.type.isMap) {
-              return [fn.type.asMap.key.toString(), fn.type.asMap.value.toString()];
-            } else if (fn.type.isDoubleMap) {
-              return [
-                fn.type.asDoubleMap.key1.toString(),
-                fn.type.asDoubleMap.key2.toString(),
-                fn.type.asDoubleMap.value.toString(),
-              ];
-            } else {
-              return [fn.type.asType.toString()];
-            }
-          })
-    );
-  }
-  /**
-   * @description Helper to retrieve a list of all type that are found, sorted and de-deuplicated
-   */
-  getUniqTypes(throwError) {
-    const types = flattenUniq([this.callNames, this.eventNames, this.storageNames]);
-    validateTypes(types, throwError);
-    return types;
   }
 }

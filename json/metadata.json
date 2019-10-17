@@ -690,7 +690,7 @@
               "name": "MethodCallWeight",
               "modifier": "Default",
               "type": {
-                "PlainType": "BTreeMap<Text,u64>"
+                "PlainType": "BTreeMap<XText,u64>"
               },
               "fallback": "0x00000000",
               "documentation": [
@@ -784,6 +784,26 @@
                 }
               ],
               "documentation": [" Remove a method weight."]
+            },
+            {
+              "name": "add_blocked_account",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" add an account into blocked list"]
+            },
+            {
+              "name": "remove_blocked_account",
+              "args": [
+                {
+                  "name": "who",
+                  "type": "AccountId"
+                }
+              ],
+              "documentation": [" remove an account into blocked list"]
             }
           ],
           "events": [
@@ -1394,7 +1414,23 @@
                 }
               },
               "fallback": "0x000000000000000000000000000000000000000000000000",
-              "documentation": [" All the accounts with a desire to stake."]
+              "documentation": [" All the accounts with a desire to be a validator."]
+            },
+            {
+              "name": "IntentionsV1",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "AccountId",
+                  "value": "IntentionProfsV1",
+                  "isLinked": true
+                }
+              },
+              "fallback": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "documentation": [
+                " This is same with Intentions with the weight field extended from u64 to u128. Ref intention_profs! comments."
+              ]
             },
             {
               "name": "NominationRecords",
@@ -1411,6 +1447,33 @@
               "documentation": []
             },
             {
+              "name": "NominationRecordsV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,AccountId)",
+                  "value": "NominationRecordV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [
+                " This is same with NominationRecords with the weight field extended from u64 to u128. Ref intention_profs! comments."
+              ]
+            },
+            {
+              "name": "UpperBoundFactor",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x0a000000",
+              "documentation": [
+                " The upper bound nominations of the intention that could absorb is up to the self-bonded."
+              ]
+            },
+            {
               "name": "EvilValidatorsPerSession",
               "modifier": "Default",
               "type": {
@@ -1418,6 +1481,29 @@
               },
               "fallback": "0x00",
               "documentation": [" Reported validators that did evil, reset per session."]
+            },
+            {
+              "name": "LastRenominationOf",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "AccountId",
+                  "value": "BlockNumber",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [" The height of user's last nomination."]
+            },
+            {
+              "name": "MaxUnbondEntriesPerIntention",
+              "modifier": "Default",
+              "type": {
+                "PlainType": "u32"
+              },
+              "fallback": "0x0a000000",
+              "documentation": [" The maximum ongoing unbond entries simultaneously against per intention."]
             },
             {
               "name": "MinimumPenalty",
@@ -1518,7 +1604,7 @@
                   "type": "Memo"
                 }
               ],
-              "documentation": []
+              "documentation": [" Unbond the nomination."]
             },
             {
               "name": "claim",
@@ -1542,7 +1628,7 @@
                   "type": "u32"
                 }
               ],
-              "documentation": []
+              "documentation": [" Free the locked unnomination."]
             },
             {
               "name": "refresh",
@@ -1561,7 +1647,7 @@
                 },
                 {
                   "name": "about",
-                  "type": "Option<Text>"
+                  "type": "Option<XText>"
                 }
               ],
               "documentation": [" Update the url, desire to join in elections of intention and session key."]
@@ -1655,6 +1741,130 @@
                 }
               ],
               "documentation": [" Set the minimum validator candidate threshold."]
+            },
+            {
+              "name": "set_upper_bond_factor",
+              "args": [
+                {
+                  "name": "new",
+                  "type": "u32"
+                }
+              ],
+              "documentation": [" Set the factor of intention's total nomination upper bond."]
+            },
+            {
+              "name": "set_nomination_record",
+              "args": [
+                {
+                  "name": "nominator",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "nominee",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new_nomination",
+                  "type": "Option<Balance>"
+                },
+                {
+                  "name": "new_last_vote_weight",
+                  "type": "Option<u64>"
+                },
+                {
+                  "name": "new_last_vote_weight_update",
+                  "type": "Option<BlockNumber>"
+                },
+                {
+                  "name": "new_revocations",
+                  "type": "Option<(Vec<BlockNumber>,Vec<Balance>)>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_intention_profs",
+              "args": [
+                {
+                  "name": "intention",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new_total_nomination",
+                  "type": "Option<Balance>"
+                },
+                {
+                  "name": "new_last_total_vote_weight",
+                  "type": "Option<u64>"
+                },
+                {
+                  "name": "new_last_total_vote_weight_update",
+                  "type": "Option<BlockNumber>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_nomination_record_v1",
+              "args": [
+                {
+                  "name": "nominator",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "nominee",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new_nomination",
+                  "type": "Option<Balance>"
+                },
+                {
+                  "name": "new_last_vote_weight",
+                  "type": "Option<u128>"
+                },
+                {
+                  "name": "new_last_vote_weight_update",
+                  "type": "Option<BlockNumber>"
+                },
+                {
+                  "name": "new_revocations",
+                  "type": "Option<(Vec<BlockNumber>,Vec<Balance>)>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_intention_profs_v1",
+              "args": [
+                {
+                  "name": "intention",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "new_total_nomination",
+                  "type": "Option<Balance>"
+                },
+                {
+                  "name": "new_last_total_vote_weight",
+                  "type": "Option<u128>"
+                },
+                {
+                  "name": "new_last_total_vote_weight_update",
+                  "type": "Option<BlockNumber>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "remove_zombie_intentions",
+              "args": [
+                {
+                  "name": "zombies",
+                  "type": "Vec<AccountId>"
+                }
+              ],
+              "documentation": [" Remove the zombie intentions."]
             }
           ],
           "events": [
@@ -1695,7 +1905,7 @@
             },
             {
               "name": "Refresh",
-              "args": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<Text>"],
+              "args": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<XText>"],
               "documentation": []
             },
             {
@@ -1707,6 +1917,16 @@
               "name": "SessionReward",
               "args": ["Balance", "Balance", "Balance", "Balance"],
               "documentation": [" All rewards issued to all (psedu-)intentions."]
+            },
+            {
+              "name": "ClaimV1",
+              "args": ["u128", "u128", "Balance"],
+              "documentation": [" u128 version of Claim"]
+            },
+            {
+              "name": "RemoveZombieIntentions",
+              "args": ["Vec<AccountId>"],
+              "documentation": []
             }
           ]
         },
@@ -1735,7 +1955,35 @@
                 "PlainType": "Vec<Token>"
               },
               "fallback": "0x00",
+              "documentation": [" Cross-chain assets that are able to participate in the assets mining."]
+            },
+            {
+              "name": "ClaimRestrictionOf",
+              "modifier": "Default",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "(u32,BlockNumber)",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x0a000000409d040000000000",
               "documentation": []
+            },
+            {
+              "name": "LastClaimOf",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,Token)",
+                  "value": "BlockNumber",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": [" Block height of last claim for some cross miner per token."]
             },
             {
               "name": "PseduIntentionProfiles",
@@ -1752,6 +2000,20 @@
               "documentation": []
             },
             {
+              "name": "PseduIntentionProfilesV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "PseduIntentionVoteWeightV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
+            },
+            {
               "name": "DepositRecords",
               "modifier": "Default",
               "type": {
@@ -1763,6 +2025,20 @@
                 }
               },
               "fallback": "0x00000000000000000000000000000000",
+              "documentation": []
+            },
+            {
+              "name": "DepositRecordsV1",
+              "modifier": "Optional",
+              "type": {
+                "MapType": {
+                  "hasher": "Blake2_256",
+                  "key": "(AccountId,Token)",
+                  "value": "DepositVoteWeightV1",
+                  "isLinked": false
+                }
+              },
+              "fallback": "0x00",
               "documentation": []
             },
             {
@@ -1800,7 +2076,9 @@
                   "type": "u32"
                 }
               ],
-              "documentation": []
+              "documentation": [
+                " Set the discount for converting the cross-chain asset to PCX based on the market value."
+              ]
             },
             {
               "name": "set_deposit_reward",
@@ -1808,6 +2086,100 @@
                 {
                   "name": "value",
                   "type": "Balance"
+                }
+              ],
+              "documentation": [" Set the reward for the newly issued cross-chain assets."]
+            },
+            {
+              "name": "set_claim_restriction",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new",
+                  "type": "(u32,BlockNumber)"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_deposit_record",
+              "args": [
+                {
+                  "name": "depositor",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new_last_deposit_weight",
+                  "type": "Option<u64>"
+                },
+                {
+                  "name": "new_last_deposit_weight_update",
+                  "type": "Option<BlockNumber>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_deposit_record_v1",
+              "args": [
+                {
+                  "name": "depositor",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new_last_deposit_weight",
+                  "type": "Option<u128>"
+                },
+                {
+                  "name": "new_last_deposit_weight_update",
+                  "type": "Option<BlockNumber>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_psedu_intention_profs",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new_last_total_deposit_weight",
+                  "type": "Option<u64>"
+                },
+                {
+                  "name": "new_last_total_deposit_weight_update",
+                  "type": "Option<BlockNumber>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_psedu_intention_profs_v1",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "new_last_total_deposit_weight",
+                  "type": "Option<u128>"
+                },
+                {
+                  "name": "new_last_total_deposit_weight_update",
+                  "type": "Option<BlockNumber>"
                 }
               ],
               "documentation": []
@@ -1822,6 +2194,11 @@
             {
               "name": "DepositorClaim",
               "args": ["AccountId", "Token", "u64", "u64", "Balance"],
+              "documentation": []
+            },
+            {
+              "name": "DepositorClaimV1",
+              "args": ["AccountId", "Token", "u128", "u128", "Balance"],
               "documentation": []
             }
           ]
@@ -2418,6 +2795,30 @@
                 }
               ],
               "documentation": []
+            },
+            {
+              "name": "set_best_index",
+              "args": [
+                {
+                  "name": "hash",
+                  "type": "H256"
+                }
+              ],
+              "documentation": [" Dangerous! Be careful to set BestIndex"]
+            },
+            {
+              "name": "set_header_confirmed_state",
+              "args": [
+                {
+                  "name": "hash",
+                  "type": "H256"
+                },
+                {
+                  "name": "confirmed",
+                  "type": "bool"
+                }
+              ],
+              "documentation": []
             }
           ],
           "events": [
@@ -2667,7 +3068,7 @@
               "args": [
                 {
                   "name": "about",
-                  "type": "Text"
+                  "type": "XText"
                 },
                 {
                   "name": "hot_entity",

@@ -5,7 +5,7 @@ import { assert, isUndefined, stringCamelCase, u8aToHex } from '@chainx/util';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import U8aFixed from './codec/U8aFixed';
-import { getTypeClass, getTypeDef } from './codec/createType';
+import { getTypeClass, getTypeDef } from './codec';
 import Null from './Null';
 import U32 from './U32';
 const EventTypes = {};
