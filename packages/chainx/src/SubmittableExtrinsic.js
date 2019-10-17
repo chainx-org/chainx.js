@@ -86,7 +86,11 @@ export default class SubmittableExtrinsic extends Extrinsic {
       throw new Error('need fee map');
     }
     const feeWeightMap = Object.keys(this._api.feeWeight.feeWeight).reduce((r, k) => {
-      r[k.toLowerCase().replace(/[\W_]/g, '')] = this._api.feeWeight.feeWeight[k];
+      const key = k.toLowerCase().replace(/[\W_]/g, '');
+      r[key] = this._api.feeWeight.feeWeight[k];
+      if (key.includes('xassetsprocess')) {
+        r[key.replace('xassetsprocess', 'withdrawal')] = this._api.feeWeight.feeWeight[k];
+      }
       return r;
     }, {});
 
