@@ -6,7 +6,13 @@ import { blake2AsU8a } from '@chainx/util-crypto';
 import Compact from './Compact';
 import U8a from './U8a';
 import { compareArray } from './utils';
-
+/**
+ * @name AbstractArray
+ * @description
+ * This manages codec arrays. It is an extension to Array, providing
+ * specific encoding/decoding on top of the base type.
+ * @noInheritDoc
+ */
 export default class AbstractArray extends Array {
   /**
    * @description The length of the value when encoded as a Uint8Array

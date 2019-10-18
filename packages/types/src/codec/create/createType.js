@@ -1,10 +1,11 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { isU8a, u8aToHex } from '@chainx/util';
 import { createClass } from './createClass';
-
 function u8aHasValue(value) {
   return value.some(v => !!v);
 }
-
 // With isPedantic, actually check that the encoding matches that supplied. This
 // is much slower, but verifies that we have the correct types defined
 function checkInstance(value, created) {

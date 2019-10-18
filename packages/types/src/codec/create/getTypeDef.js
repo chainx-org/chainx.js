@@ -1,8 +1,10 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { TypeDefInfo } from './types';
 import { assert } from '@chainx/util';
 import sanitize from './sanitize';
 import { typeSplit } from './typeSplit';
-
 // decode an enum of either of the following forms
 //  { _enum: ['A', 'B', 'C'] }
 //  { _enum: { A: AccountId, B: Balance, C: u32 } }
@@ -21,7 +23,6 @@ function _decodeEnum(value, details) {
       );
   return value;
 }
-
 // decode a set of the form
 //   { _set: { A: 0b0001, B: 0b0010, C: 0b0100 } }
 function _decodeSet(value, details) {
@@ -34,7 +35,6 @@ function _decodeSet(value, details) {
   }));
   return value;
 }
-
 // decode a struct, set or enum
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _decodeStruct(value, type, _) {
@@ -51,7 +51,6 @@ function _decodeStruct(value, type, _) {
   );
   return value;
 }
-
 // decode a fixed vector, e.g. [u8;32]
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _decodeFixedVec(value, type, _) {
@@ -62,7 +61,6 @@ function _decodeFixedVec(value, type, _) {
   value.ext = { length: vecLen, type: vecType };
   return value;
 }
-
 // decode a tuple
 function _decodeTuple(value, _, subType) {
   value.sub = typeSplit(subType).map(inner =>
@@ -71,7 +69,6 @@ function _decodeTuple(value, _, subType) {
   );
   return value;
 }
-
 function hasWrapper(type, [start, end]) {
   if (type.substr(0, start.length) !== start) {
     return false;
@@ -79,7 +76,6 @@ function hasWrapper(type, [start, end]) {
   assert(type.endsWith(end), `Expected '${start}' closing with '${end}'`);
   return true;
 }
-
 const nestedExtraction = [
   ['[', ']', TypeDefInfo.VecFixed, _decodeFixedVec],
   ['{', '}', TypeDefInfo.Struct, _decodeStruct],
@@ -88,7 +84,6 @@ const nestedExtraction = [
   ['BTreeMap<', '>', TypeDefInfo.BTreeMap, _decodeTuple],
   ['Result<', '>', TypeDefInfo.Result, _decodeTuple],
 ];
-
 const wrappedExtraction = [
   ['Compact<', '>', TypeDefInfo.Compact],
   ['DoubleMap<', '>', TypeDefInfo.DoubleMap],
@@ -96,11 +91,9 @@ const wrappedExtraction = [
   ['Option<', '>', TypeDefInfo.Option],
   ['Vec<', '>', TypeDefInfo.Vec],
 ];
-
 function extractSubType(type, [start, end]) {
   return type.substr(start.length, type.length - start.length - end.length);
 }
-
 export function getTypeDef(_type, { name, displayName } = {}) {
   // create the type via Type, allowing types to be sanitized
   const type = sanitize(_type);

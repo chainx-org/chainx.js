@@ -5,9 +5,11 @@ import Option from './Option';
 import Struct from './Struct';
 import Tuple from './Tuple';
 import Vec from './Vec';
-
 const EMPTY = new Uint8Array();
-
+/**
+ * @name Linkage
+ * @description The wrapper for the result from a LinkedMap
+ */
 export default class Linkage extends Struct {
   constructor(Type, value) {
     super(
@@ -46,7 +48,10 @@ export default class Linkage extends Struct {
     return this.isEmpty ? EMPTY : super.toU8a();
   }
 }
-
+/**
+ * @name LinkageResult
+ * @description A Linkage keys/Values tuple
+ */
 export class LinkageResult extends Tuple {
   constructor([TypeKey, keys], [TypeValue, values]) {
     super(

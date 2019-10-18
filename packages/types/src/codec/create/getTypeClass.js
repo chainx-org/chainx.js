@@ -1,3 +1,6 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { TypeDefInfo } from './types';
 import { assert } from '@chainx/util';
 import BTreeMap from '../BTreeMap';
@@ -14,7 +17,6 @@ import Vec from '../Vec';
 import VecFixed from '../VecFixed';
 import { ClassOf } from './createClass';
 import { getTypeRegistry } from './registry';
-
 function getSubDefArray(value) {
   assert(value.sub && Array.isArray(value.sub), `Expected subtype as TypeDef[] in ${JSON.stringify(value)}`);
   return value.sub;
@@ -34,12 +36,10 @@ function getTypeClassMap(value) {
     return result;
   }, result);
 }
-
 // create an array of type string constructors from the input
 function getTypeClassArray(value) {
   return getSubDefArray(value).map(({ type }) => type);
 }
-
 const infoMapping = {
   [TypeDefInfo.BTreeMap]: value => {
     const [keyType, valueType] = getTypeClassArray(value);

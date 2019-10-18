@@ -1,19 +1,20 @@
-// Copyright 2017-2018 @polkadot/types authors & contributors
+// Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { isU8a, u8aConcat, u8aToHex, isHex, hexToU8a } from '@chainx/util';
-import decodeU8a from './utils/decodeU8a';
+import { isU8a, u8aConcat, isHex, hexToU8a } from '@chainx/util';
+import { decodeU8a, mapToTypeMap, typeToConstructor } from './utils';
+import AbstractArray from './AbstractArray';
 /**
  * @name Tuple
  * @description
  * A Tuple defines an anonymous fixed-length array, where each element has its
  * own type. It extends the base JS `Array` object.
- * @noInheritDoc
  */
-export default class Tuple extends Array {
+export default class Tuple extends AbstractArray {
   constructor(Types, value) {
-    super(...Tuple.decodeTuple(Types, value));
-    this._Types = Types;
+    const Clazzes = Array.isArray(Types) ? Types.map(type => typeToConstructor(type)) : mapToTypeMap(Types);
+    super(...Tuple.decodeTuple(Clazzes, value));
+    this._Types = Clazzes;
   }
   static decodeTuple(_Types, value) {
     if (isU8a(value)) {
@@ -23,11 +24,15 @@ export default class Tuple extends Array {
     }
     const Types = Array.isArray(_Types) ? _Types : Object.values(_Types);
     return Types.map((Type, index) => {
-      return new Type(value && value[index]);
+      try {
+        return new Type(value && value[index]);
+      } catch (error) {
+        throw new Error(`Tuple: failed on ${index}:: ${error.message}`);
+      }
     });
   }
   static with(Types) {
-    return class Tuple extends Tuple {
+    return class extends Tuple {
       constructor(value) {
         super(Types, value);
       }
@@ -38,32 +43,24 @@ export default class Tuple extends Array {
    */
   get encodedLength() {
     return this.reduce((length, entry) => {
-      return (length += entry.encodedLength);
+      length += entry.encodedLength;
+      return length;
     }, 0);
   }
   /**
    * @description The types definition of the tuple
    */
   get Types() {
-    return this._Types.map(({ name }) => name);
+    return Array.isArray(this._Types) ? this._Types.map(Type => new Type().toRawType()) : Object.keys(this._Types);
   }
   /**
-   * @description Converts the Object to an standard JavaScript Array
+   * @description Returns the base runtime type name for this instance
    */
-  toArray() {
-    return Array.from(this);
-  }
-  /**
-   * @description Returns a hex string representation of the value
-   */
-  toHex() {
-    return u8aToHex(this.toU8a());
-  }
-  /**
-   * @description Converts the Object to JSON, typically used for RPC transfers
-   */
-  toJSON() {
-    return this.map(entry => entry.toJSON());
+  toRawType() {
+    const types = (Array.isArray(this._Types) ? this._Types : Object.values(this._Types)).map(Type =>
+      new Type().toRawType()
+    );
+    return `(${types.join(',')})`;
   }
   /**
    * @description Returns the string representation of the value
@@ -73,29 +70,10 @@ export default class Tuple extends Array {
     return JSON.stringify(this.toJSON());
   }
   /**
-   * @description Encodes the value as a Uint8Array as per the parity-codec specifications
+   * @description Encodes the value as a Uint8Array as per the SCALE specifications
    * @param isBare true when the value has none of the type-specific prefixes (internal)
    */
   toU8a(isBare) {
     return u8aConcat(...this.map(entry => entry.toU8a(isBare)));
-  }
-  // Below are methods that we override. When we do a `new Tuple(...).map()`,
-  // we want it to throw an error. We only override the methods that return a
-  // new instance.
-  /**
-   * @description Filters the array with the callback
-   * @param callbackfn The filter function
-   * @param thisArg The `this` object to apply the result to
-   */
-  filter(callbackfn, thisArg) {
-    return this.toArray().filter(callbackfn, thisArg);
-  }
-  /**
-   * @description Maps the array with the callback
-   * @param callbackfn The mapping function
-   * @param thisArg The `this` onject to apply the result to
-   */
-  map(callbackfn, thisArg) {
-    return this.toArray().map(callbackfn, thisArg);
   }
 }

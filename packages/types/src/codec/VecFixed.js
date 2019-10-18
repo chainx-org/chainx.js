@@ -1,8 +1,15 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { assert, isU8a, u8aConcat, compactToU8a } from '@chainx/util';
 import AbstractArray from './AbstractArray';
 import { typeToConstructor } from './utils';
 import Vec from './Vec';
-
+/**
+ * @name VecFixed
+ * @description
+ * This manages codec arrays of a fixed length
+ */
 export default class VecFixed extends AbstractArray {
   constructor(Type, length, value = []) {
     const Clazz = typeToConstructor(Type);

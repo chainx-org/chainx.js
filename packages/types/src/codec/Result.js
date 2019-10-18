@@ -3,7 +3,11 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { assert } from '@chainx/util';
 import Enum from './Enum';
-
+/**
+ * @name Result
+ * @description
+ * A Result maps to the Rust Result type, that can either wrap a success or error value
+ */
 export default class Result extends Enum {
   constructor(Ok, Error, value) {
     // NOTE This is order-dependent, Ok (with index 0) needs to be first

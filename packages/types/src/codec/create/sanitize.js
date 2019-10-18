@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 const ALLOWED_BOXES = ['BTreeMap', 'Compact', 'DoubleMap', 'Linkage', 'Result', 'Option', 'Vec'];
-
 const mappings = [
   // alias <T::InherentOfflineReport as InherentOfflineReport>::Inherent -> InherentOfflineReport
   _alias('<T::InherentOfflineReport as InherentOfflineReport>::Inherent', 'InherentOfflineReport'),
@@ -42,7 +45,6 @@ const mappings = [
   // converts ::Type to Type, <T as Trait<I>>::Proposal -> ::Proposal
   _removeColonPrefix(),
 ];
-
 // given a starting index, find the closing >
 function _findClosing(value, start) {
   let depth = 0;
@@ -58,13 +60,11 @@ function _findClosing(value, start) {
   }
   throw new Error(`Unable to find closing matching <> on '${value}' (start ${start})`);
 }
-
 function _alias(src, dest) {
   return value => {
     return value.replace(new RegExp(src, 'g'), dest);
   };
 }
-
 function _cleanupCompact() {
   return value => {
     for (let index = 0; index < value.length; index++) {
@@ -79,19 +79,16 @@ function _cleanupCompact() {
     return value;
   };
 }
-
 function _flattenSingleTuple() {
   return value => {
     return value.replace(/\(([^,]*)\)/, '$1');
   };
 }
-
 function _removeColonPrefix() {
   return value => {
     return value.replace(/^::/, '');
   };
 }
-
 function _removeGenerics() {
   return value => {
     for (let index = 0; index < value.length; index++) {
@@ -111,7 +108,6 @@ function _removeGenerics() {
     return value;
   };
 }
-
 // remove the PairOf wrappers
 function _removePairOf() {
   return value => {

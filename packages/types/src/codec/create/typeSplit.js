@@ -1,9 +1,10 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { assert } from '@chainx/util';
-
 function isNotNested(...counters) {
   return !counters.some(counter => counter !== 0);
 }
-
 // safely split a string on ', ' while taking care of any nested occurences
 export function typeSplit(type) {
   let [cDepth, fDepth, sDepth, tDepth, start] = [0, 0, 0, 0, 0];

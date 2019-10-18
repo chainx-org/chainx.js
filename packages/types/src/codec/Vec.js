@@ -1,9 +1,18 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { u8aToU8a, assert } from '@chainx/util';
 import Compact from './Compact';
 import { decodeU8a, typeToConstructor } from './utils';
 import AbstractArray from './AbstractArray';
 const MAX_LENGTH = 32768;
-
+/**
+ * @name Vec
+ * @description
+ * This manages codec arrays. Internally it keeps track of the length (as decoded) and allows
+ * construction with the passed `Type` in the constructor. It is an extension to Array, providing
+ * specific encoding/decoding on top of the base type.
+ */
 export default class Vec extends AbstractArray {
   constructor(Type, value = []) {
     const Clazz = typeToConstructor(Type);

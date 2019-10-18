@@ -1,5 +1,7 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 export var TypeDefInfo;
-
 (function(TypeDefInfo) {
   TypeDefInfo[(TypeDefInfo['BTreeMap'] = 0)] = 'BTreeMap';
   TypeDefInfo[(TypeDefInfo['Compact'] = 1)] = 'Compact';
@@ -17,7 +19,6 @@ export var TypeDefInfo;
   // anything not fully supported (keep this as the last entry)
   TypeDefInfo[(TypeDefInfo['Null'] = 13)] = 'Null';
 })(TypeDefInfo || (TypeDefInfo = {}));
-
 export var MetaTypeInfo;
 (function(MetaTypeInfo) {
   MetaTypeInfo[(MetaTypeInfo['BuiltinPlain'] = 0)] = 'BuiltinPlain';
@@ -29,7 +30,6 @@ export var MetaTypeInfo;
   MetaTypeInfo[(MetaTypeInfo['TupleStruct'] = 6)] = 'TupleStruct';
   MetaTypeInfo[(MetaTypeInfo['Null'] = 7)] = 'Null';
 })(MetaTypeInfo || (MetaTypeInfo = {}));
-
 export var MetaRegistryItem;
 (function(MetaRegistryItem) {
   MetaRegistryItem[(MetaRegistryItem['String'] = 0)] = 'String';
