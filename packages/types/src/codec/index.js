@@ -19,6 +19,7 @@ export { default as AbstractArray } from './AbstractArray';
 export { default as VecFixed } from './VecFixed';
 export { default as Linkage } from './Linkage';
 export { default as Result } from './Result';
+export { default as StructAny } from './StructAny';
 // Convenience base classes, used as "anything of this type" bases
 export { default as U8a } from './U8a';
 export { default as UInt } from './UInt';
