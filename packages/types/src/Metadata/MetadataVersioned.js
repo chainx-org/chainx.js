@@ -10,10 +10,14 @@ import MetadataV1 from './v1';
 import MetadataV2 from './v2';
 import MetadataV3 from './v3';
 import MetadataV4 from './v4';
+import MetadataV5 from './v5';
+
 import v0ToV1 from './v0/toV1';
 import v1ToV2 from './v1/toV2';
 import v2ToV3 from './v2/toV3';
 import v3ToV4 from './v3/toV4';
+import v4ToV5 from './v4/toV5';
+
 class MetadataEnum extends Enum {
   constructor(value) {
     super(
@@ -23,6 +27,7 @@ class MetadataEnum extends Enum {
         MetadataV2,
         MetadataV3,
         MetadataV4,
+        MetadataV5,
       },
       value
     );
@@ -191,7 +196,7 @@ export default class MetadataVersioned extends Struct {
    * @description Returns the wrapped values as a V4 object
    */
   get asV4() {
-    assert(this.metadata.version <= 4, `Cannot convert metadata from v${this.metadata.version} to v3`);
+    assert(this.metadata.version <= 4, `Cannot convert metadata from v${this.metadata.version} to v4`);
     if (this.metadata.version === 4) {
       return this.metadata.asV4;
     }
@@ -199,5 +204,19 @@ export default class MetadataVersioned extends Struct {
       this._convertedV4 = v3ToV4(this.asV3);
     }
     return this._convertedV4;
+  }
+
+  /**
+   * @description Returns the wrapped values as a V5 object
+   */
+  get asV5() {
+    assert(this.metadata.version <= 5, `Cannot convert metadata from v${this.metadata.version} to v5`);
+    if (this.metadata.version === 5) {
+      return this.metadata.asV5;
+    }
+    if (isUndefined(this._convertedV4)) {
+      this._convertedV5 = v4ToV5(this.asV5);
+    }
+    return this._convertedV5;
   }
 }

@@ -10,8 +10,8 @@ import Bytes from '../../Bytes';
 import StorageHasher from '../../StorageHasher';
 import Text from '../../Text';
 import Type from '../../Type';
-import { PlainType, StorageFunctionModifier } from '../v3/Storage';
-// Re-export classes that haven't changed between V3 and V4
+import { PlainType, StorageFunctionModifier } from '../v4/Storage';
+// Re-export classes that haven't changed between V4 and V5
 export { PlainType, StorageFunctionModifier };
 
 export class MapType extends Struct {
@@ -60,7 +60,7 @@ export class DoubleMapType extends Struct {
         key1: Type,
         key2: Type,
         value: Type,
-        key2Hasher: Text,
+        key2Hasher: StorageHasher,
       },
       value
     );
