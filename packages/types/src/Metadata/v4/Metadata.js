@@ -16,8 +16,6 @@ import { StorageFunctionMetadata } from './Storage';
  */
 export class ModuleMetadata extends Struct {
   constructor(value) {
-    console.log(JSON.stringify([...value.slice(0, 256)]));
-
     super(
       {
         name: Text,

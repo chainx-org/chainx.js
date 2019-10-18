@@ -16,10 +16,6 @@ import Text from '../../Text';
  */
 export class ModuleMetadata extends Struct {
   constructor(value) {
-    // console.log(JSON.stringify([...value.slice(0, 256)]));
-
-    console.log(value, '哈哈哈哈');
-
     super(
       {
         name: Text,
@@ -30,7 +26,6 @@ export class ModuleMetadata extends Struct {
       },
       value
     );
-    console.log(this.name, '哦哦哦哦哦');
   }
   /**
    * @description the module calls

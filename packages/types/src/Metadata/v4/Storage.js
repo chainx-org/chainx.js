@@ -51,6 +51,7 @@ export class MapType extends Struct {
     return this.get('value');
   }
 }
+
 export class DoubleMapType extends Struct {
   constructor(value) {
     super(
@@ -167,9 +168,9 @@ export class StorageFunctionType extends Enum {
  * @description
  * The definition of a storage function
  */
+
 export class StorageFunctionMetadata extends Struct {
   constructor(value) {
-    console.log(value);
     super(
       {
         name: Text,
@@ -180,8 +181,6 @@ export class StorageFunctionMetadata extends Struct {
       },
       value
     );
-    console.log(this.name);
-    throw new Error('哈哈哈');
   }
   /**
    * @description The default value of the storage function

@@ -7,16 +7,56 @@ import Struct from '../../codec/Struct';
 import Type from '../../Type';
 import Vector from '../../codec/Vector';
 import Bytes from '../../Bytes';
+import Bool from '../../Bool';
+
 import StorageHasher from '../../StorageHasher';
 import Text from '../../Text';
 import { PlainType, StorageFunctionModifier } from '../v4/Storage';
+
+export class MapType extends Struct {
+  constructor(value) {
+    super(
+      {
+        hasher: StorageHasher,
+        key: Type,
+        value: Type,
+        isLinked: Bool,
+      },
+      value
+    );
+  }
+  /**
+   * @description The hash algorithm used to hash keys, as [[StorageHasher]]
+   */
+  get hasher() {
+    return this.get('hasher');
+  }
+  /**
+   * @description Is this an enumerable linked map
+   */
+  get isLinked() {
+    return this.get('isLinked').valueOf();
+  }
+  /**
+   * @description The mapped key as [[Type]]
+   */
+  get key() {
+    return this.get('key');
+  }
+  /**
+   * @description The mapped value as [[Type]]
+   */
+  get value() {
+    return this.get('value');
+  }
+}
 
 export class StorageFunctionType extends Enum {
   constructor(value, index) {
     super(
       {
-        Type: Type,
-        Map: Type,
+        Type: PlainType,
+        Map: MapType,
         DoubleMap: DoubleMapType,
       },
       value,
@@ -90,8 +130,8 @@ export class StorageFunctionMetadata extends Struct {
         name: Text,
         modifier: StorageFunctionModifier,
         type: StorageFunctionType,
-        fallback: Bytes,
-        documentation: Vector.with(Text),
+        // fallback: Bytes,
+        // documentation: Vector.with(Text),
       },
       value
     );
