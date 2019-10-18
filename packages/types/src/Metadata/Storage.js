@@ -2,7 +2,7 @@
 // // This software may be modified and distributed under the terms
 // // of the Apache-2.0 license. See the LICENSE file for details.
 // import Enum from '../../codec/Enum';
-// import EnumType from '../../codec/EnumType';
+// import Enum from '../../codec/Enum';
 // import Struct from '../../codec/Struct';
 // import Vec from '../../codec/Vec';
 // import Bool from '../../Bool';
@@ -134,7 +134,7 @@
 //     return this.get('value');
 //   }
 // }
-// export class StorageFunctionType extends EnumType {
+// export class StorageFunctionType extends Enum {
 //   constructor(value, index) {
 //     super(
 //       {

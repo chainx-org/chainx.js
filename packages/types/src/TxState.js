@@ -1,6 +1,6 @@
 import Null from './Null';
 import U32 from './U32';
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Tuple from './codec/Tuple';
 
 class NotApplying extends Null {}
@@ -12,7 +12,7 @@ class Confirming extends Tuple.with([U32, U32]) {}
 class Confirmed extends Null {}
 class Unknown extends Null {}
 
-export default class TxState extends EnumType {
+export default class TxState extends Enum {
   constructor(value, index) {
     super(
       {

@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import Vec from './codec/Vec';
@@ -37,7 +37,7 @@ export class CandidateReceipt extends Struct {
 export class AvailabilityVote extends Tuple.with([SessionKey, CandidateSignature]) {}
 export class ExplicitCandidateSignature extends CandidateSignature {}
 export class ImplicitCandidateSignature extends CandidateSignature {}
-export class ValidityAttestation extends EnumType {
+export class ValidityAttestation extends Enum {
   constructor(value) {
     super(
       {

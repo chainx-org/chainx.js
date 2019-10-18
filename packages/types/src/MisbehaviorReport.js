@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Struct from './codec/Struct';
 import AuthorityId from './AuthorityId';
 import { BftHashSignature } from './Bft';
@@ -96,9 +96,9 @@ export class BftDoubleCommit extends BftAtReport {}
 /**
  * @name MisbehaviorKind
  * @description
- * An [[EnumType]] containing a Bft misbehaviour
+ * An [[Enum]] containing a Bft misbehaviour
  */
-export class MisbehaviorKind extends EnumType {
+export class MisbehaviorKind extends Enum {
   constructor(value, index) {
     super(
       {

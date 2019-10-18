@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import Vec from './codec/Vec';
@@ -53,9 +53,9 @@ export class Seal extends Tuple {
 /**
  * @name DigestItem
  * @description
- * A [[EnumType]] the specifies the specific item in the logs of a [[Digest]]
+ * A [[Enum]] the specifies the specific item in the logs of a [[Digest]]
  */
-export class DigestItem extends EnumType {
+export class DigestItem extends Enum {
   constructor(value) {
     super(
       {
