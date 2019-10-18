@@ -1,10 +1,11 @@
 // Copyright 2017-2019 @polkadot/api-contract authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { Compact } from '@polkadot/types';
-import { assert, isNumber, isString, isNull, isObject, isUndefined, stringCamelCase } from '@polkadot/util';
+import { Compact } from '@chainx/types';
+import { assert, isNumber, isString, isNull, isObject, isUndefined, stringCamelCase } from '@chainx/util';
 import MetaRegistry from './MetaRegistry';
 import { createArgClass } from './method';
+
 export default class ContractRegistry extends MetaRegistry {
   // Contract ABI helpers
   validateArgs(name, args) {
@@ -16,6 +17,7 @@ export default class ContractRegistry extends MetaRegistry {
       assert(isNumber(arg.type.ty) && isObject(this.typeDefAt(arg.type.ty)), `${name} args should have valid type`);
     });
   }
+
   validateConstructors({ contract: { constructors } }) {
     constructors.forEach((constructor, index) => {
       const unknownKeys = Object.keys(constructor).filter(key => !['args', 'docs', 'name', 'selector'].includes(key));
@@ -23,6 +25,7 @@ export default class ContractRegistry extends MetaRegistry {
       this.validateArgs(`constructor ${index}`, constructor.args);
     });
   }
+
   validateMethods({ contract: { messages } }) {
     messages.forEach(method => {
       const unknownKeys = Object.keys(method).filter(

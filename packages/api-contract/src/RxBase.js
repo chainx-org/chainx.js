@@ -1,9 +1,6 @@
-// Copyright 2017-2019 @polkadot/api-contract authors & contributors
-// This software may be modified and distributed under the terms
-// of the Apache-2.0 license. See the LICENSE file for details.
-import { assert } from '@polkadot/util';
+import { assert } from '@chainx/util';
 import Abi from './Abi';
-// NOTE Experimental, POC, bound to change
+
 export default class RxBase {
   constructor(api, abi) {
     this.abi = abi instanceof Abi ? abi : new Abi(abi);

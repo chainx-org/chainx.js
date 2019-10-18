@@ -6,6 +6,7 @@ import { assert } from '@polkadot/util';
 import { displayType, withTypeString } from '@polkadot/types';
 const { BuiltinPlain, BuiltinTuple, BuiltinArray, ClikeEnum, Enum, Struct, TupleStruct, Null } = MetaTypeInfo;
 const { String, Type, TypeDef: TypeDefItem } = MetaRegistryItem;
+
 export default class MetaRegistry {
   constructor({ registry: { strings, types } }) {
     this._strings = [];

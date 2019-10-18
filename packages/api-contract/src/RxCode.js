@@ -2,16 +2,18 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { map } from 'rxjs/operators';
-import { SubmittableResult } from '@polkadot/api';
-import { compactAddLength, u8aToU8a } from '@polkadot/util';
+import { SubmittableResult } from '@chainx/api';
+import { compactAddLength, u8aToU8a } from '@chainx/util';
 import RxBase from './RxBase';
 import RxBlueprint from './RxBlueprint';
+
 class CodePutCodeResult extends SubmittableResult {
   constructor(result, blueprint) {
     super(result);
     this.blueprint = blueprint;
   }
 }
+
 // NOTE Experimental, POC, bound to change
 export default class RxCode extends RxBase {
   constructor(api, abi, wasm) {
