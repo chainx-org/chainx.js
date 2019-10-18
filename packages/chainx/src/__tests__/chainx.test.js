@@ -12,11 +12,6 @@ describe('chainx.js', () => {
   });
 
   it('test', async () => {
-    const accounts = await chainx.chain.particularAccounts();
-    console.debug(accounts);
-    const multiSigAddrInfo = await chainx.trustee.getMultiSigAddrInfo(accounts.trusteesAccount.Bitcoin);
-    console.debug(multiSigAddrInfo);
-    const pendingListFor = await chainx.trustee.getPendingListFor(accounts.trusteesAccount.Bitcoin);
-    console.debug(JSON.stringify(pendingListFor));
+    console.log(chainx.api.tx.transfer);
   });
 });
