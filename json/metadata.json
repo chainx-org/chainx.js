@@ -690,7 +690,7 @@
               "name": "MethodCallWeight",
               "modifier": "Default",
               "type": {
-                "PlainType": "BTreeMap<XText,u64>"
+                "PlainType": "BTreeMap<Text,u64>"
               },
               "fallback": "0x00000000",
               "documentation": [
@@ -1652,7 +1652,7 @@
                 },
                 {
                   "name": "about",
-                  "type": "Option<XText>"
+                  "type": "Option<Text>"
                 }
               ],
               "documentation": [" Update the url, desire to join in elections of intention and session key."]
@@ -1910,7 +1910,7 @@
             },
             {
               "name": "Refresh",
-              "args": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<XText>"],
+              "args": ["AccountId", "Option<URL>", "Option<bool>", "Option<SessionKey>", "Option<Text>"],
               "documentation": []
             },
             {
@@ -3073,7 +3073,7 @@
               "args": [
                 {
                   "name": "about",
-                  "type": "XText"
+                  "type": "Text"
                 },
                 {
                   "name": "hot_entity",
@@ -3552,7 +3552,7 @@
                 "MapType": {
                   "hasher": "Blake2_256",
                   "key": "CodeHash",
-                  "value": "PrefabWasmModule",
+                  "value": "wasm::PrefabWasmModule",
                   "isLinked": false
                 }
               },
