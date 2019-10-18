@@ -4,13 +4,13 @@
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
 import Vector from '../../codec/Vector';
-import { StorageFunctionMetadata } from './Storage';
+import Text from '../../Text';
+import { flattenUniq, validateTypes } from '../util';
 import { FunctionMetadata } from './Calls';
 import { EventMetadata } from './Events';
-import Text from '../../Text';
-
+import { StorageFunctionMetadata } from './Storage';
 /**
- * @name ModuleMetadataV5
+ * @name ModuleMetadata
  * @description
  * The definition of a module in the system
  */
@@ -58,7 +58,6 @@ export class ModuleMetadata extends Struct {
     return this.get('storage');
   }
 }
-
 /**
  * @name MetadataV5
  * @description
@@ -78,5 +77,42 @@ export default class MetadataV5 extends Struct {
    */
   get modules() {
     return this.get('modules');
+  }
+  get callNames() {
+    return this.modules.map(mod =>
+      mod.calls.isNone ? [] : mod.calls.unwrap().map(fn => fn.args.map(arg => arg.type.toString()))
+    );
+  }
+  get eventNames() {
+    return this.modules.map(mod =>
+      mod.events.isNone ? [] : mod.events.unwrap().map(event => event.args.map(arg => arg.toString()))
+    );
+  }
+  get storageNames() {
+    return this.modules.map(mod =>
+      mod.storage.isNone
+        ? []
+        : mod.storage.unwrap().map(fn => {
+            if (fn.type.isMap) {
+              return [fn.type.asMap.key.toString(), fn.type.asMap.value.toString()];
+            } else if (fn.type.isDoubleMap) {
+              return [
+                fn.type.asDoubleMap.key1.toString(),
+                fn.type.asDoubleMap.key2.toString(),
+                fn.type.asDoubleMap.value.toString(),
+              ];
+            } else {
+              return [fn.type.asType.toString()];
+            }
+          })
+    );
+  }
+  /**
+   * @description Helper to retrieve a list of all type that are found, sorted and de-deuplicated
+   */
+  getUniqTypes(throwError) {
+    const types = flattenUniq([this.callNames, this.eventNames, this.storageNames]);
+    validateTypes(types, throwError);
+    return types;
   }
 }

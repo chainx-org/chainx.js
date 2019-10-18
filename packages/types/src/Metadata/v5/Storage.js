@@ -4,14 +4,15 @@
 import { assert } from '@chainx/util';
 import Enum from '../../codec/Enum';
 import Struct from '../../codec/Struct';
-import Type from '../../Type';
 import Vector from '../../codec/Vector';
-import Bytes from '../../Bytes';
 import Bool from '../../Bool';
-
+import Bytes from '../../Bytes';
 import StorageHasher from '../../StorageHasher';
 import Text from '../../Text';
+import Type from '../../Type';
 import { PlainType, StorageFunctionModifier } from '../v4/Storage';
+// Re-export classes that haven't changed between V4 and V5
+export { PlainType, StorageFunctionModifier };
 
 export class MapType extends Struct {
   constructor(value) {
@@ -51,13 +52,57 @@ export class MapType extends Struct {
   }
 }
 
+export class DoubleMapType extends Struct {
+  constructor(value) {
+    super(
+      {
+        hasher: StorageHasher,
+        key1: Type,
+        key2: Type,
+        value: Type,
+        key2Hasher: StorageHasher,
+      },
+      value
+    );
+  }
+  /**
+   * @description The hashing algorithm used to hash keys, as [[StorageHasher]]
+   */
+  get hasher() {
+    return this.get('hasher');
+  }
+  /**
+   * @description The mapped key as [[Type]]
+   */
+  get key1() {
+    return this.get('key1');
+  }
+  /**
+   * @description The mapped key as [[Type]]
+   */
+  get key2() {
+    return this.get('key2');
+  }
+  /**
+   * @description The hashing algorithm used to hash key2, as [[Text]]
+   */
+  get key2Hasher() {
+    return this.get('key2Hasher');
+  }
+  /**
+   * @description The mapped key as [[Type]]
+   */
+  get value() {
+    return this.get('value');
+  }
+}
 export class StorageFunctionType extends Enum {
   constructor(value, index) {
     super(
       {
-        Type: PlainType,
-        Map: MapType,
-        DoubleMap: DoubleMapType,
+        PlainType,
+        MapType,
+        DoubleMapType,
       },
       value,
       index
@@ -107,10 +152,10 @@ export class StorageFunctionType extends Enum {
    */
   toString() {
     if (this.isDoubleMap) {
-      return `DoubleMap<${this.asDoubleMap.value.toString()}>`;
+      return `DoubleMap<${this.asDoubleMap.toString()}>`;
     }
     if (this.isMap) {
-      if (this.asMap.linked.isTrue) {
+      if (this.asMap.isLinked) {
         return `(${this.asMap.value.toString()}, Linkage<${this.asMap.key.toString()}>)`;
       }
       return this.asMap.value.toString();
@@ -123,6 +168,7 @@ export class StorageFunctionType extends Enum {
  * @description
  * The definition of a storage function
  */
+
 export class StorageFunctionMetadata extends Struct {
   constructor(value) {
     super(
@@ -130,11 +176,18 @@ export class StorageFunctionMetadata extends Struct {
         name: Text,
         modifier: StorageFunctionModifier,
         type: StorageFunctionType,
-        // fallback: Bytes,
-        // documentation: Vector.with(Text),
+        fallback: Bytes,
+        documentation: Vector.with(Text),
       },
       value
     );
+  }
+  /**
+   * @description The default value of the storage function
+   * @deprecated Use `.fallback` instead.
+   */
+  get default() {
+    return this.fallback;
   }
   /**
    * @description The default value of the storage function
@@ -147,6 +200,13 @@ export class StorageFunctionMetadata extends Struct {
    */
   get documentation() {
     return this.get('documentation');
+  }
+  /**
+   * @description The [[Text]] documentation
+   * @deprecated Use `.documentation` instead.
+   */
+  get docs() {
+    return this.documentation;
   }
   /**
    * @description The key name
@@ -165,50 +225,5 @@ export class StorageFunctionMetadata extends Struct {
    */
   get type() {
     return this.get('type');
-  }
-}
-
-export class DoubleMapType extends Struct {
-  constructor(value) {
-    super(
-      {
-        hasher: StorageHasher,
-        key1: Type,
-        key2: Type,
-        value: Type,
-        key2Hasher: Text,
-      },
-      value
-    );
-  }
-  /**
-   * @description The hashing algorithm used to hash keys, as [[StorageHasher]]
-   */
-  get hasher() {
-    return this.get('hasher');
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get key1() {
-    return this.get('key1');
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get key2() {
-    return this.get('key2');
-  }
-  /**
-   * @description The hashing algorithm used to hash key2, as [[Text]]
-   */
-  get key2Hasher() {
-    return this.get('key2Hasher');
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get value() {
-    return this.get('value');
   }
 }

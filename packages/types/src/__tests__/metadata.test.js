@@ -23,6 +23,6 @@ describe('chainx.js', () => {
 describe('chainx.js', () => {
   // console.log(staticV4, staticV5)
   // new Metadata(staticV4)
-  // new Metadata(staticV5);
+  new Metadata(staticV5);
   // new MetadataV5(Uint8Array.from(Buffer.from(staticV5.substr(12), 'hex')))
 });
