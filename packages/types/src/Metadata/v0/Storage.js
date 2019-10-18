@@ -10,7 +10,6 @@ import Text from '../../Text';
 import Type from '../../Type';
 export class StorageFunctionModifier extends Enum {
   constructor(value) {
-    console.log(value);
     super(['Optional', 'Default', 'Required'], value);
   }
   /**
