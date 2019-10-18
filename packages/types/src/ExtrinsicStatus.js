@@ -1,8 +1,8 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
-import Vector from './codec/Vector';
+import Enum from './codec/Enum';
+import Vec from './codec/Vec';
 import Hash from './Hash';
 import Null from './Null';
 import Text from './Text';
@@ -11,7 +11,7 @@ import Text from './Text';
  * @description
  * An [[ExtrinsicStatus]] indicating that the [[Extrinsic]] has been boradcast to peers
  */
-export class Broadcast extends Vector.with(Text) {}
+export class Broadcast extends Vec.with(Text) {}
 /**
  * @name Dropped
  * @description
@@ -51,9 +51,9 @@ export class Usurped extends Hash {}
 /**
  * @name ExtrinsicStatus
  * @description
- * An [[EnumType]] that indicates the status of the [[Extrinsic]] as been submitted
+ * An [[Enum]] that indicates the status of the [[Extrinsic]] as been submitted
  */
-export default class ExtrinsicStatus extends EnumType {
+export default class ExtrinsicStatus extends Enum {
   constructor(value, index) {
     super(
       {

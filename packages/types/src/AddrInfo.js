@@ -1,5 +1,5 @@
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import Tuple from './codec/Tuple';
 import AddrType from './AddrType';
 import U32 from './U32';
@@ -12,7 +12,7 @@ export default class AddrInfo extends Struct {
       {
         addrType: AddrType,
         requiredNum: U32,
-        ownerList: Vector.with(Tuple.with([AccountId, MultiSigPermission])),
+        ownerList: Vec.with(Tuple.with([AccountId, MultiSigPermission])),
       },
       value
     );

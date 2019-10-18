@@ -3,26 +3,22 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
-import Text from '../../Text';
-import { flattenUniq, validateTypes } from '../util';
-import { FunctionMetadata } from './Calls';
-import { EventMetadata } from './Events';
+import Vec from '../../codec/Vec';
 import { StorageFunctionMetadata } from './Storage';
 /**
- * @name ModuleMetadata
+ * @name ModuleMetadataV2
  * @description
  * The definition of a module in the system
  */
-export class ModuleMetadata extends Struct {
+export class ModuleMetadataV2 extends Struct {
   constructor(value) {
     super(
       {
-        name: Text,
-        prefix: Text,
-        storage: Option.with(Vector.with(StorageFunctionMetadata)),
-        calls: Option.with(Vector.with(FunctionMetadata)),
-        events: Option.with(Vector.with(EventMetadata)),
+        name: 'Text',
+        prefix: 'Text',
+        storage: Option.with(Vec.with(StorageFunctionMetadata)),
+        calls: Option.with('Vec<FunctionMetadataV2>'),
+        events: Option.with('Vec<EventMetadataV2>'),
       },
       value
     );
@@ -67,7 +63,7 @@ export default class MetadataV2 extends Struct {
   constructor(value) {
     super(
       {
-        modules: Vector.with(ModuleMetadata),
+        modules: Vec.with(ModuleMetadataV2),
       },
       value
     );
@@ -77,36 +73,5 @@ export default class MetadataV2 extends Struct {
    */
   get modules() {
     return this.get('modules');
-  }
-  get callNames() {
-    return this.modules.map(mod =>
-      mod.calls.isNone ? [] : mod.calls.unwrap().map(fn => fn.args.map(arg => arg.type.toString()))
-    );
-  }
-  get eventNames() {
-    return this.modules.map(mod =>
-      mod.events.isNone ? [] : mod.events.unwrap().map(event => event.args.map(arg => arg.toString()))
-    );
-  }
-  get storageNames() {
-    return this.modules.map(mod =>
-      mod.storage.isNone
-        ? []
-        : mod.storage
-            .unwrap()
-            .map(fn =>
-              fn.type.isMap
-                ? [fn.type.asMap.key.toString(), fn.type.asMap.value.toString()]
-                : [fn.type.asType.toString()]
-            )
-    );
-  }
-  /**
-   * @description Helper to retrieve a list of all type that are found, sorted and de-deuplicated
-   */
-  getUniqTypes(throwError) {
-    const types = flattenUniq([this.callNames, this.eventNames, this.storageNames]);
-    validateTypes(types, throwError);
-    return types;
   }
 }

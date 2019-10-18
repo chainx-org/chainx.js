@@ -1,10 +1,12 @@
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
 import { assert } from '@chainx/util';
-import { createType, Option, Vector } from '../../codec';
+import { createType, Option, Vec } from '../../codec';
 import StorageHasher from '../../StorageHasher';
 import MetadataV5 from '../v5';
 import { ModuleMetadataV5 } from '../v5/Metadata';
 import { StorageFunctionMetadata, StorageFunctionType } from '../v5/Storage';
-
 const hasherMap = new Map([
   ['blake2_128', 'Blake2_128'],
   ['blake2_256', 'Blake2_256'],
@@ -12,13 +14,11 @@ const hasherMap = new Map([
   ['twox_256', 'Twox256'],
   ['twox_64_concat', 'Twox64Concat'],
 ]);
-
 function toStorageHasher(text) {
   const mapped = hasherMap.get(text.toString());
   assert(mapped, `Invalid Storage hasher: ${text.toString()}`);
   return new StorageHasher(mapped);
 }
-
 /**
  * Convert V4 StorageFunction to V5 StorageFunction
  */
@@ -58,7 +58,7 @@ export default function toV5({ modules }) {
           name,
           prefix,
           storage: storage.isSome
-            ? new Option(Vector.with(StorageFunctionMetadata), storage.unwrap().map(toV5StorageFunction))
+            ? new Option(Vec.with(StorageFunctionMetadata), storage.unwrap().map(toV5StorageFunction))
             : undefined,
           calls,
           events,

@@ -4,7 +4,7 @@
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
 import U8aFixed from './codec/U8aFixed';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import Text from './Text';
 import U32 from './U32';
 /**
@@ -53,7 +53,7 @@ export default class RuntimeVersion extends Struct {
         authoringVersion: U32,
         specVersion: U32,
         implVersion: U32,
-        apis: Vector.with(RuntimeVersionApi),
+        apis: Vec.with(RuntimeVersionApi),
       },
       value,
       new Map([

@@ -5,7 +5,7 @@ import Enum from './codec/Enum';
 
 export default class StorageHasher extends Enum {
   constructor(value) {
-    super(['Blake2_128', 'Blake2_256', 'Twox128', 'Twox256', 'Twox128Concat'], value);
+    super(['Blake2_128', 'Blake2_256', 'Twox128', 'Twox256', 'Twox64Concat'], value);
   }
   /**
    * @description Is the enum Blake2_128?
@@ -32,9 +32,9 @@ export default class StorageHasher extends Enum {
     return this.toNumber() === 3;
   }
   /**
-   * @description Is the enum isTwox128Concat?
+   * @description Is the enum isTwox64Concat?
    */
-  get isTwox128Concat() {
+  get isTwox64Concat() {
     return this.toNumber() === 4;
   }
   toJSON() {

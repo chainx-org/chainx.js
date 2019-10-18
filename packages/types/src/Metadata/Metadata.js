@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { isHex, hexToU8a, u8aConcat } from '@chainx/util';
-import { MAGIC_ERROR, MAGIC_NUMBER } from './MagicNumber';
+import { MAGIC_NUMBER } from './MagicNumber';
 import MetadataVersioned from './MetadataVersioned';
 /**
  * @name Metadata
@@ -21,7 +21,7 @@ export default class Metadata extends MetadataVersioned {
     try {
       return new MetadataVersioned(value);
     } catch (error) {
-      if (error.code !== MAGIC_ERROR) {
+      if (error.message.indexOf('MagicNumber mismatch') === -1) {
         throw error;
       }
     }

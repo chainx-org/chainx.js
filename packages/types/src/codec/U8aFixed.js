@@ -27,4 +27,18 @@ export default class U8aFixed extends U8a {
   bitLength() {
     return this.length * 8;
   }
+
+  static with(bitLength) {
+    return class extends U8aFixed {
+      constructor(value) {
+        super(value, bitLength);
+      }
+    };
+  }
+  /**
+   * @description Returns the base runtime type name for this instance
+   */
+  toRawType() {
+    return `[u8;${this.length}]`;
+  }
 }

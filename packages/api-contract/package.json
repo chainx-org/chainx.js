@@ -1,11 +1,11 @@
 {
-  "name": "api-contract",
-  "version": "1.0.0",
+  "name": "@chainx/api-contract",
+  "version": "2.22.25",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "@chainx/types": "^2.21.2",
-    "@chainx/util": "^2.21.2",
+    "@chainx/types": "^2.22.25",
+    "@chainx/util": "^2.22.2",
     "rxjs": "^6.5.3"
   }
 }

@@ -1,4 +1,4 @@
-// Copyright 2017-2018 @polkadot/types authors & contributors
+// Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 /**
@@ -8,11 +8,16 @@
  * @param u8a - The u8a to decode.
  * @param types - The array of Constructor to decode the U8a against.
  */
-export default function decodeU8a(u8a, types) {
+export default function decodeU8a(u8a, _types) {
+  const types = Array.isArray(_types) ? _types : Object.values(_types);
   if (!types.length) {
     return [];
   }
   const Type = types[0];
-  const value = new Type(u8a);
-  return [value].concat(decodeU8a(u8a.subarray(value.encodedLength), types.slice(1)));
+  try {
+    const value = new Type(u8a);
+    return [value].concat(decodeU8a(u8a.subarray(value.encodedLength), types.slice(1)));
+  } catch (error) {
+    throw new Error(`U8a: failed on '${Type.name}':: ${error.message}`);
+  }
 }

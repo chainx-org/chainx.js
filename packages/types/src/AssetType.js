@@ -10,6 +10,9 @@ export default class AssetType extends Enum {
         'ReservedWithdrawal',
         'ReservedDexSpot',
         'ReservedDexFuture',
+        'ReservedCurrency',
+        'ReservedXRC20',
+        'GasPayment',
       ],
       index
     );

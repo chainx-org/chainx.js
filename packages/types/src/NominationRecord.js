@@ -1,5 +1,5 @@
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import Tuple from './codec/Tuple';
 import Balance from './Balance';
 import BlockNumber from './BlockNumber';
@@ -17,7 +17,7 @@ export default class NominationRecord extends Struct {
         nomination: Balance,
         lastVoteWeight: U64,
         lastVoteWeightUpdate: BlockNumber,
-        revocations: Vector.with(Tuple.with([AccountId, MultiSigPermission])),
+        revocations: Vec.with(Tuple.with([AccountId, MultiSigPermission])),
       },
       value
     );

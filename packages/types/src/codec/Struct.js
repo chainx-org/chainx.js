@@ -1,12 +1,14 @@
-// Copyright 2017-2018 @polkadot/types authors & contributors
+// Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { hexToU8a, isHex, isObject, isU8a, u8aConcat, u8aToHex } from '@chainx/util';
-import decodeU8a from './utils/decodeU8a';
+import { hexToU8a, isHex, isObject, isU8a, isUndefined, u8aConcat, u8aToHex } from '@chainx/util';
+import { blake2AsU8a } from '@chainx/util-crypto';
+import U8a from './U8a';
+import { compareMap, decodeU8a, mapToTypeMap } from './utils';
 /**
  * @name Struct
  * @description
- * A Struct defines an Object with key/values - where the values are Codec values. It removes
+ * A Struct defines an Object with key-value pairs - where the values are Codec values. It removes
  * a lot of repetition from the actual coding, define a structure type, pass it the key/Codec
  * values in the constructor and it manages the decoding. It is important that the constructor
  * values matches 100% to the order in th Rust code, i.e. don't go crazy and make it alphabetical,
@@ -15,13 +17,11 @@ import decodeU8a from './utils/decodeU8a';
  */
 export default class Struct extends Map {
   constructor(Types, value = {}, jsonMap = new Map()) {
-    const decoded = Struct.decodeStruct(Types, value, jsonMap);
+    const Clazzes = mapToTypeMap(Types);
+    const decoded = Struct.decodeStruct(Clazzes, value, jsonMap);
     super(Object.entries(decoded));
     this._jsonMap = jsonMap;
-    this._Types = Object.keys(Types).reduce((result, key) => {
-      result[key] = Types[key].name;
-      return result;
-    }, {});
+    this._Types = Clazzes;
   }
   /**
    * Decode input to pass into constructor.
@@ -39,13 +39,13 @@ export default class Struct extends Map {
    * @param jsonMap
    */
   static decodeStruct(Types, value, jsonMap) {
-    // l.debug(() => ['Struct.decode', { Types, value }]);
     if (isHex(value)) {
       return Struct.decodeStruct(Types, hexToU8a(value), jsonMap);
     } else if (isU8a(value)) {
       const values = decodeU8a(value, Object.values(Types));
       // Transform array of values to {key: value} mapping
       return Object.keys(Types).reduce((raw, key, index) => {
+        // TS2322: Type 'Codec' is not assignable to type 'T[keyof S]'.
         raw[key] = values[index];
         return raw;
       }, {});
@@ -60,27 +60,33 @@ export default class Struct extends Map {
       // The key in the JSON can be snake_case (or other cases), but in our
       // Types, result or any other maps, it's camelCase
       const jsonKey = jsonMap.get(key) && !value[key] ? jsonMap.get(key) : key;
-      if (Array.isArray(value)) {
-        if (!Types[key]) {
-          throw new Error(`Struct: cannot find type of value ${key}`);
+      try {
+        if (Array.isArray(value)) {
+          // TS2322: Type 'Codec' is not assignable to type 'T[keyof S]'.
+          raw[key] = value[index] instanceof Types[key] ? value[index] : new Types[key](value[index]);
+        } else if (value instanceof Map) {
+          const mapped = value.get(jsonKey);
+          raw[key] = mapped instanceof Types[key] ? mapped : new Types[key](mapped);
+        } else if (isObject(value)) {
+          raw[key] = value[jsonKey] instanceof Types[key] ? value[jsonKey] : new Types[key](value[jsonKey]);
+        } else {
+          throw new Error(`Struct: cannot decode type ${Types[key].name} with value ${JSON.stringify(value)}`);
         }
-        raw[key] = value[index] instanceof Types[key] ? value[index] : new Types[key](value[index]);
-      } else if (value instanceof Map) {
-        const mapped = value.get(jsonKey);
-        raw[key] = mapped instanceof Types[key] ? mapped : new Types[key](mapped);
-      } else if (isObject(value)) {
-        raw[key] = value[jsonKey] instanceof Types[key] ? value[jsonKey] : new Types[key](value[jsonKey]);
-      } else {
-        throw new Error(`Struct: cannot decode type ${Types[key].name} with value ${JSON.stringify(value)}`);
+      } catch (error) {
+        throw new Error(`Struct: failed on '${jsonKey}':: ${error.message}`);
       }
       return raw;
     }, {});
   }
   static with(Types) {
-    return class Struct extends Struct {
+    return class extends Struct {
       constructor(value, jsonMap) {
         super(Types, value, jsonMap);
         Object.keys(Types).forEach(key => {
+          // do not clobber existing properties on the object
+          if (!isUndefined(this[key])) {
+            return;
+          }
           Object.defineProperty(this, key, {
             enumerable: true,
             get: () => this.get(key),
@@ -90,18 +96,46 @@ export default class Struct extends Map {
     };
   }
   /**
+   * @description Checks if the value is an empty value
+   */
+  get isEmpty() {
+    const items = this.toArray();
+    for (let i = 0; i < items.length; i++) {
+      if (!items[i].isEmpty) {
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
    * @description Returns the Type description to sthe structure
    */
   get Type() {
-    return this._Types;
+    return Object.entries(this._Types).reduce((result, [key, Type]) => {
+      result[key] = new Type().toRawType();
+      return result;
+    }, {});
   }
   /**
    * @description The length of the value when encoded as a Uint8Array
    */
   get encodedLength() {
     return this.toArray().reduce((length, entry) => {
-      return (length += entry.encodedLength);
+      length += entry.encodedLength;
+      return length;
     }, 0);
+  }
+  /**
+   * @description returns a hash of the contents
+   */
+  get hash() {
+    return new U8a(blake2AsU8a(this.toU8a(), 256));
+  }
+  /**
+   * @description Compares the value of the input to see if there is a match
+   */
+  eq(other) {
+    return compareMap(this, other);
   }
   /**
    * @description Returns a specific names entry in the structure
@@ -132,12 +166,26 @@ export default class Struct extends Map {
    * @description Converts the Object to JSON, typically used for RPC transfers
    */
   toJSON() {
+    // FIXME the return type string is only used by Extrinsic (extends Struct),
+    // but its toJSON is the hex value
     return [...this.keys()].reduce((json, key) => {
       const jsonKey = this._jsonMap.get(key) || key;
       const value = this.get(key);
       json[jsonKey] = value && value.toJSON();
       return json;
     }, {});
+  }
+  static typesToMap(Types) {
+    return Object.entries(Types).reduce((result, [key, Type]) => {
+      result[key] = new Type().toRawType();
+      return result;
+    }, {});
+  }
+  /**
+   * @description Returns the base runtime type name for this instance
+   */
+  toRawType() {
+    return JSON.stringify(Struct.typesToMap(this._Types));
   }
   /**
    * @description Returns the string representation of the value
@@ -146,7 +194,7 @@ export default class Struct extends Map {
     return JSON.stringify(this.toJSON());
   }
   /**
-   * @description Encodes the value as a Uint8Array as per the parity-codec specifications
+   * @description Encodes the value as a Uint8Array as per the SCALE specifications
    * @param isBare true when the value has none of the type-specific prefixes (internal)
    */
   toU8a(isBare) {

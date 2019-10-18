@@ -267,6 +267,37 @@ const getExtrinsicsEventsByBlockHash = {
   type: 'RawJSON',
 };
 
+const contractCall = {
+  description: '',
+  params: [createParam('callRequest', 'ContractCallRequest'), createParam('at', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
+const contractGetStorage = {
+  description: '',
+  params: [
+    createParam('contractAddress', 'PublicKey'),
+    createParam('storageKey', 'H256'),
+    createParam('at', 'Hash', { isOptional: true }),
+  ],
+  type: 'RawJSON',
+};
+
+const contractXRC20Call = {
+  description: '',
+  params: [
+    createParam('ContractXRC20CallRequest', 'ContractXRC20CallRequest'),
+    createParam('at', 'Hash', { isOptional: true }),
+  ],
+  type: 'RawJSON',
+};
+
+const contractXRCTokenInfo = {
+  description: '',
+  params: [createParam('at', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -321,5 +352,9 @@ export default {
       'getCrossMiningDividendByAccount',
       getCrossMiningDividendByAccount
     ),
+    contractCall: createMethod(section, 'contractCall', contractCall),
+    contractGetStorage: createMethod(section, 'contractGetStorage', contractGetStorage),
+    contractXRC20Call: createMethod(section, 'contractXRC20Call', contractXRC20Call),
+    contractXRCTokenInfo: createMethod(section, 'contractXRCTokenInfo', contractXRCTokenInfo),
   },
 };

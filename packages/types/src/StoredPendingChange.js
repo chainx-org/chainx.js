@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import BlockNumber from './BlockNumber';
 import SessionKey from './SessionKey';
 import U64 from './U64';
@@ -34,7 +34,7 @@ export default class StoredPendingChange extends Struct {
       {
         scheduledAt: BlockNumber,
         delay: BlockNumber,
-        nextAuthorities: Vector.with(NextAuthority),
+        nextAuthorities: Vec.with(NextAuthority),
       },
       value,
       new Map([['scheduledAt', 'scheduled_at'], ['nextAuthorities', 'next_authorities']])

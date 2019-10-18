@@ -1,13 +1,8 @@
 // Copyright 2017-2019 @polkadot/storage authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { createType, Bytes, Compact, StorageKey, U8a } from '@chainx/types';
-import {
-  v4SPlainType as PlainType,
-  v4SStorageFunctionMetadata as StorageFunctionMetadata,
-  v4SStorageFunctionModifier as StorageFunctionModifier,
-  v4SStorageFunctionType as StorageFunctionType,
-} from '@chainx/types/Metadata';
+import { createType, Compact, StorageKey, U8a } from '@chainx/types';
+import { StorageFunctionMetadata } from '@chainx/types/Metadata';
 import { assert, isNull, isUndefined, stringLowerFirst, stringToU8a, u8aConcat } from '@chainx/util';
 import getHasher from './getHasher';
 
@@ -46,13 +41,14 @@ export default function createFunction(section, method, meta, options = {}) {
     const keyFn = () => keyHash;
     keyFn.meta = new StorageFunctionMetadata({
       name: meta.name,
-      modifier: new StorageFunctionModifier('Required'),
-      type: new StorageFunctionType(new PlainType(meta.type.asMap.key), 0),
-      fallback: new Bytes(),
+      modifier: createType('StorageEntryModifierLatest', 1),
+      type: new StorageFunctionMetadata(createType('PlainTypeLatest', type.asMap.key), 0),
+      fallback: createType('Bytes', createTypeUnsafe(type.asMap.key.toString()).toHex()),
       documentation: meta.documentation,
     });
     storageFn.headKey = new StorageKey(keyFn);
   }
+
   storageFn.meta = meta;
   storageFn.method = stringLowerFirst(method.toString());
   storageFn.section = stringLowerFirst(section.toString());

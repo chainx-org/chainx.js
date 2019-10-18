@@ -12,7 +12,7 @@ import createUnchecked from './createUnchecked';
  * @param metadata - The metadata to extend the storage object against.
  */
 export default function fromMetadata(metadata) {
-  return metadata.asV4.modules
+  return metadata.asLatest.modules
     .filter(modul => modul.calls.isSome)
     .reduce(
       (result, modul, sectionIndex) => {

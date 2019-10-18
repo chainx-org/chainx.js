@@ -1,76 +1,149 @@
-import { u8aConcat, u8aToU8a, u8aToHex } from '@chainx/util';
+// Copyright 2017-2019 @polkadot/types authors & contributors
+// This software may be modified and distributed under the terms
+// of the Apache-2.0 license. See the LICENSE file for details.
+import { isHex, hexToU8a, isU8a, u8aConcat, u8aToHex, u8aToU8a } from '@chainx/util';
+import { blake2AsU8a } from '@chainx/util-crypto';
 import Compact from './Compact';
-import decodeU8a from './utils/decodeU8a';
+import U8a from './U8a';
 import U32 from '../U32';
-
-// BTreeMap 前几个字节是 U32 表示长度
-export default class BTreeMap extends Array {
-  constructor(Type, value = []) {
-    super(...BTreeMap.decodeBTreeMap(Type, value));
-    this._Type = Type;
+import { compareMap, decodeU8a, typeToConstructor } from './utils';
+export default class BTreeMap extends Map {
+  constructor(keyType, valType, rawValue) {
+    const KeyClass = typeToConstructor(keyType);
+    const ValClass = typeToConstructor(valType);
+    super(BTreeMap.decodeBTreeMap(KeyClass, ValClass, rawValue));
+    this._KeyClass = KeyClass;
+    this._ValClass = ValClass;
   }
-
-  static decodeBTreeMap(Type, value) {
-    if (Array.isArray(value)) {
-      return value.map(entry => (entry instanceof Type ? entry : new Type(entry)));
+  /**
+   * Decode input to pass into constructor.
+   *
+   * @param KeyClass - Type of the map key
+   * @param ValClass - Type of the map value
+   * @param value - Value to decode, one of:
+   * - null
+   * - undefined
+   * - hex
+   * - Uint8Array
+   * - Map<any, any>, where both key and value types are either
+   *   constructors or decodeable values for their types.
+   * @param jsonMap
+   */
+  static decodeBTreeMap(KeyClass, ValClass, value) {
+    if (!value) {
+      return new Map();
+    } else if (isHex(value)) {
+      return BTreeMap.decodeBTreeMap(KeyClass, ValClass, hexToU8a(value));
+    } else if (isU8a(value)) {
+      return BTreeMap.decodeBTreeMapFromU8a(KeyClass, ValClass, u8aToU8a(value));
+    } else if (value instanceof Map) {
+      return BTreeMap.decodeBTreeMapFromMap(KeyClass, ValClass, value);
     }
-    const u8a = u8aToU8a(value);
-    const _length = new U32(u8a);
-    const length = _length.toNumber();
-    const offset = _length.encodedLength;
-    return decodeU8a(u8a.subarray(offset), new Array(length).fill(Type));
+    throw new Error('BTreeMap: cannot decode type');
   }
-
-  static with(Type) {
-    return class BTreeMap extends BTreeMap {
+  static decodeBTreeMapFromU8a(KeyClass, ValClass, u8a) {
+    const output = new Map();
+    const length = new U32(u8a).toNumber();
+    const types = [];
+    for (let i = 0; i < length; i++) {
+      types.push(KeyClass, ValClass);
+    }
+    const values = decodeU8a(u8a.subarray(4), types);
+    for (let i = 0; i < values.length; i += 2) {
+      output.set(values[i], values[i + 1]);
+    }
+    return output;
+  }
+  static decodeBTreeMapFromMap(KeyClass, ValClass, value) {
+    const output = new Map();
+    value.forEach((v, k) => {
+      let key, val;
+      try {
+        key = k instanceof KeyClass ? k : new KeyClass(k);
+        val = v instanceof ValClass ? v : new ValClass(v);
+      } catch (error) {
+        console.error('Failed to decode BTreeMap key or value:', error.message);
+        throw error;
+      }
+      output.set(key, val);
+    });
+    return output;
+  }
+  static with(keyType, valType) {
+    return class extends BTreeMap {
       constructor(value) {
-        super(Type, value);
+        super(keyType, valType, value);
       }
     };
   }
-
-  get Type() {
-    return this._Type.name;
-  }
-
+  /**
+   * @description The length of the value when encoded as a Uint8Array
+   */
   get encodedLength() {
-    return this.reduce((total, raw) => {
-      return total + raw.encodedLength;
-    }, new U32(this.length).encodedLength);
+    let len = new U32(this.size).encodedLength;
+    this.forEach((v, k) => {
+      len += v.encodedLength + k.encodedLength;
+    });
+    return len;
   }
-
-  get length() {
-    // only included here since we ignore inherited docs
-    return super.length;
+  /**
+   * @description Returns a hash of the value
+   */
+  get hash() {
+    return new U8a(blake2AsU8a(this.toU8a(), 256));
   }
-
-  toArray() {
-    return Array.from(this);
+  /**
+   * @description Checks if the value is an empty value
+   */
+  get isEmpty() {
+    return this.size === 0;
   }
-
+  /**
+   * @description Compares the value of the input to see if there is a match
+   */
+  eq(other) {
+    return compareMap(this, other);
+  }
+  /**
+   * @description Returns a hex string representation of the value. isLe returns a LE (number-only) representation
+   */
   toHex() {
     return u8aToHex(this.toU8a());
   }
-
+  /**
+   * @description Converts the Object to JSON, typically used for RPC transfers
+   */
   toJSON() {
-    return this.map(entry => entry.toJSON());
+    const json = {};
+    this.forEach((v, k) => {
+      json[k.toString()] = v.toJSON();
+    });
+    return json;
   }
-
+  /**
+   * @description Returns the base runtime type name for this instance
+   */
+  toRawType() {
+    return `BTreeMap<${new this._KeyClass().toRawType()},${new this._ValClass().toRawType()}>`;
+  }
+  /**
+   * @description Returns the string representation of the value
+   */
   toString() {
-    const data = this.map(entry => entry.toString());
-    return `[${data.join(', ')}]`;
+    return JSON.stringify(this.toJSON());
   }
-
+  /**
+   * @description Encodes the value as a Uint8Array as per the SCALE specifications
+   * @param isBare true when the value has none of the type-specific prefixes (internal)
+   */
   toU8a(isBare) {
-    const encoded = this.map(entry => entry.toU8a(isBare));
-    return isBare ? u8aConcat(...encoded) : u8aConcat(new U32(this.length).toU8a(), ...encoded);
-  }
-
-  filter(callbackfn, thisArg) {
-    return this.toArray().filter(callbackfn, thisArg);
-  }
-
-  map(callbackfn, thisArg) {
-    return this.toArray().map(callbackfn, thisArg);
+    const encoded = new Array();
+    if (!isBare) {
+      encoded.push(new U32(this.size).toU8a());
+    }
+    this.forEach((v, k) => {
+      encoded.push(k.toU8a(isBare), v.toU8a(isBare));
+    });
+    return u8aConcat(...encoded);
   }
 }

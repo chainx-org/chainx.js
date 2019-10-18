@@ -1,10 +1,10 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import AccountId from './AccountId';
 import Bytes from './Bytes';
 import Hash from './Hash';
@@ -25,8 +25,8 @@ export class CandidateReceipt extends Struct {
         collator: AccountId,
         signature: CandidateSignature,
         headData: HeadData,
-        balanceUploads: Vector.with(BalanceUpload),
-        egressQueueRoots: Vector.with(EgressQueueRoot),
+        balanceUploads: Vec.with(BalanceUpload),
+        egressQueueRoots: Vec.with(EgressQueueRoot),
         fees: U64,
         blockDataHash: Hash,
       },
@@ -37,7 +37,7 @@ export class CandidateReceipt extends Struct {
 export class AvailabilityVote extends Tuple.with([SessionKey, CandidateSignature]) {}
 export class ExplicitCandidateSignature extends CandidateSignature {}
 export class ImplicitCandidateSignature extends CandidateSignature {}
-export class ValidityAttestation extends EnumType {
+export class ValidityAttestation extends Enum {
   constructor(value) {
     super(
       {
@@ -62,8 +62,8 @@ export default class AttestedCandidate extends Struct {
     super(
       {
         candidate: CandidateReceipt,
-        validityVotes: Vector.with(ValidityVote),
-        availabilityVotes: Vector.with(AvailabilityVote),
+        validityVotes: Vec.with(ValidityVote),
+        availabilityVotes: Vec.with(AvailabilityVote),
       },
       value
     );

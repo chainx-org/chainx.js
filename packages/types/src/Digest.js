@@ -1,10 +1,10 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import AuthorityId from './AuthorityId';
 import Bytes from './Bytes';
 import Hash from './Hash';
@@ -15,7 +15,7 @@ import U64 from './U64';
  * @description
  * Log for Authories changed
  */
-export class AuthoritiesChange extends Vector.with(AuthorityId) {}
+export class AuthoritiesChange extends Vec.with(AuthorityId) {}
 /**
  * @name ChangesTrieRoot
  * @description
@@ -53,9 +53,9 @@ export class Seal extends Tuple {
 /**
  * @name DigestItem
  * @description
- * A [[EnumType]] the specifies the specific item in the logs of a [[Digest]]
+ * A [[Enum]] the specifies the specific item in the logs of a [[Digest]]
  */
-export class DigestItem extends EnumType {
+export class DigestItem extends Enum {
   constructor(value) {
     super(
       {
@@ -78,7 +78,7 @@ export default class Digest extends Struct {
     // @todo digest 解析有错误
     super(
       {
-        // logs: Vector.with(Text),
+        // logs: Vec.with(Text),
       },
       value
     );

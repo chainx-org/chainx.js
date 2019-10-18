@@ -1,8 +1,18 @@
 // Copyright 2017-2019 @polkadot/api-contract authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { Compact } from '@chainx/types';
-import { assert, isNumber, isString, isNull, isObject, isUndefined, stringCamelCase } from '@chainx/util';
+import { Compact, U8a, U8aFixed } from '@chainx/types';
+import {
+  assert,
+  isNumber,
+  isString,
+  isNull,
+  isObject,
+  isUndefined,
+  stringCamelCase,
+  u8aToHex,
+  isHex,
+} from '@chainx/util';
 import MetaRegistry from './MetaRegistry';
 import { createArgClass } from './method';
 
@@ -37,7 +47,7 @@ export default class ContractRegistry extends MetaRegistry {
       );
       const { name, selector, return_type: returnType } = method;
       assert(isNumber(name) && isString(this.stringAt(name)), `Expected name for messages.${method.name}`);
-      assert(isNumber(selector), `Expected selector for messages.${method.name}`);
+      // assert(isHex(selector), `Expected selector for messages.${method.name}`);
       assert(
         isNull(returnType) || (isNumber(returnType.ty) && isObject(this.typeDefAt(returnType.ty))),
         `Expected return_type for messages.${method.name}`
@@ -68,7 +78,11 @@ export default class ContractRegistry extends MetaRegistry {
         type,
       };
     });
-    const Clazz = createArgClass(args, isUndefined(method.selector) ? {} : { __selector: 'u32' });
+
+    const Clazz = createArgClass(
+      args,
+      isUndefined(method.selector) || name.includes('constructor') ? {} : { __selector: 'Selector' }
+    );
     const baseStruct = { __selector: method.selector };
     const encoder = (...params) => {
       assert(
@@ -84,7 +98,8 @@ export default class ContractRegistry extends MetaRegistry {
           { ...baseStruct }
         )
       ).toU8a();
-      return Compact.addLengthPrefix(u8a);
+
+      return u8aToHex(u8a);
     };
     const fn = encoder;
     fn.args = args;
@@ -119,9 +134,10 @@ export default class ContractRegistry extends MetaRegistry {
       return this.convertMethod(constructor);
     });
   }
-  convertMethod({ args, name, return_type: returnType, ...method }) {
+  convertMethod({ args, name, return_type: returnType, selector, ...method }) {
     return {
       ...method,
+      selector: u8aToHex(JSON.parse(selector)),
       args: this.convertArgs(args),
       name: this.stringAt(name),
       returnType: returnType ? this.convertType(returnType) : null,

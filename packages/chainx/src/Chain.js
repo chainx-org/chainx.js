@@ -1,6 +1,8 @@
 import { Observable, combineLatest, of } from 'rxjs';
 import { switchMap, map, filter } from 'rxjs/operators';
 import { drr } from './utils/drr';
+import { u8aToHex, hexToU8a, u8aConcat } from '@chainx/util';
+import { u64 } from '@chainx/types';
 
 class Chain {
   constructor(chainx) {
@@ -57,6 +59,20 @@ class Chain {
 
   particularAccounts() {
     return this.api.rpc.chainx.particularAccounts();
+  }
+
+  convertToAsset(token, balance, value, gas) {
+    return this.api.rpc.chainx.contractXRCTokenInfo().then(data => {
+      const contractAddress = data.BTC.XRC20.address;
+      const selector = data.BTC.XRC20.selectors.Destroy;
+
+      return this.api.tx.xContracts.call(
+        contractAddress,
+        value,
+        gas,
+        u8aToHex(u8aConcat(hexToU8a(selector), new u64(balance).toU8a()))
+      );
+    });
   }
 
   subscribeNewHead() {

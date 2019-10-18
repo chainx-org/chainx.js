@@ -1,12 +1,12 @@
 import TrusteeIntentionProps from './TrusteeIntentionProps';
 import H520 from './H520';
 import H264 from './H264';
-import EnumType from './codec/EnumType';
+import Enum from './codec/Enum';
 
 class Normal extends H520 {}
 class Compressed extends H264 {}
 
-class BitcoinTrusteeType extends EnumType {
+class BitcoinTrusteeType extends Enum {
   constructor(value, index) {
     super(
       {
@@ -18,6 +18,5 @@ class BitcoinTrusteeType extends EnumType {
     );
   }
 }
-
 
 export default TrusteeIntentionProps.with(BitcoinTrusteeType);
