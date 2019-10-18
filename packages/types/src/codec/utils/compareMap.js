@@ -1,0 +1,24 @@
+import { isFunction, isObject, isUndefined } from '@chainx/util';
+function hasMismatch(a, b) {
+  return (
+    isUndefined(a) ||
+    // Codec has .eq, use it here
+    (isFunction(a.eq) ? !a.eq(b) : a !== b)
+  );
+}
+function notEntry(value) {
+  return !Array.isArray(value) || value.length !== 2;
+}
+// NOTE These are used internally and when comparing objects, expects that
+// when the second is an Map<string, Codec> that the first has to be as well
+export default function compareMap(a, b) {
+  if (Array.isArray(b)) {
+    // equal number of entries and each entry in the array should match
+    return a.size === b.length && !b.some(entry => notEntry(entry) || hasMismatch(a.get(entry[0]), entry[1]));
+  } else if (b instanceof Map) {
+    return compareMap(a, [...b.entries()]);
+  } else if (isObject(b)) {
+    return compareMap(a, Object.entries(b));
+  }
+  return false;
+}

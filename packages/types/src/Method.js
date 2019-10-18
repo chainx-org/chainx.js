@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { assert, isHex, isObject, isU8a, hexToU8a } from '@chainx/util';
-import { getTypeDef, getTypeClass } from './codec/createType';
+import { getTypeDef, getTypeClass } from './codec';
 import Struct from './codec/Struct';
 import U8aFixed from './codec/U8aFixed';
 
