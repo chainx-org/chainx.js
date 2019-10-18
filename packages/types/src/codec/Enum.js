@@ -15,7 +15,7 @@ import {
   u8aConcat,
   u8aToHex,
 } from '@chainx/util';
-import Null from '../primitive/Null';
+import Null from '../Null';
 import { mapToTypeMap } from './utils';
 import Base from './Base';
 import Struct from './Struct';

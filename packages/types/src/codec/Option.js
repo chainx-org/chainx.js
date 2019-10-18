@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { isNull, isU8a, isUndefined, u8aToHex } from '@chainx/util';
-import Null from '../primitive/Null';
+import Null from '../Null/Null';
 import { typeToConstructor } from './utils';
 import Base from './Base';
 /**
