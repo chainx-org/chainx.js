@@ -1,5 +1,5 @@
 import { assert } from '@chainx/util';
-import { createType, Option, Vector } from '../../codec';
+import { createType, Option, Vec } from '../../codec';
 import StorageHasher from '../../StorageHasher';
 import MetadataV5 from '../v5';
 import { ModuleMetadataV5 } from '../v5/Metadata';
@@ -58,7 +58,7 @@ export default function toV5({ modules }) {
           name,
           prefix,
           storage: storage.isSome
-            ? new Option(Vector.with(StorageFunctionMetadata), storage.unwrap().map(toV5StorageFunction))
+            ? new Option(Vec.with(StorageFunctionMetadata), storage.unwrap().map(toV5StorageFunction))
             : undefined,
           calls,
           events,

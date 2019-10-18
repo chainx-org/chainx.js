@@ -4,7 +4,7 @@
 import { assert } from '@chainx/util';
 import Enum from './codec/Enum';
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import Hash from './Hash';
 import Event from './Event';
 import Null from './Null';
@@ -97,7 +97,7 @@ export class EventRecord_0_76 extends Struct {
    * @description The [[Hash]] topics for this event (empty, compat)
    */
   get topics() {
-    return new (Vector.with(Hash))();
+    return new (Vec.with(Hash))();
   }
 }
 /**
@@ -112,7 +112,7 @@ export default class EventRecord extends Struct {
       {
         phase: Phase,
         event: Event,
-        topics: Vector.with(Hash),
+        topics: Vec.with(Hash),
       },
       value
     );

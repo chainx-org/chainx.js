@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Text from '../../Text';
 import Type from '../../Type';
 
@@ -39,8 +39,8 @@ export class FunctionMetadata extends Struct {
     super(
       {
         name: Text,
-        args: Vector.with(FunctionArgumentMetadata),
-        documentation: Vector.with(Text),
+        args: Vec.with(FunctionArgumentMetadata),
+        documentation: Vec.with(Text),
       },
       value
     );

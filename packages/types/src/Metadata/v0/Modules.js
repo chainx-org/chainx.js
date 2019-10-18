@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Text from '../../Text';
 import Type from '../../Type';
 import U16 from '../../U16';
@@ -37,8 +37,8 @@ export class FunctionMetadata extends Struct {
       {
         id: U16,
         name: Text,
-        args: Vector.with(FunctionArgumentMetadata),
-        documentation: Vector.with(Text),
+        args: Vec.with(FunctionArgumentMetadata),
+        documentation: Vec.with(Text),
       },
       value
     );
@@ -87,7 +87,7 @@ export class CallMetadata extends Struct {
     super(
       {
         name: Text,
-        functions: Vector.with(FunctionMetadata),
+        functions: Vec.with(FunctionMetadata),
       },
       value
     );

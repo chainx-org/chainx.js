@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { u8aToHex } from '@chainx/util';
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import { BftAuthoritySignature } from './Bft';
 import Bytes from './Bytes';
 import Hash from './Hash';
@@ -30,7 +30,7 @@ export class RhdJustification extends Struct {
       {
         roundNumber: U32,
         hash: Hash,
-        signatures: Vector.with(BftAuthoritySignature),
+        signatures: Vec.with(BftAuthoritySignature),
       },
       value,
       new Map([['roundNumber', 'round_number']])

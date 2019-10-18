@@ -14,7 +14,7 @@ export default function validateTypes(types, throwError) {
           return decoded.type;
         case TypeDefInfo.Compact:
         case TypeDefInfo.Option:
-        case TypeDefInfo.Vector:
+        case TypeDefInfo.Vec:
           return extractTypes([decoded.sub.type]);
         case TypeDefInfo.Tuple:
           return extractTypes(decoded.sub.map(sub => sub.type));

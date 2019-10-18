@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Text from '../../Text';
 import U16 from '../../U16';
 
@@ -41,7 +41,7 @@ export class OuterDispatchMetadata extends Struct {
     super(
       {
         name: Text,
-        calls: Vector.with(OuterDispatchCall),
+        calls: Vec.with(OuterDispatchCall),
       },
       value
     );

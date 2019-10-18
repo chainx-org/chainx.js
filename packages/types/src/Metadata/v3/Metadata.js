@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Text from '../../Text';
 import { flattenUniq, validateTypes } from '../util';
 import { FunctionMetadata } from './Calls';
@@ -20,9 +20,9 @@ export class ModuleMetadata extends Struct {
       {
         name: Text,
         prefix: Text,
-        storage: Option.with(Vector.with(StorageFunctionMetadata)),
-        calls: Option.with(Vector.with(FunctionMetadata)),
-        events: Option.with(Vector.with(EventMetadata)),
+        storage: Option.with(Vec.with(StorageFunctionMetadata)),
+        calls: Option.with(Vec.with(FunctionMetadata)),
+        events: Option.with(Vec.with(EventMetadata)),
       },
       value
     );
@@ -67,7 +67,7 @@ export default class MetadataV3 extends Struct {
   constructor(value) {
     super(
       {
-        modules: Vector.with(ModuleMetadata),
+        modules: Vec.with(ModuleMetadata),
       },
       value
     );

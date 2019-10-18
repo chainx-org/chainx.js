@@ -2,24 +2,24 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import { stringUpperFirst } from '@chainx/util';
-import { Option, Vector } from '../../codec';
+import { Option, Vec } from '../../codec';
 import { FunctionMetadata } from '../v1/Calls';
 import { EventMetadata } from '../v1/Events';
 import MetadataV1, { ModuleMetadata } from '../v1/Metadata';
 import { StorageFunctionMetadata } from '../v1/Storage';
 function toV1Calls(modul) {
   return modul.module.call.functions.length === 0
-    ? new Option(Vector.with(FunctionMetadata))
-    : new Option(Vector.with(FunctionMetadata), modul.module.call.functions);
+    ? new Option(Vec.with(FunctionMetadata))
+    : new Option(Vec.with(FunctionMetadata), modul.module.call.functions);
 }
 function toV1Events(metadataV0, prefix) {
   const events = metadataV0.events.find(event => event.name.eq(prefix));
-  return events ? new Option(Vector.with(EventMetadata), events.events) : new Option(Vector.with(EventMetadata));
+  return events ? new Option(Vec.with(EventMetadata), events.events) : new Option(Vec.with(EventMetadata));
 }
 function toV1Storage(modul) {
   return modul.storage.isNone
-    ? new Option(Vector.with(StorageFunctionMetadata))
-    : new Option(Vector.with(StorageFunctionMetadata), modul.storage.unwrap().functions);
+    ? new Option(Vec.with(StorageFunctionMetadata))
+    : new Option(Vec.with(StorageFunctionMetadata), modul.storage.unwrap().functions);
 }
 /**
  * Function that converts MetadataV0 to MetadataV1

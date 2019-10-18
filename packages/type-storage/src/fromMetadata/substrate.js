@@ -5,7 +5,7 @@ import {
   v4SStorageFunctionModifier as StorageFunctionModifier,
   v4SStorageFunctionType as StorageFunctionType,
 } from '@chainx/types/Metadata';
-import { Text, Vector } from '@chainx/types';
+import { Text, Vec } from '@chainx/types';
 import createFunction from './createFunction';
 // Small helper function to factorize code on this page.
 const createRuntimeFunction = (method, key, { documentation, type }) =>
@@ -13,7 +13,7 @@ const createRuntimeFunction = (method, key, { documentation, type }) =>
     new Text('Substrate'),
     new Text(method),
     {
-      documentation: new Vector(Text, [documentation]),
+      documentation: new Vec(Text, [documentation]),
       modifier: new StorageFunctionModifier(1),
       type: new StorageFunctionType(type, 0),
       toJSON: () => key,

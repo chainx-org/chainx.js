@@ -4,7 +4,7 @@
 import { hexToU8a, isHex, isU8a } from '@chainx/util';
 import Compact from '../../codec/Compact';
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import { flattenUniq, validateTypes } from '../util';
 import { OuterDispatchMetadata } from './Calls';
 import { OuterEventMetadata } from './Events';
@@ -20,7 +20,7 @@ export default class MetadataV0 extends Struct {
     super(
       {
         outerEvent: OuterEventMetadata,
-        modules: Vector.with(RuntimeModuleMetadata),
+        modules: Vec.with(RuntimeModuleMetadata),
         outerDispatch: OuterDispatchMetadata,
       },
       MetadataV0.decodeMetadata(value)

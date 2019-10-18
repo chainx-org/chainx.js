@@ -4,7 +4,7 @@
 import EnumType from './codec/EnumType';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import AccountId from './AccountId';
 import Bytes from './Bytes';
 import Hash from './Hash';
@@ -25,8 +25,8 @@ export class CandidateReceipt extends Struct {
         collator: AccountId,
         signature: CandidateSignature,
         headData: HeadData,
-        balanceUploads: Vector.with(BalanceUpload),
-        egressQueueRoots: Vector.with(EgressQueueRoot),
+        balanceUploads: Vec.with(BalanceUpload),
+        egressQueueRoots: Vec.with(EgressQueueRoot),
         fees: U64,
         blockDataHash: Hash,
       },
@@ -62,8 +62,8 @@ export default class AttestedCandidate extends Struct {
     super(
       {
         candidate: CandidateReceipt,
-        validityVotes: Vector.with(ValidityVote),
-        availabilityVotes: Vector.with(AvailabilityVote),
+        validityVotes: Vec.with(ValidityVote),
+        availabilityVotes: Vec.with(AvailabilityVote),
       },
       value
     );

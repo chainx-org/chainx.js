@@ -1,11 +1,11 @@
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import AccountId from './AccountId';
 
 export default class TrusteeIntentionProps extends Struct {
   static with(TrusteeAddress) {
     return Struct.with({
-      trusteeList: Vector.with(AccountId),
+      trusteeList: Vec.with(AccountId),
       hotAddress: TrusteeAddress,
       coldAddress: TrusteeAddress,
     });

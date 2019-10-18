@@ -1,41 +1,13 @@
-// Copyright 2017-2018 @polkadot/types authors & contributors
+// Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { u8aConcat, u8aToU8a, u8aToHex } from '@chainx/util';
+import { u8aConcat, u8aToHex } from '@chainx/util';
+import { blake2AsU8a } from '@chainx/util-crypto';
 import Compact from './Compact';
-import decodeU8a from './utils/decodeU8a';
-/**
- * @name Vector
- * @description
- * This manages codec arrays. Intrernally it keeps track of the length (as decoded) and allows
- * construction with the passed `Type` in the constructor. It is an extension to Array, providing
- * specific encoding/decoding on top of the base type.
- * @noInheritDoc
- */
-export default class Vector extends Array {
-  constructor(Type, value = []) {
-    super(...Vector.decodeVector(Type, value));
-    this._Type = Type;
-  }
-  static decodeVector(Type, value) {
-    if (Array.isArray(value)) {
-      return value.map(entry => (entry instanceof Type ? entry : new Type(entry)));
-    }
-    const u8a = u8aToU8a(value);
-    let [offset, _length] = Compact.decodeU8a(u8a);
-    const length = _length.toNumber();
-    return decodeU8a(u8a.subarray(offset), new Array(length).fill(Type));
-  }
-  static with(Type) {
-    return class Vector extends Vector {
-      constructor(value) {
-        super(Type, value);
-      }
-    };
-  }
-  get Type() {
-    return this._Type.name;
-  }
+import U8a from './U8a';
+import { compareArray } from './utils';
+
+export default class AbstractArray extends Array {
   /**
    * @description The length of the value when encoded as a Uint8Array
    */
@@ -45,11 +17,29 @@ export default class Vector extends Array {
     }, Compact.encodeU8a(this.length).length);
   }
   /**
+   * @description returns a hash of the contents
+   */
+  get hash() {
+    return new U8a(blake2AsU8a(this.toU8a(), 256));
+  }
+  /**
+   * @description Checks if the value is an empty value
+   */
+  get isEmpty() {
+    return this.length === 0;
+  }
+  /**
    * @description The length of the value
    */
   get length() {
     // only included here since we ignore inherited docs
     return super.length;
+  }
+  /**
+   * @description Compares the value of the input to see if there is a match
+   */
+  eq(other) {
+    return compareArray(this, other);
   }
   /**
    * @description Converts the Object to an standard JavaScript Array
@@ -78,14 +68,14 @@ export default class Vector extends Array {
     return `[${data.join(', ')}]`;
   }
   /**
-   * @description Encodes the value as a Uint8Array as per the parity-codec specifications
+   * @description Encodes the value as a Uint8Array as per the SCALE specifications
    * @param isBare true when the value has none of the type-specific prefixes (internal)
    */
   toU8a(isBare) {
     const encoded = this.map(entry => entry.toU8a(isBare));
     return isBare ? u8aConcat(...encoded) : u8aConcat(Compact.encodeU8a(this.length), ...encoded);
   }
-  // Below are methods that we override. When we do a `new Vector(...).map()`,
+  // Below are methods that we override. When we do a `new Vec(...).map()`,
   // we want it to return an Array. We only override the methods that return a
   // new instance.
   /**
@@ -103,5 +93,11 @@ export default class Vector extends Array {
    */
   map(callbackfn, thisArg) {
     return this.toArray().map(callbackfn, thisArg);
+  }
+  /**
+   * @description Checks if the array includes a specific value
+   */
+  includes(check) {
+    return this.some(value => value.eq(check));
   }
 }

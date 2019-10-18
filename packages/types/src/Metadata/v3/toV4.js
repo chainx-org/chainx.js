@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { Option, Vector } from '../../codec';
+import { Option, Vec } from '../../codec';
 import StorageHasher from '../../StorageHasher';
 import MetadataV4 from '../v4';
 import { DoubleMapType, MapType, StorageFunctionMetadata, StorageFunctionType } from '../v4/Storage';
@@ -54,7 +54,7 @@ export default function toV4(metadataV3) {
         name: modul.name,
         prefix: modul.prefix,
         storage: modul.storage.isSome
-          ? new Option(Vector.with(StorageFunctionMetadata), modul.storage.unwrap().map(toV4StorageFunction))
+          ? new Option(Vec.with(StorageFunctionMetadata), modul.storage.unwrap().map(toV4StorageFunction))
           : undefined,
         calls: modul.calls,
         events: modul.events,

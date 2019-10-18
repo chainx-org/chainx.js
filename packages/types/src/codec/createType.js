@@ -6,7 +6,7 @@ import Compact from './Compact';
 import Option from './Option';
 import Struct from './Struct';
 import Tuple from './Tuple';
-import Vector from './Vector';
+import Vec from './Vec';
 import BTreeMap from './BTreeMap';
 import registry from './typeRegistry';
 export var TypeDefInfo;
@@ -16,7 +16,7 @@ export var TypeDefInfo;
   TypeDefInfo[(TypeDefInfo['Plain'] = 2)] = 'Plain';
   TypeDefInfo[(TypeDefInfo['Struct'] = 3)] = 'Struct';
   TypeDefInfo[(TypeDefInfo['Tuple'] = 4)] = 'Tuple';
-  TypeDefInfo[(TypeDefInfo['Vector'] = 5)] = 'Vector';
+  TypeDefInfo[(TypeDefInfo['Vec'] = 5)] = 'Vec';
   TypeDefInfo[(TypeDefInfo['BTreeMap'] = 6)] = 'BTreeMap';
 })(TypeDefInfo || (TypeDefInfo = {}));
 // safely split a string on ', ' while taking care of any nested occurences
@@ -99,7 +99,7 @@ export function getTypeDef(_type, name) {
     value.info = TypeDefInfo.Option;
     value.sub = getTypeDef(subType);
   } else if (startingWith(type, 'Vec<', '>')) {
-    value.info = TypeDefInfo.Vector;
+    value.info = TypeDefInfo.Vec;
     value.sub = getTypeDef(subType);
   } else if (startingWith(type, 'BTreeMap<', '>')) {
     value.info = TypeDefInfo.BTreeMap;
@@ -126,9 +126,9 @@ export function getTypeClass(value) {
   } else if (value.info === TypeDefInfo.Tuple) {
     assert(Array.isArray(value.sub), 'Expected nested subtypes for Tuple');
     return Tuple.with(value.sub.map(getTypeClass));
-  } else if (value.info === TypeDefInfo.Vector) {
-    assert(value.sub && !Array.isArray(value.sub), 'Expected subtype for Vector');
-    return Vector.with(getTypeClass(value.sub));
+  } else if (value.info === TypeDefInfo.Vec) {
+    assert(value.sub && !Array.isArray(value.sub), 'Expected subtype for Vec');
+    return Vec.with(getTypeClass(value.sub));
   } else if (value.info === TypeDefInfo.BTreeMap) {
     assert(value.sub && Array.isArray(value.sub), 'Expected subtype for BTreeMap');
     return BTreeMap.with(Tuple.with(value.sub.map(getTypeClass)));

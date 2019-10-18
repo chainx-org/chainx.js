@@ -4,7 +4,7 @@
 import EnumType from './codec/EnumType';
 import Struct from './codec/Struct';
 import Tuple from './codec/Tuple';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import AuthorityId from './AuthorityId';
 import Bytes from './Bytes';
 import Hash from './Hash';
@@ -15,7 +15,7 @@ import U64 from './U64';
  * @description
  * Log for Authories changed
  */
-export class AuthoritiesChange extends Vector.with(AuthorityId) {}
+export class AuthoritiesChange extends Vec.with(AuthorityId) {}
 /**
  * @name ChangesTrieRoot
  * @description
@@ -78,7 +78,7 @@ export default class Digest extends Struct {
     // @todo digest 解析有错误
     super(
       {
-        // logs: Vector.with(Text),
+        // logs: Vec.with(Text),
       },
       value
     );

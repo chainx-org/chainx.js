@@ -13,7 +13,12 @@ export { default as Option } from './Option';
 export { default as Set } from './Set';
 export { default as Struct } from './Struct';
 export { default as Tuple } from './Tuple';
-export { default as Vector } from './Vector';
+export { default as Vec } from './Vec';
+export { default as VecAny } from './VecAny';
+export { default as AbstractArray } from './AbstractArray';
+export { default as VecFixed } from './VecFixed';
+export { default as Linkage } from './Linkage';
+export { default as Result } from './Result';
 // Convenience base classes, used as "anything of this type" bases
 export { default as U8a } from './U8a';
 export { default as UInt } from './UInt';

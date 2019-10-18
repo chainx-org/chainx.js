@@ -2,7 +2,7 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Struct from './codec/Struct';
-import Vector from './codec/Vector';
+import Vec from './codec/Vec';
 import Hash from './Hash';
 import { KeyValueOption } from './KeyValue';
 /**
@@ -17,7 +17,7 @@ export default class StorageChangeSet extends Struct {
     super(
       {
         block: Hash,
-        changes: Vector.with(KeyValueOption),
+        changes: Vec.with(KeyValueOption),
       },
       value
     );

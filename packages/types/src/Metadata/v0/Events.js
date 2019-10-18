@@ -3,7 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 import Struct from '../../codec/Struct';
 import Tuple from '../../codec/Tuple';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Text from '../../Text';
 import Type from '../../Type';
 
@@ -12,8 +12,8 @@ export class EventMetadata extends Struct {
     super(
       {
         name: Text,
-        args: Vector.with(Type),
-        documentation: Vector.with(Text),
+        args: Vec.with(Type),
+        documentation: Vec.with(Text),
       },
       value
     );
@@ -56,7 +56,7 @@ export class OuterEventEventMetadata extends Tuple {
     super(
       {
         Text,
-        'Vec<EventMetadata>': Vector.with(EventMetadata),
+        'Vec<EventMetadata>': Vec.with(EventMetadata),
       },
       value
     );
@@ -79,7 +79,7 @@ export class OuterEventMetadata extends Struct {
     super(
       {
         name: Text,
-        events: Vector.with(OuterEventEventMetadata),
+        events: Vec.with(OuterEventEventMetadata),
       },
       value
     );

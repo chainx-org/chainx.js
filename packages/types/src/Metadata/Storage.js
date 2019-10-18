@@ -4,7 +4,7 @@
 // import Enum from '../../codec/Enum';
 // import EnumType from '../../codec/EnumType';
 // import Struct from '../../codec/Struct';
-// import Vector from '../../codec/Vector';
+// import Vec from '../../codec/Vec';
 // import Bool from '../../Bool';
 // import Bytes from '../../Bytes';
 // import Text from '../../Text';
@@ -199,7 +199,7 @@
 //         modifier: StorageFunctionModifier,
 //         type: StorageFunctionType,
 //         fallback: Bytes,
-//         documentation: Vector.with(Text),
+//         documentation: Vec.with(Text),
 //       },
 //       value
 //     );

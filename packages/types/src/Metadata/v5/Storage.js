@@ -4,7 +4,7 @@
 import { assert } from '@chainx/util';
 import Enum from '../../codec/Enum';
 import Struct from '../../codec/Struct';
-import Vector from '../../codec/Vector';
+import Vec from '../../codec/Vec';
 import Bool from '../../Bool';
 import Bytes from '../../Bytes';
 import StorageHasher from '../../StorageHasher';
@@ -177,7 +177,7 @@ export class StorageFunctionMetadata extends Struct {
         modifier: StorageFunctionModifier,
         type: StorageFunctionType,
         fallback: Bytes,
-        documentation: Vector.with(Text),
+        documentation: Vec.with(Text),
       },
       value
     );
