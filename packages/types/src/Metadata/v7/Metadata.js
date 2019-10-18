@@ -4,21 +4,21 @@
 import Option from '../../codec/Option';
 import Struct from '../../codec/Struct';
 import Vec from '../../codec/Vec';
-import { StorageFunctionMetadata } from './Storage';
+import { StorageMetadata } from './Storage';
 /**
- * @name ModuleMetadataV3
+ * @name ModuleMetadataV7
  * @description
  * The definition of a module in the system
  */
-export class ModuleMetadataV3 extends Struct {
+export class ModuleMetadataV7 extends Struct {
   constructor(value) {
     super(
       {
         name: 'Text',
-        prefix: 'Text',
-        storage: Option.with(Vec.with(StorageFunctionMetadata)),
-        calls: Option.with('Vec<FunctionMetadataV3>'),
-        events: Option.with('Vec<EventMetadataV3>'),
+        storage: Option.with(StorageMetadata),
+        calls: Option.with('Vec<FunctionMetadataV7>'),
+        events: Option.with('Vec<EventMetadataV7>'),
+        constants: 'Vec<ModuleConstantMetadataV7>',
       },
       value
     );
@@ -28,6 +28,12 @@ export class ModuleMetadataV3 extends Struct {
    */
   get calls() {
     return this.get('calls');
+  }
+  /**
+   * @description the module constants
+   */
+  get constants() {
+    return this.get('constants');
   }
   /**
    * @description the module events
@@ -42,12 +48,6 @@ export class ModuleMetadataV3 extends Struct {
     return this.get('name');
   }
   /**
-   * @description the module prefix
-   */
-  get prefix() {
-    return this.get('prefix');
-  }
-  /**
    * @description the associated module storage
    */
   get storage() {
@@ -55,15 +55,15 @@ export class ModuleMetadataV3 extends Struct {
   }
 }
 /**
- * @name MetadataV3
+ * @name MetadataV7
  * @description
  * The runtime metadata as a decoded structure
  */
-export default class MetadataV3 extends Struct {
+export default class MetadataV7 extends Struct {
   constructor(value) {
     super(
       {
-        modules: Vec.with(ModuleMetadataV3),
+        modules: Vec.with(ModuleMetadataV7),
       },
       value
     );

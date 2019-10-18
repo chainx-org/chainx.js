@@ -4,57 +4,13 @@
 import { assert } from '@chainx/util';
 import Enum from '../../codec/Enum';
 import Struct from '../../codec/Struct';
-import Vec from '../../codec/Vec';
-import Bytes from '../../Bytes';
-import Text from '../../Text';
-import Type from '../../Type';
-import { MapType, PlainType, StorageFunctionModifier } from '../v2/Storage';
-// Re-export classes that haven't changed between V2 and V3
-export { MapType, PlainType, StorageFunctionModifier };
-export class DoubleMapType extends Struct {
-  constructor(value) {
-    super(
-      {
-        key1: Type,
-        key2: Type,
-        value: Type,
-        key2Hasher: Text,
-      },
-      value
-    );
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get key1() {
-    return this.get('key1');
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get key2() {
-    return this.get('key2');
-  }
-  /**
-   * @description The hashing algorithm used to hash key2, as [[Text]]
-   */
-  get key2Hasher() {
-    return this.get('key2Hasher');
-  }
-  /**
-   * @description The mapped key as [[Type]]
-   */
-  get value() {
-    return this.get('value');
-  }
-}
 export class StorageFunctionType extends Enum {
   constructor(value, index) {
     super(
       {
-        PlainType,
-        MapType,
-        DoubleMapType,
+        Type: 'PlainTypeV3',
+        Map: 'MapTypeV3',
+        DoubleMap: 'DoubleMapTypeV3',
       },
       value,
       index
@@ -107,7 +63,7 @@ export class StorageFunctionType extends Enum {
       return `DoubleMap<${this.asDoubleMap.toString()}>`;
     }
     if (this.isMap) {
-      if (this.asMap.isLinked) {
+      if (this.asMap.linked.isTrue) {
         return `(${this.asMap.value.toString()}, Linkage<${this.asMap.key.toString()}>)`;
       }
       return this.asMap.value.toString();
@@ -124,21 +80,14 @@ export class StorageFunctionMetadata extends Struct {
   constructor(value) {
     super(
       {
-        name: Text,
-        modifier: StorageFunctionModifier,
+        name: 'Text',
+        modifier: 'StorageFunctionModifierV3',
         type: StorageFunctionType,
-        fallback: Bytes,
-        documentation: Vec.with(Text),
+        fallback: 'Bytes',
+        documentation: 'Vec<Text>',
       },
       value
     );
-  }
-  /**
-   * @description The default value of the storage function
-   * @deprecated Use `.fallback` instead.
-   */
-  get default() {
-    return this.fallback;
   }
   /**
    * @description The [[Text]] documentation
@@ -147,20 +96,13 @@ export class StorageFunctionMetadata extends Struct {
     return this.get('documentation');
   }
   /**
-   * @description The [[Text]] documentation
-   * @deprecated Use `.documentation` instead.
-   */
-  get docs() {
-    return this.documentation;
-  }
-  /**
    * @description The [[Bytes]] fallback default
    */
   get fallback() {
     return this.get('fallback');
   }
   /**
-   * @description The [[MetadataArgument]] for arguments
+   * @description The [[StorageFunctionModifierV3]] for arguments
    */
   get modifier() {
     return this.get('modifier');
