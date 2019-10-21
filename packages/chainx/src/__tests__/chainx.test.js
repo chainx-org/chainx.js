@@ -12,6 +12,6 @@ describe('chainx.js', () => {
   });
 
   it('test', async () => {
-    console.log(chainx.api.tx.transfer);
+    console.log(chainx.api.tx.xAssets.transfer, 111);
   });
 });

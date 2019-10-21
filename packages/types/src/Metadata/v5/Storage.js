@@ -4,6 +4,7 @@
 import { assert } from '@chainx/util';
 import Enum from '../../codec/Enum';
 import Struct from '../../codec/Struct';
+
 export class StorageFunctionType extends Enum {
   constructor(value, index) {
     super(

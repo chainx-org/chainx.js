@@ -209,7 +209,7 @@ export default class ApiBase {
   checkTypeDefine() {
     // 检测未定义类型
     try {
-      for (const module of this.runtimeMetadata.asV4.modules) {
+      for (const module of this.runtimeMetadata.asV5.modules) {
         if (module.calls.isSome) {
           for (const callMetadata of module.calls.unwrap()) {
             const expectedArgs = callMetadata.args;

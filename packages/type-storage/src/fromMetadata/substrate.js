@@ -1,12 +1,10 @@
 // Copyright 2017-2019 @polkadot/storage authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import {
-  v4SStorageFunctionModifier as StorageFunctionModifier,
-  v4SStorageFunctionType as StorageFunctionType,
-} from '@chainx/types/Metadata';
-import { Text, Vec } from '@chainx/types';
+import { Text, Vec, createType } from '@chainx/types';
+import { StorageFunctionType } from '@chainx/types/Metadata';
 import createFunction from './createFunction';
+
 // Small helper function to factorize code on this page.
 const createRuntimeFunction = (method, key, { documentation, type }) =>
   createFunction(
@@ -14,7 +12,7 @@ const createRuntimeFunction = (method, key, { documentation, type }) =>
     new Text(method),
     {
       documentation: new Vec(Text, [documentation]),
-      modifier: new StorageFunctionModifier(1),
+      modifier: new createType('StorageFunctionModifierV5', 1),
       type: new StorageFunctionType(type, 0),
       toJSON: () => key,
     },
