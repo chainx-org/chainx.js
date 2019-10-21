@@ -1,6 +1,6 @@
-import { MetaRegistryItem, MetaTypeInfo, TypeDefInfo } from './types';
+import { MetaRegistryItem, MetaTypeInfo, TypeDefInfo } from '@chainx/types/types';
 import { assert } from '@chainx/util';
-import { displayType, withTypeString } from './encodeTypes';
+import { displayType, withTypeString } from '@chainx/types';
 const { BuiltinPlain, BuiltinTuple, BuiltinArray, ClikeEnum, Enum, Struct, TupleStruct, Null } = MetaTypeInfo;
 const { String, Type, TypeDef: TypeDefItem } = MetaRegistryItem;
 
