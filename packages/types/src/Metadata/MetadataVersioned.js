@@ -9,17 +9,11 @@ import MetadataV2 from './v2';
 import MetadataV3 from './v3';
 import MetadataV4 from './v4';
 import MetadataV5 from './v5';
-import MetadataV6 from './v6';
-import MetadataV7 from './v7';
-import MetadataV8 from './v8';
 import v0ToV1 from './v0/toV1';
 import v1ToV2 from './v1/toV2';
 import v2ToV3 from './v2/toV3';
 import v3ToV4 from './v3/toV4';
 import v4ToV5 from './v4/toV5';
-import v5ToV6 from './v5/toV6';
-import v6ToV7 from './v6/toV7';
-import v7ToV8 from './v7/toV8';
 import { getUniqTypes, toCallsOnly } from './util';
 
 class MetadataEnum extends Enum {
@@ -32,9 +26,6 @@ class MetadataEnum extends Enum {
         V3: MetadataV3,
         V4: MetadataV4,
         V5: MetadataV5,
-        V6: MetadataV6,
-        V7: MetadataV7,
-        V8: MetadataV8,
       },
       value,
       index
@@ -83,27 +74,6 @@ class MetadataEnum extends Enum {
     return this.value;
   }
   /**
-   * @description Returns the wrapped values as a V6 object
-   */
-  get asV6() {
-    assert(this.isV6, `Cannot convert '${this.type}' via asV6`);
-    return this.value;
-  }
-  /**
-   * @description Returns the wrapped values as a V7 object
-   */
-  get asV7() {
-    assert(this.isV7, `Cannot convert '${this.type}' via asV7`);
-    return this.value;
-  }
-  /**
-   * @description Returns the wrapped values as a V8 object
-   */
-  get asV8() {
-    assert(this.isV8, `Cannot convert '${this.type}' via asV8`);
-    return this.value;
-  }
-  /**
    * @description `true` if Deprecated
    */
   get isDeprecated() {
@@ -144,24 +114,6 @@ class MetadataEnum extends Enum {
    */
   get isV5() {
     return this.type === 'V5';
-  }
-  /**
-   * @description `true` if V6
-   */
-  get isV6() {
-    return this.type === 'V6';
-  }
-  /**
-   * @description `true` if V7
-   */
-  get isV7() {
-    return this.type === 'V7';
-  }
-  /**
-   * @description `true` if V8
-   */
-  get isV8() {
-    return this.type === 'V8';
   }
 }
 /**
@@ -242,28 +194,11 @@ export default class MetadataVersioned extends Struct {
     return this.getVersion(5, v4ToV5);
   }
   /**
-   * @description Returns the wrapped values as a V6 object
-   */
-  get asV6() {
-    return this.getVersion(6, v5ToV6);
-  }
-  /**
-   * @description Returns the wrapped values as a V7 object
-   */
-  get asV7() {
-    return this.getVersion(7, v6ToV7);
-  }
-  /**
-   * @description Returns the wrapped values as a V8 object
-   */
-  get asV8() {
-    return this.getVersion(8, v7ToV8);
-  }
   /**
    * @description Returns the wrapped values as a latest version object
    */
   get asLatest() {
-    return this.asV8;
+    return this.asV5;
   }
   /**
    * @description
