@@ -1215,7 +1215,7 @@
         },
         {
           "name": "xprocess",
-          "prefix": "Withdrawal",
+          "prefix": "XAssetsProcess",
           "storage": [
             {
               "name": "TokenBlackList",
@@ -3509,7 +3509,7 @@
         },
         {
           "name": "xcontracts",
-          "prefix": "Contract",
+          "prefix": "XContracts",
           "storage": [
             {
               "name": "GasSpent",
@@ -3693,7 +3693,7 @@
               "name": "claim_surcharge",
               "args": [
                 {
-                  "name": "dest",
+                  "name": "_dest",
                   "type": "AccountId"
                 },
                 {
@@ -3708,6 +3708,16 @@
                 " If contract is not evicted as a result of this call, no actions are taken and",
                 " the sender is not eligible for the reward."
               ]
+            },
+            {
+              "name": "set_gas_price",
+              "args": [
+                {
+                  "name": "price",
+                  "type": "Balance"
+                }
+              ],
+              "documentation": []
             }
           ],
           "events": [
