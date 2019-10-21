@@ -1,7 +1,7 @@
 // Copyright 2017-2019 @polkadot/storage authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { createType, createType, Compact, StorageKey, U8a } from '@chainx/types';
+import { createType, Compact, StorageKey, U8a } from '@chainx/types';
 import { StorageFunctionMetadata } from '@chainx/types/Metadata';
 import { assert, isNull, isUndefined, stringLowerFirst, stringToU8a, u8aConcat } from '@chainx/util';
 import getHasher from './getHasher';
