@@ -24,7 +24,6 @@ import { getUniqTypes, toCallsOnly } from './util';
 
 class MetadataEnum extends Enum {
   constructor(value, index) {
-    console.log(value, index);
     super(
       {
         V0: 'MetadataV0',
