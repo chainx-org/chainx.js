@@ -3,7 +3,7 @@ import Chainx from '../index';
 import { WsProvider } from '@chainx/rpc-provider';
 import { Extrinsic } from '@chainx/types';
 describe('chainx.js', () => {
-  const chainx = new Chainx('wss://w1.chainx.org.cn/ws');
+  const chainx = new Chainx('ws://192.168.0.100:9944');
 
   jest.setTimeout(30000);
 
@@ -13,5 +13,6 @@ describe('chainx.js', () => {
 
   it('test', async () => {
     console.log(chainx.api.tx.xAssets.transfer, 111);
+    // console.log(chainx.api.tx.contract.putCode);
   });
 });

@@ -9,14 +9,14 @@ describe('Abi', () => {
       abi = new Abi(ercAbi);
     });
     it('has the attached methods', () => {
-      // expect(Object.keys(abi.messages)).toEqual([
-      //   'totalSupply',
-      //   'balanceOf',
-      //   'allowance',
-      //   'transfer',
-      //   'approve',
-      //   'transferFrom',
-      // ]);
+      expect(Object.keys(abi.messages)).toEqual([
+        'totalSupply',
+        'balanceOf',
+        'allowance',
+        'transfer',
+        'approve',
+        'transferFrom',
+      ]);
     });
   });
 });
