@@ -1,10 +1,9 @@
-import ApiBase from '../ApiBase';
 import Chainx from '../index';
-import { WsProvider } from '@chainx/rpc-provider';
-import { Extrinsic } from '@chainx/types';
 import fs from 'fs';
 import path from 'path';
-import { compactAddLength, u8aToHex } from '@chainx/util';
+import { compactAddLength } from '@chainx/util';
+import { Abi } from '@chainx/api-contract';
+import erc20 from './Erc20';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:9944');
@@ -15,13 +14,51 @@ describe('chainx.js', () => {
     await chainx.isRpcReady();
   });
 
-  it('test', done => {
+  xit('putCode', done => {
     const code = fs.readFileSync(path.resolve(__dirname, './flipper.wasm'));
     const ex = chainx.api.tx.xContracts.putCode(500000, compactAddLength(code));
+
     ex.signAndSend(
       chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020'),
       (error, result) => {
         console.log(error, result);
+        if (result) {
+          console.log(JSON.stringify(result));
+        }
+      }
+    );
+  });
+
+  xit('PristineCode', async () => {
+    const result = await chainx.api.query.xContracts.pristineCode(
+      '0x533eb91e0f1eeb6300cf98ec5181327d49487bf6350a284e9d8cde8deab2da74'
+    );
+    console.log(result.length);
+  });
+
+  xit('abi', () => {
+    const abi = new Abi(erc20);
+    console.log(abi.constructors[0](1000));
+  });
+
+  it('instantiate', done => {
+    const abi = new Abi(erc20);
+
+    // endowment, gasLimit, codeHash, contractAbi.constructors[constructorIndex](...params)
+    const ex = chainx.api.tx.xContracts.instantiate(
+      1000,
+      500000,
+      '0x533eb91e0f1eeb6300cf98ec5181327d49487bf6350a284e9d8cde8deab2da74',
+      abi.constructors[0](1000)
+    );
+
+    ex.signAndSend(
+      chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020'),
+      (error, result) => {
+        console.log(error, result);
+        if (result) {
+          console.log(JSON.stringify(result));
+        }
       }
     );
   });

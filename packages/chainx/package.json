@@ -4,6 +4,7 @@
   "main": "index.js",
   "dependencies": {
     "@chainx/account": "^2.22.2",
+    "@chainx/api-contract": "^2.22.2",
     "@chainx/extrinsics": "^2.22.2",
     "@chainx/keyring": "^2.22.2",
     "@chainx/rpc-provider": "^2.22.2",

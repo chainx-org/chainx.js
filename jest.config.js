@@ -5,7 +5,7 @@ module.exports = {
     '~(.*)$': '<rootDir>/$1',
   },
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['mjs', 'js', 'node'],
+  moduleFileExtensions: ['mjs', 'js', 'node', 'json'],
   transform: {
     '^.+\\.(js)$': 'babel-jest',
   },
