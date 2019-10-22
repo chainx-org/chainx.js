@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { compactAddLength } from '@chainx/util';
 import { Abi } from '@chainx/api-contract';
-import erc20 from './Erc20';
+import ssss from './ssss';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:9944');
@@ -37,19 +37,19 @@ describe('chainx.js', () => {
   });
 
   xit('abi', () => {
-    const abi = new Abi(erc20);
-    console.log(abi.constructors[0](1000));
+    const abi = new Abi(ssss);
+    console.log(abi.constructors[0]());
   });
 
   it('instantiate', done => {
-    const abi = new Abi(erc20);
-
+    const abi = new Abi(ssss);
+    // console.log(abi.constructors[0](0))
     // endowment, gasLimit, codeHash, contractAbi.constructors[constructorIndex](...params)
     const ex = chainx.api.tx.xContracts.instantiate(
       1000,
       500000,
       '0x533eb91e0f1eeb6300cf98ec5181327d49487bf6350a284e9d8cde8deab2da74',
-      abi.constructors[0](1000)
+      abi.constructors[0]()
     );
 
     ex.signAndSend(
