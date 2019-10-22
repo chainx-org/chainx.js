@@ -1,6 +1,6 @@
 {
   "name": "@chainx/api-contract",
-  "version": "2.22.2",
+  "version": "2.22.3",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
