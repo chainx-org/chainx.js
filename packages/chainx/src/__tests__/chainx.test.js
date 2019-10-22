@@ -3,7 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { compactAddLength } from '@chainx/util';
 import { Abi } from '@chainx/api-contract';
-import ssss from './ssss';
+import flipper from './flipper';
+import erc20 from './erc20';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:9944');
@@ -42,18 +43,18 @@ describe('chainx.js', () => {
   });
 
   it('instantiate', done => {
-    const abi = new Abi(ssss);
+    const abi = new Abi(flipper);
     // console.log(abi.constructors[0](0))
     // endowment, gasLimit, codeHash, contractAbi.constructors[constructorIndex](...params)
     const ex = chainx.api.tx.xContracts.instantiate(
       1000,
       500000,
-      '0x533eb91e0f1eeb6300cf98ec5181327d49487bf6350a284e9d8cde8deab2da74',
+      '0xf4b1df2b2d11c7be74144b734e9cb207856c2a8e71108c92d89769b0cf517413',
       abi.constructors[0]()
     );
 
     ex.signAndSend(
-      chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020'),
+      chainx.account.from('0xf4b1df2b2d11c7be74144b734e9cb207856c2a8e71108c92d89769b0cf517413'),
       (error, result) => {
         console.log(error, result);
         if (result) {
