@@ -1,13 +1,18 @@
 import Chainx from '../index';
 import fs from 'fs';
 import path from 'path';
-import { compactAddLength } from '@chainx/util';
+import { compactAddLength, u8aToHex, u8aToU8a, u8aConcat } from '@chainx/util';
 import { Abi } from '@chainx/api-contract';
+import { Bytes } from '@chainx/types';
+import { blake2AsU8a } from '@chainx/util-crypto';
 import flipper from './flipper';
+import abi2 from './abi2';
 import erc20 from './erc20';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:9944');
+  const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
+  const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
 
   jest.setTimeout(30000);
 
@@ -16,18 +21,15 @@ describe('chainx.js', () => {
   });
 
   xit('putCode', done => {
-    const code = fs.readFileSync(path.resolve(__dirname, './flipper.wasm'));
+    const code = fs.readFileSync(path.resolve(__dirname, './flipper2.wasm'));
     const ex = chainx.api.tx.xContracts.putCode(500000, compactAddLength(code));
 
-    ex.signAndSend(
-      chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020'),
-      (error, result) => {
-        console.log(error, result);
-        if (result) {
-          console.log(JSON.stringify(result));
-        }
+    ex.signAndSend(Alice, (error, result) => {
+      console.log(error, result);
+      if (result) {
+        console.log(JSON.stringify(result));
       }
-    );
+    });
   });
 
   xit('PristineCode', async () => {
@@ -42,25 +44,71 @@ describe('chainx.js', () => {
     console.log(abi.constructors[0]());
   });
 
-  it('instantiate', done => {
-    const abi = new Abi(flipper);
+  xit('hash', () => {
+    const abi = new Abi(abi2);
+
+    const code = fs.readFileSync(path.resolve(__dirname, './flipper2.wasm'));
+
+    const codeHash = blake2AsU8a(code);
+    // console.log('codeHash:', u8aToHex(codeHash));
+    // const data = abi.constructors[0]();
+    // console.log('data:', data);
+    // console.log('origin:', u8aToU8a(Alice1.publicKey()));
+    // console.log('concat:', u8aConcat(codeHash, blake2AsU8a(abi.constructors[0]()), u8aToU8a(Alice1.publicKey())));
+    console.log(
+      chainx.account.encodeAddress(
+        blake2AsU8a(u8aConcat(codeHash, blake2AsU8a(abi.constructors[0](true)), u8aToU8a(Alice.publicKey())))
+      )
+    );
+    // console.log(
+    //   chainx.account.encodeAddress(
+    //     blake2AsU8a(u8aConcat(codeHash, blake2AsU8a(abi.constructors[0]()), u8aToU8a(Alice1.publicKey())))
+    //   )
+    // );
+    // console.log(u8aToHex(blake2AsU8a((u8aConcat(codeHash, blake2AsU8a(abi.constructors[0](true)), u8aToU8a(Alice.publicKey()))))));
+    // console.log(blake2AsU8a(Uint8Array.from([])))
+    // console.log(u8aToHex(blake2AsU8a((u8aConcat(codeHash, blake2AsU8a(Uint8Array.from([])), u8aToU8a(Alice1.publicKey()))))));
+    // console.log(chainx.account.encodeAddress('0xfa170bacf1dd6a1edfc349c4fe5785053a50fca2de0dab22c2fa1a34c7e8eb7a'));
+    // console.log(blake2AsU8a(Uint8Array.from([])))
+  });
+
+  xit('instantiate', done => {
+    // const abi = new Abi(flipper);
+    const abi = new Abi(abi2);
     // console.log(abi.constructors[0](0))
     // endowment, gasLimit, codeHash, contractAbi.constructors[constructorIndex](...params)
     const ex = chainx.api.tx.xContracts.instantiate(
-      1000,
-      500000,
-      '0xf4b1df2b2d11c7be74144b734e9cb207856c2a8e71108c92d89769b0cf517413',
-      abi.constructors[0]()
+      1001,
+      500001,
+      '0x63c547c53bc2e338ac15e2be81642e78f4d54231c1ac300c3344d39bff4342e2',
+      abi.constructors[0](true)
     );
 
-    ex.signAndSend(
-      chainx.account.from('0xf4b1df2b2d11c7be74144b734e9cb207856c2a8e71108c92d89769b0cf517413'),
-      (error, result) => {
-        console.log(error, result);
-        if (result) {
-          console.log(JSON.stringify(result));
-        }
+    ex.signAndSend(Alice, (error, result) => {
+      console.log(error, result);
+      if (result) {
+        console.log(JSON.stringify(result));
       }
+    });
+  });
+
+  it('call', done => {
+    // const abi = new Abi(flipper);
+    const abi = new Abi(abi2);
+
+    const ex = chainx.api.tx.xContracts.call(
+      '5H6VsLH2u7CFFfobL4Pj9TGqECPY2AANoajhdjXTpSmjd1kv', // contract address
+      0, // value
+      500000, // gas
+      abi.messages.flipTo(true)
+      // abi.messages.flip()
     );
+
+    ex.signAndSend(Alice, (error, result) => {
+      console.log(error, result);
+      if (result) {
+        console.log(JSON.stringify(result));
+      }
+    });
   });
 });
