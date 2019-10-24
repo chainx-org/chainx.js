@@ -267,6 +267,12 @@ const getExtrinsicsEventsByBlockHash = {
   type: 'RawJSON',
 };
 
+const contractCall = {
+  description: '',
+  params: [createParam('callRequest', 'ContractCallRequest'), createParam('at', 'Hash', { isOptional: true })],
+  type: 'ContractExecResult',
+};
+
 const section = 'chainx';
 
 /**
@@ -321,5 +327,6 @@ export default {
       'getCrossMiningDividendByAccount',
       getCrossMiningDividendByAccount
     ),
+    contractCall: createMethod(section, 'contractCall', contractCall),
   },
 };

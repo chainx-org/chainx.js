@@ -37,6 +37,11 @@ describe('chainx.js', () => {
     console.log(result.length);
   });
 
+  it('PristineCode', async () => {
+    const result = await chainx.api.query.xContracts.contractInfoOf('5CBrqWdcpG3SfMtswjP654xgSNrTZuXDfGRX8D3QFsV4fcyg');
+    console.log(result.toJSON());
+  });
+
   xit('abi', () => {
     const abi = new Abi(ssss);
     console.log(abi.constructors[0]());
@@ -49,7 +54,7 @@ describe('chainx.js', () => {
     const code = fs.readFileSync(path.resolve(__dirname, './erc20.wasm'));
 
     const codeHash = blake2AsU8a(code);
-    console.log(codeHash);
+    console.log(u8aToHex(codeHash));
     // console.log(createType('u128', 8000000000000).toU8a())
     // console.log(blake2AsU8a(createType('u128', 8000000000000).toU8a()))
     console.log(blake2AsU8a(createType('u64', 800000000).toU8a()));
@@ -69,13 +74,14 @@ describe('chainx.js', () => {
     );
   });
 
-  it('instantiate', done => {
+  xit('instantiate', done => {
     const abi = new Abi(erc20);
+
     const ex = chainx.api.tx.xContracts.instantiate(
       1000,
       500000,
-      '0x44653593064dc5f0233285c22ea474c468d7161e1dea77cc7423a2ccfd6ee890',
-      abi.constructors[0](800000001)
+      '0x5e71dc66c1527bf4047942c5ada9c5c59941bff8eb8b2d1a6d849306bfd52e93',
+      abi.constructors[0](800000002)
     );
 
     ex.signAndSend(Alice, (error, result) => {
