@@ -1,6 +1,6 @@
 {
   "name": "@chainx/jsonrpc",
-  "version": "2.22.2",
+  "version": "2.22.4",
   "main": "index.js",
   "license": "MIT"
 }
