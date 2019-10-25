@@ -2,10 +2,13 @@ import Chainx from '../index';
 import fs from 'fs';
 import path from 'path';
 import { compactAddLength, compactFromU8a, u8aToHex, u8aToU8a, u8aConcat } from '@chainx/util';
+import { isU8a } from '@chainx/util';
+
 import { Abi } from '@chainx/api-contract';
-import { Bytes, createType } from '@chainx/types';
+import { Bytes, U8a, createType } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
+import erc21 from './erc21';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:9944');
@@ -16,6 +19,20 @@ describe('chainx.js', () => {
 
   beforeEach(async () => {
     await chainx.isRpcReady();
+    console.log(chainx.api.rpc.chainx.contractCall);
+  });
+
+  it('erc21', done => {
+    // console.log(createType('u32', 949181842).toHex())
+    // console.log(createType('Bytes', JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')))
+    // console.log(compactAddLength('0x38935d92'))
+    // console.log(compactAddLength(Uint8Array.from([ 56, 147, 93, 146 ])))
+    // console.log(compactAddLength(new U8a(JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')).toU8a(true)))
+    // console.log(new U8a(JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')).toU8a(true))
+    // console.log(isU8a('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]'))
+    // const code = fs.readFileSync(path.resolve(__dirname, './erc21.wasm'));
+    // const abi = new Abi(erc21);
+    // console.log(JSON.stringify(abi.abi.contract.messages))
   });
 
   xit('putCode', done => {
@@ -37,7 +54,7 @@ describe('chainx.js', () => {
     console.log(result.length);
   });
 
-  it('PristineCode', async () => {
+  xit('contractInfoOf', async () => {
     const result = await chainx.api.query.xContracts.contractInfoOf('5CBrqWdcpG3SfMtswjP654xgSNrTZuXDfGRX8D3QFsV4fcyg');
     console.log(result.toJSON());
   });
@@ -81,7 +98,7 @@ describe('chainx.js', () => {
       1000,
       500000,
       '0x5e71dc66c1527bf4047942c5ada9c5c59941bff8eb8b2d1a6d849306bfd52e93',
-      abi.constructors[0](800000002)
+      abi.constructors[0](800000003)
     );
 
     ex.signAndSend(Alice, (error, result) => {
