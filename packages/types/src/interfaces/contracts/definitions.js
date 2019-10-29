@@ -13,9 +13,8 @@ export default {
     },
     CodeHash: 'Hash',
     ContractCallRequest: {
-      origin: 'AccountId',
-      dest: 'AccountId',
-      value: 'Balance',
+      origin: 'PublicKey',
+      dest: 'PublicKey',
       gasLimit: 'u64',
       inputData: 'Bytes',
     },

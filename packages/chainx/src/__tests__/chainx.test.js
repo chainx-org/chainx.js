@@ -19,7 +19,6 @@ describe('chainx.js', () => {
 
   beforeEach(async () => {
     await chainx.isRpcReady();
-    console.log(chainx.api.rpc.chainx.contractCall);
   });
 
   it('erc21', done => {
@@ -33,6 +32,24 @@ describe('chainx.js', () => {
     // const code = fs.readFileSync(path.resolve(__dirname, './erc21.wasm'));
     // const abi = new Abi(erc21);
     // console.log(JSON.stringify(abi.abi.contract.messages))
+
+    chainx.api.rpc.chainx.contractCall(
+      createType('ContractCallRequest', {
+        dest: '5D3b9xSw5PYK78pnZSzaS5aA5KJU5Zde8YZcX4icy3FFyL2D',
+        gasLimit: 0,
+        // inputData: Uint8Array.from([16, 146, 93, 147, 56]),
+        origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
+      }).toU8a()
+    );
+    // console.log(
+    //   createType('ContractCallRequest', {
+    //     dest: '5D3b9xSw5PYK78pnZSzaS5aA5KJU5Zde8YZcX4icy3FFyL2D',
+    //     gasLimit: 0,
+    //     inputData: Uint8Array.from([16, 146, 93, 147, 56]),
+    //     origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
+    //     value: 0,
+    //   }).toHex()
+    // );
   });
 
   xit('putCode', done => {
