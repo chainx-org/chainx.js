@@ -11,7 +11,7 @@ import erc20 from './erc20';
 import erc21 from './erc21';
 
 describe('chainx.js', () => {
-  const chainx = new Chainx('ws://192.168.0.100:9944');
+  const chainx = new Chainx('ws://192.168.0.100:9955');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
   const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
 
@@ -22,6 +22,11 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
+    const abi = new Abi(erc21);
+    // console.log(abi.messages.totalSupply())
+    console.log(abi);
+
+    // console.log(new U8a(JSON.parse("[\"0x0B\",\"0xC5\",\"0x58\",\"0x63\"]")).toHex())
     // console.log(createType('u32', 949181842).toHex())
     // console.log(createType('Bytes', JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')))
     // console.log(compactAddLength('0x38935d92'))
@@ -32,14 +37,13 @@ describe('chainx.js', () => {
     // const code = fs.readFileSync(path.resolve(__dirname, './erc21.wasm'));
     // const abi = new Abi(erc21);
     // console.log(JSON.stringify(abi.abi.contract.messages))
-
     chainx.api.rpc.chainx.contractCall(
       createType('ContractCallRequest', {
-        dest: '5D3b9xSw5PYK78pnZSzaS5aA5KJU5Zde8YZcX4icy3FFyL2D',
-        gasLimit: 0,
-        // inputData: Uint8Array.from([16, 146, 93, 147, 56]),
         origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
-      }).toU8a()
+        dest: '5GehVasZwiFufHR52jsEe3RdmVYzAr9o8PqxnR5bDSJFUKd6',
+        gasLimit: 100000000,
+        inputData: abi.messages.totalSupply(),
+      })
     );
     // console.log(
     //   createType('ContractCallRequest', {

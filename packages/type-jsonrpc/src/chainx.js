@@ -270,7 +270,7 @@ const getExtrinsicsEventsByBlockHash = {
 const contractCall = {
   description: '',
   params: [createParam('callRequest', 'ContractCallRequest'), createParam('at', 'Hash', { isOptional: true })],
-  type: 'ContractExecResult',
+  type: 'RawJSON',
 };
 
 const section = 'chainx';
