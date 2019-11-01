@@ -54,11 +54,11 @@ export default class Asset {
    * https://github.com/chainpool/ChainX/blob/develop/xrml/xassets/process/src/lib.rs#L63
    */
   withdraw = (token, value, addr, ext) => {
-    return this.api.tx.withdrawal.withdraw(token, value, addr, ext);
+    return this.api.tx.xAssetsProcess.withdraw(token, value, addr, ext);
   };
 
   revokeWithdraw = id => {
-    return this.api.tx.withdrawal.revokeWithdraw(id);
+    return this.api.tx.xAssetsProcess.revokeWithdraw(id);
   };
 
   claimSdot = (ethereumSignature, signData, inputData) => {

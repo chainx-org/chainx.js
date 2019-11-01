@@ -22,11 +22,11 @@ describe('chainx.js', () => {
     await chainx.isRpcReady();
   });
 
-  xit('erc21', done => {
-    const abi = new Abi(erc21);
+  it('erc21', done => {
+    // const abi = new Abi(erc21);
     // console.log(abi.messages.totalSupply())
-    console.log(abi);
-
+    // console.log(abi);
+    console.log(createType('Bytes', '0x200000000064000000').toHex());
     // console.log(new U8a(JSON.parse("[\"0x0B\",\"0xC5\",\"0x58\",\"0x63\"]")).toHex())
     // console.log(createType('u32', 949181842).toHex())
     // console.log(createType('Bytes', JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')))
@@ -38,14 +38,14 @@ describe('chainx.js', () => {
     // const code = fs.readFileSync(path.resolve(__dirname, './erc21.wasm'));
     // const abi = new Abi(erc21);
     // console.log(JSON.stringify(abi.abi.contract.messages))
-    chainx.api.rpc.chainx.contractCall(
-      createType('ContractCallRequest', {
-        origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
-        dest: '5GehVasZwiFufHR52jsEe3RdmVYzAr9o8PqxnR5bDSJFUKd6',
-        gasLimit: 100000000,
-        inputData: abi.messages.totalSupply(),
-      })
-    );
+    // chainx.api.rpc.chainx.contractCall(
+    //   createType('ContractCallRequest', {
+    //     origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
+    //     dest: '5GehVasZwiFufHR52jsEe3RdmVYzAr9o8PqxnR5bDSJFUKd6',
+    //     gasLimit: 100000000,
+    //     inputData: abi.messages.totalSupply(),
+    //   })
+    // );
     // console.log(
     //   createType('ContractCallRequest', {
     //     dest: '5D3b9xSw5PYK78pnZSzaS5aA5KJU5Zde8YZcX4icy3FFyL2D',
@@ -57,7 +57,7 @@ describe('chainx.js', () => {
     // );
   });
 
-  it('putCode', done => {
+  xit('putCode', done => {
     const code = fs.readFileSync(path.resolve(__dirname, './erc20.wasm'));
     const ex = chainx.api.tx.xContracts.putCode(500000, compactAddLength(code));
     console.log(Test.publicKey());
