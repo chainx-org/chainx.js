@@ -26,6 +26,7 @@ describe('chainx.js', () => {
     // const abi = new Abi(erc21);
     // console.log(abi.messages.totalSupply())
     // console.log(abi);
+    '0x4011';
     console.log(createType('Bytes', '0x200000000064000000').toHex());
     // console.log(new U8a(JSON.parse("[\"0x0B\",\"0xC5\",\"0x58\",\"0x63\"]")).toHex())
     // console.log(createType('u32', 949181842).toHex())
