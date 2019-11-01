@@ -11,9 +11,10 @@ import erc20 from './erc20';
 import erc21 from './erc21';
 
 describe('chainx.js', () => {
-  const chainx = new Chainx('ws://192.168.0.100:9955');
+  const chainx = new Chainx('ws://121.40.173.14:8087');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
   const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
+  const Test = chainx.account.from('0x436861696e582d5361746f736869202020202020202020202020202020202020');
 
   jest.setTimeout(30000);
 
@@ -21,7 +22,7 @@ describe('chainx.js', () => {
     await chainx.isRpcReady();
   });
 
-  it('erc21', done => {
+  xit('erc21', done => {
     const abi = new Abi(erc21);
     // console.log(abi.messages.totalSupply())
     console.log(abi);
@@ -56,11 +57,11 @@ describe('chainx.js', () => {
     // );
   });
 
-  xit('putCode', done => {
+  it('putCode', done => {
     const code = fs.readFileSync(path.resolve(__dirname, './erc20.wasm'));
     const ex = chainx.api.tx.xContracts.putCode(500000, compactAddLength(code));
-
-    ex.signAndSend(Alice, (error, result) => {
+    console.log(Test.publicKey());
+    ex.signAndSend(Test, (error, result) => {
       console.log(error, result);
       if (result) {
         console.log(JSON.stringify(result));
