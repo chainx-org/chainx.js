@@ -23,11 +23,12 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    // const abi = new Abi(erc21);
+    const abi = new Abi(erc21);
+    console.log(abi.constructors[0](100));
     // console.log(abi.messages.totalSupply())
     // console.log(abi);
-    '0x4011';
-    console.log(createType('Bytes', '0x200000000064000000').toHex());
+    // '0x4011';
+    // console.log(createType('StorageData', u8aToU8a('0x206400000000000000')));
     // console.log(new U8a(JSON.parse("[\"0x0B\",\"0xC5\",\"0x58\",\"0x63\"]")).toHex())
     // console.log(createType('u32', 949181842).toHex())
     // console.log(createType('Bytes', JSON.parse('[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]')))
@@ -40,12 +41,12 @@ describe('chainx.js', () => {
     // const abi = new Abi(erc21);
     // console.log(JSON.stringify(abi.abi.contract.messages))
     // chainx.api.rpc.chainx.contractCall(
-    //   createType('ContractCallRequest', {
+    //     {
     //     origin: '5FjN2LCaoRfCR6Z78XHBE6SMCUPFPRWQD7bHU5M8qxrhTxjj',
     //     dest: '5GehVasZwiFufHR52jsEe3RdmVYzAr9o8PqxnR5bDSJFUKd6',
     //     gasLimit: 100000000,
     //     inputData: abi.messages.totalSupply(),
-    //   })
+    //   }
     // );
     // console.log(
     //   createType('ContractCallRequest', {

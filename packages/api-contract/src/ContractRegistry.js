@@ -79,7 +79,10 @@ export default class ContractRegistry extends MetaRegistry {
       };
     });
 
-    const Clazz = createArgClass(args, isUndefined(method.selector) ? {} : { __selector: 'Selector' });
+    const Clazz = createArgClass(
+      args,
+      isUndefined(method.selector) || name.includes('constructor') ? {} : { __selector: 'Selector' }
+    );
     const baseStruct = { __selector: method.selector };
     const encoder = (...params) => {
       assert(
