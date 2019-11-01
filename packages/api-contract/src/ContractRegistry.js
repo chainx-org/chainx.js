@@ -134,7 +134,7 @@ export default class ContractRegistry extends MetaRegistry {
   convertMethod({ args, name, return_type: returnType, selector, ...method }) {
     return {
       ...method,
-      selector: u8aToHex(JSON.parse(selector).reverse()),
+      selector: u8aToHex(JSON.parse(selector)),
       args: this.convertArgs(args),
       name: this.stringAt(name),
       returnType: returnType ? this.convertType(returnType) : null,
