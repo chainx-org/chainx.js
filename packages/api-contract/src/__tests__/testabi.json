@@ -1,0 +1,358 @@
+{
+  "registry": {
+    "strings": [
+      "Flipper",
+      "flipper",
+      "normal",
+      "b",
+      "Value",
+      "ink_core",
+      "storage",
+      "value",
+      "cell",
+      "SyncCell",
+      "sync_cell",
+      "Key",
+      "key",
+      "h",
+      "Hash",
+      "env",
+      "srml",
+      "types",
+      "i",
+      "on_deploy",
+      "b1",
+      "bool",
+      "h1",
+      "i1",
+      "u64",
+      "getU64",
+      "getBool",
+      "getVec",
+      "Vec",
+      "elems",
+      "getTuple"
+    ],
+    "types": [
+      {
+        "id": {
+          "custom.name": 1,
+          "custom.namespace": [2, 3],
+          "custom.params": []
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 4,
+              "type": 2
+            },
+            {
+              "name": 14,
+              "type": 8
+            },
+            {
+              "name": 19,
+              "type": 11
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 4
+            }
+          ]
+        }
+      },
+      {
+        "id": "bool",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 12,
+          "custom.namespace": [6, 7, 13],
+          "custom.params": []
+        },
+        "def": {
+          "tuple_struct.types": [6]
+        }
+      },
+      {
+        "id": {
+          "array.len": 32,
+          "array.type": 7
+        },
+        "def": "builtin"
+      },
+      {
+        "id": "u8",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [9]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 10
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 15,
+          "custom.namespace": [6, 16, 17, 18],
+          "custom.params": []
+        },
+        "def": {
+          "tuple_struct.types": [6]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [9]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [12]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 13
+            }
+          ]
+        }
+      },
+      {
+        "id": "u64",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [12]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 29,
+          "custom.namespace": [],
+          "custom.params": [9]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 30,
+              "type": 15
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "slice.type": 9
+        },
+        "def": "builtin"
+      },
+      {
+        "id": [12, 3, 9],
+        "def": "builtin"
+      }
+    ]
+  },
+  "storage": {
+    "struct.type": 1,
+    "struct.fields": [
+      {
+        "name": 4,
+        "layout": {
+          "struct.type": 2,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "range.len": 1,
+                "range.elem_type": 3
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 14,
+        "layout": {
+          "struct.type": 8,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "range.len": 1,
+                "range.elem_type": 9
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 19,
+        "layout": {
+          "struct.type": 11,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000002",
+                "range.len": 1,
+                "range.elem_type": 12
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "contract": {
+    "name": 1,
+    "constructors": [
+      {
+        "name": 20,
+        "selector": "[\"0x00\",\"0x00\",\"0x00\",\"0x00\"]",
+        "args": [
+          {
+            "name": 21,
+            "type": {
+              "ty": 3,
+              "display_name": [22]
+            }
+          },
+          {
+            "name": 23,
+            "type": {
+              "ty": 9,
+              "display_name": [15]
+            }
+          },
+          {
+            "name": 24,
+            "type": {
+              "ty": 12,
+              "display_name": [25]
+            }
+          }
+        ],
+        "docs": []
+      }
+    ],
+    "messages": [
+      {
+        "name": 26,
+        "selector": "[\"0x7A\",\"0xAD\",\"0x73\",\"0xAE\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 12,
+          "display_name": [25]
+        },
+        "docs": []
+      },
+      {
+        "name": 27,
+        "selector": "[\"0x8B\",\"0x85\",\"0x72\",\"0x25\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [22]
+        },
+        "docs": []
+      },
+      {
+        "name": 28,
+        "selector": "[\"0xB0\",\"0x74\",\"0x2D\",\"0x81\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 23,
+            "type": {
+              "ty": 9,
+              "display_name": [15]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 14,
+          "display_name": [29]
+        },
+        "docs": []
+      },
+      {
+        "name": 31,
+        "selector": "[\"0x47\",\"0x3C\",\"0x23\",\"0x5D\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 16,
+          "display_name": []
+        },
+        "docs": []
+      }
+    ],
+    "events": [],
+    "docs": []
+  }
+}

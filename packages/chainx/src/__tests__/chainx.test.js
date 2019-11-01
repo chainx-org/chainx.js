@@ -9,6 +9,7 @@ import { Bytes, U8a, createType } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
+import testabi from './testabi';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://121.40.173.14:8087');
@@ -23,8 +24,8 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    const abi = new Abi(erc21);
-    console.log(abi.constructors[0](100));
+    const abi = new Abi(testabi);
+    // console.log(abi.constructors[0](100));
     // console.log(abi.messages.totalSupply())
     // console.log(abi);
     // '0x4011';

@@ -23,12 +23,13 @@ export var MetaTypeInfo;
 (function(MetaTypeInfo) {
   MetaTypeInfo[(MetaTypeInfo['BuiltinPlain'] = 0)] = 'BuiltinPlain';
   MetaTypeInfo[(MetaTypeInfo['BuiltinTuple'] = 1)] = 'BuiltinTuple';
-  MetaTypeInfo[(MetaTypeInfo['BuiltinArray'] = 2)] = 'BuiltinArray';
-  MetaTypeInfo[(MetaTypeInfo['Enum'] = 3)] = 'Enum';
-  MetaTypeInfo[(MetaTypeInfo['ClikeEnum'] = 4)] = 'ClikeEnum';
-  MetaTypeInfo[(MetaTypeInfo['Struct'] = 5)] = 'Struct';
-  MetaTypeInfo[(MetaTypeInfo['TupleStruct'] = 6)] = 'TupleStruct';
-  MetaTypeInfo[(MetaTypeInfo['Null'] = 7)] = 'Null';
+  MetaTypeInfo[(MetaTypeInfo['BuiltinVec'] = 2)] = 'BuiltinVec';
+  MetaTypeInfo[(MetaTypeInfo['BuiltinVecFixed'] = 3)] = 'BuiltinVecFixed';
+  MetaTypeInfo[(MetaTypeInfo['Enum'] = 4)] = 'Enum';
+  MetaTypeInfo[(MetaTypeInfo['ClikeEnum'] = 5)] = 'ClikeEnum';
+  MetaTypeInfo[(MetaTypeInfo['Struct'] = 6)] = 'Struct';
+  MetaTypeInfo[(MetaTypeInfo['TupleStruct'] = 7)] = 'TupleStruct';
+  MetaTypeInfo[(MetaTypeInfo['Null'] = 8)] = 'Null';
 })(MetaTypeInfo || (MetaTypeInfo = {}));
 export var MetaRegistryItem;
 (function(MetaRegistryItem) {
