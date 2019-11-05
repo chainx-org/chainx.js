@@ -43,7 +43,7 @@ class TypeEncoder {
   static subTypes(sub, asEnum) {
     return `{ ${asEnum ? '"_enum": { ' : ''}${sub
       .map(type => `"${type.name}": "${this.withParams(type)}"`)
-      .join(', ')}} }`;
+      .join(', ')} }`;
   }
   static withParams(typeDef, outer = typeDef.displayName || typeDef.type) {
     const { params } = typeDef;
