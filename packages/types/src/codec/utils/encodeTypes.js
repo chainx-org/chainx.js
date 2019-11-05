@@ -5,112 +5,93 @@ import { TypeDefInfo } from '../types';
 import { assert } from '@chainx/util';
 import { getTypeDef } from '../create';
 const SPECIAL_TYPES = ['AccountId', 'AccountIndex', 'Address', 'Balance'];
-export function paramsNotation(outer, inner, transform) {
-  let array;
+
+const identity = value => value;
+
+export function paramsNotation(outer, inner, transform = identity) {
+  let arrayStr = '';
   if (inner) {
-    array = Array.isArray(inner) ? inner : [inner];
-    if (transform) {
-      array = array.map(transform);
-    }
+    arrayStr = '<' + (Array.isArray(inner) ? inner : [inner]).map(transform).join(', ') + '>';
   }
-  return `${outer}${array ? `<${array.join(', ')}>` : ''}`;
+  return `${outer}${arrayStr}`;
 }
-class TypeEncoder {
-  static enum(typeDef) {
-    assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Enum type');
-    const sub = typeDef.sub;
-    const isClikeEnum = sub.reduce((bool, { type }) => bool && type === 'Null', true);
-    if (isClikeEnum) {
-      return `[${sub.map(({ name }) => `"${name}"`).join(', ')}]`;
-    }
-    return this.subTypes(sub, true);
-  }
-  static struct(typeDef) {
-    assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Struct type');
-    const sub = typeDef.sub;
-    return this.subTypes(sub);
-  }
-  static tuple(typeDef) {
-    assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Tuple type');
-    const sub = typeDef.sub;
-    return `(${sub.map(type => TypeEncoder.withParams(type)).join(', ')})`;
-  }
-  static vecFixed(typeDef) {
-    assert(typeDef.ext, 'Unable to encode VecFixed type');
-    const { type, length } = typeDef.ext;
-    return `[${this.withParams(getTypeDef(type))};${length}]`;
-  }
-  static subTypes(sub, asEnum) {
-    return `{ ${asEnum ? '"_enum": { ' : ''}${sub
-      .map(type => `"${type.name}": "${this.withParams(type)}"`)
-      .join(', ')} }`;
-  }
-  static withParams(typeDef, outer = typeDef.displayName || typeDef.type) {
-    const { params } = typeDef;
-    return paramsNotation(outer, params, param => TypeEncoder.display(param));
-  }
-  static encode(typeDef) {
-    switch (typeDef.info) {
-      case TypeDefInfo.Null: {
-        return '()';
-      }
-      case TypeDefInfo.Plain: {
-        return typeDef.displayName || typeDef.type;
-      }
-      case TypeDefInfo.Compact: {
-        return TypeEncoder.withParams(typeDef, 'Compact');
-      }
-      case TypeDefInfo.DoubleMap: {
-        return TypeEncoder.withParams(typeDef, 'DoubleMap');
-      }
-      case TypeDefInfo.Linkage: {
-        return TypeEncoder.withParams(typeDef, 'Linkage');
-      }
-      case TypeDefInfo.Option: {
-        return TypeEncoder.withParams(typeDef, 'Option');
-      }
-      case TypeDefInfo.Result: {
-        return TypeEncoder.withParams(typeDef, 'Result');
-      }
-      case TypeDefInfo.Vec: {
-        return TypeEncoder.withParams(typeDef, 'Vec');
-      }
-      case TypeDefInfo.Enum: {
-        return TypeEncoder.enum(typeDef);
-      }
-      case TypeDefInfo.Struct: {
-        return TypeEncoder.struct(typeDef);
-      }
-      case TypeDefInfo.Tuple: {
-        return TypeEncoder.tuple(typeDef);
-      }
-      case TypeDefInfo.VecFixed: {
-        return TypeEncoder.vecFixed(typeDef);
-      }
-      default: {
-        throw new Error(`Cannot encode type: ${typeDef}.`);
-      }
-    }
-  }
-  static display(typeDef) {
-    if (typeDef.displayName) {
-      return TypeEncoder.withParams(typeDef);
-    }
-    switch (typeDef.info) {
-      case TypeDefInfo.Struct:
-      case TypeDefInfo.Enum:
-        return TypeEncoder.withParams(typeDef);
-      default:
-        return TypeEncoder.encode(typeDef);
-    }
-  }
+function encodeWithParams(typeDef, outer = typeDef.displayName || typeDef.type) {
+  const { params } = typeDef;
+  return paramsNotation(
+    outer,
+    params,
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    param => displayType(param)
+  );
 }
+function encodeSubTypes(sub, asEnum) {
+  return `{ ${asEnum ? '"_enum": { ' : ''}${sub
+    .map(type => `"${type.name}": "${encodeWithParams(type)}"`)
+    .join(', ')} }`;
+}
+function encodeEnum(typeDef) {
+  assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Enum type');
+  const sub = typeDef.sub;
+  const isClikeEnum = sub.reduce((bool, { type }) => bool && type === 'Null', true);
+  if (isClikeEnum) {
+    return `[${sub.map(({ name }) => `"${name}"`).join(', ')}]`;
+  }
+  return encodeSubTypes(sub, true);
+}
+function encodeStruct(typeDef) {
+  assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Struct type');
+  const sub = typeDef.sub;
+  return encodeSubTypes(sub);
+}
+function encodeTuple(typeDef) {
+  assert(typeDef.sub && Array.isArray(typeDef.sub), 'Unable to encode Tuple type');
+  const sub = typeDef.sub;
+  return `(${sub.map(type => encodeWithParams(type)).join(', ')})`;
+}
+function encodeVecFixed(typeDef) {
+  assert(typeDef.ext, 'Unable to encode VecFixed type');
+  const { type, length } = typeDef.ext;
+  return `[${encodeWithParams(getTypeDef(type))};${length}]`;
+}
+// We setup a record here to ensure we have comprehensive coverage (any item not covered will result
+// in a compile-time error with the missing index)
+const encoders = {
+  [TypeDefInfo.BTreeMap]: typeDef => encodeWithParams(typeDef, 'BTreeMap'),
+  [TypeDefInfo.Compact]: typeDef => encodeWithParams(typeDef, 'Compact'),
+  [TypeDefInfo.DoubleMap]: typeDef => encodeWithParams(typeDef, 'DoubleMap'),
+  [TypeDefInfo.Enum]: typeDef => encodeEnum(typeDef),
+  [TypeDefInfo.Linkage]: typeDef => encodeWithParams(typeDef, 'Linkage'),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  [TypeDefInfo.Null]: typeDef => 'Null',
+  [TypeDefInfo.Option]: typeDef => encodeWithParams(typeDef, 'Option'),
+  [TypeDefInfo.Plain]: typeDef => typeDef.displayName || typeDef.type,
+  [TypeDefInfo.Result]: typeDef => encodeWithParams(typeDef, 'Result'),
+  [TypeDefInfo.Set]: typeDef => typeDef.type,
+  [TypeDefInfo.Struct]: typeDef => encodeStruct(typeDef),
+  [TypeDefInfo.Tuple]: typeDef => encodeTuple(typeDef),
+  [TypeDefInfo.Vec]: typeDef => encodeWithParams(typeDef, 'Vec'),
+  [TypeDefInfo.VecFixed]: typeDef => encodeVecFixed(typeDef),
+};
+
 export function encodeType(typeDef) {
-  return TypeEncoder.encode(typeDef);
+  const encoder = encoders[typeDef.info];
+  assert(encoder, `Cannot encode type: ${typeDef}.`);
+  return encoder(typeDef);
 }
+
 export function displayType(typeDef) {
-  return TypeEncoder.display(typeDef);
+  if (typeDef.displayName) {
+    return encodeWithParams(typeDef);
+  }
+  switch (typeDef.info) {
+    case TypeDefInfo.Struct:
+    case TypeDefInfo.Enum:
+      return encodeWithParams(typeDef);
+    default:
+      return encodeType(typeDef);
+  }
 }
+
 export function withTypeString(typeDef) {
   return {
     ...typeDef,
