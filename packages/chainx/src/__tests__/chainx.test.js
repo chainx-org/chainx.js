@@ -10,6 +10,7 @@ import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
 import testabi from './testabi';
+import testabi1 from './testabi1';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://121.40.173.14:8087');
@@ -24,8 +25,8 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    const abi = new Abi(testabi);
-    // console.log(abi.constructors[0](100));
+    const abi = new Abi(testabi1);
+    console.log(abi.constructors[0]('2100', [67, 104, 105, 110, 97, 88], [80, 67, 88], '18'));
     // console.log(abi.messages.totalSupply())
     // console.log(abi);
     // '0x4011';
