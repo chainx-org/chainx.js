@@ -5,7 +5,7 @@ import { compactAddLength, compactFromU8a, u8aToHex, u8aToU8a, u8aConcat } from 
 import { isU8a } from '@chainx/util';
 
 import { Abi } from '@chainx/api-contract';
-import { Bytes, U8a, createType, Extrinsic } from '@chainx/types';
+import { Bytes, U8a, createType, Extrinsic, Vec, u8, Text, getTypeDef } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
@@ -13,7 +13,7 @@ import testabi from './testabi';
 import testabi1 from './testabi1';
 
 describe('chainx.js', () => {
-  const chainx = new Chainx('wss://w1.chainx.org/ws');
+  const chainx = new Chainx('ws://120.27.210.87:8087');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
   const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
   const Test = chainx.account.from('0x436861696e582d5361746f736869202020202020202020202020202020202020');
@@ -25,13 +25,18 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    // const abi = new Abi(testabi1);
-    // console.log(abi.constructors[0]('2100', { elem1s: [1,2,3,4] }, { elems: [1,2] }, '18'));
-    // console.log(createType('Vec<u8>', '0x1234').toHex());
+    const abi = new Abi(testabi1);
+    // // console.log(Vec.with(U8), [1,2,3]));
+    // const C = Vec.with(u8);
+    // console.log(new C([Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]));
+    // new Vec(U8, [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]);
 
-    chainx.chain.subscribeNewHead().subscribe(result => {
-      console.log(result);
-    });
+    // new Vec(Text, ['1', '23', '345', '4567', new Text('56789')])
+    // console.log(getTypeDef(`{"elems":"Vec<u16>"}`))
+    // console.log(getTypeDef("Vec<u16>"))
+    // console.log(JSON.stringify(abi.constructors[0].args[1].type))
+    // console.log(abi.constructors[0]('2100', [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])], { elems: [1, 2] }, '18'));
+
     // console.log(abi.messages.totalSupply())
     // console.log(abi);
     // '0x4011';

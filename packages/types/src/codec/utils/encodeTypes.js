@@ -56,21 +56,21 @@ function encodeVecFixed(typeDef) {
 // We setup a record here to ensure we have comprehensive coverage (any item not covered will result
 // in a compile-time error with the missing index)
 const encoders = {
-  [TypeDefInfo.BTreeMap]: typeDef => encodeWithParams(typeDef, 'BTreeMap'),
-  [TypeDefInfo.Compact]: typeDef => encodeWithParams(typeDef, 'Compact'),
-  [TypeDefInfo.DoubleMap]: typeDef => encodeWithParams(typeDef, 'DoubleMap'),
-  [TypeDefInfo.Enum]: typeDef => encodeEnum(typeDef),
-  [TypeDefInfo.Linkage]: typeDef => encodeWithParams(typeDef, 'Linkage'),
+  [TypeDefInfo.BTreeMap]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'BTreeMap'),
+  [TypeDefInfo.Compact]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'Compact'),
+  [TypeDefInfo.DoubleMap]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'DoubleMap'),
+  [TypeDefInfo.Enum]: typeDef => typeDef.displayName || encodeEnum(typeDef),
+  [TypeDefInfo.Linkage]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'Linkage'),
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   [TypeDefInfo.Null]: typeDef => 'Null',
-  [TypeDefInfo.Option]: typeDef => encodeWithParams(typeDef, 'Option'),
+  [TypeDefInfo.Option]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'Option'),
   [TypeDefInfo.Plain]: typeDef => typeDef.displayName || typeDef.type,
   [TypeDefInfo.Result]: typeDef => encodeWithParams(typeDef, 'Result'),
   [TypeDefInfo.Set]: typeDef => typeDef.type,
-  [TypeDefInfo.Struct]: typeDef => encodeStruct(typeDef),
-  [TypeDefInfo.Tuple]: typeDef => encodeTuple(typeDef),
-  [TypeDefInfo.Vec]: typeDef => encodeWithParams(typeDef, 'Vec'),
-  [TypeDefInfo.VecFixed]: typeDef => encodeVecFixed(typeDef),
+  [TypeDefInfo.Struct]: typeDef => typeDef.displayName || encodeStruct(typeDef),
+  [TypeDefInfo.Tuple]: typeDef => typeDef.displayName || encodeTuple(typeDef),
+  [TypeDefInfo.Vec]: typeDef => typeDef.displayName || encodeWithParams(typeDef, 'Vec'),
+  [TypeDefInfo.VecFixed]: typeDef => typeDef.displayName || encodeVecFixed(typeDef),
 };
 
 export function encodeType(typeDef) {

@@ -3,12 +3,14 @@ import ercAbi from '../../test/contracts/Erc20.json';
 import { Abi } from '..';
 import abijson from './abi';
 import testabijson from './testabi';
+import testabijson1 from './testabi1';
 import { createArgClass } from '../method';
 import { encodeType } from '@chainx/types';
 
 describe('Abi', () => {
   it('abi', () => {
-    new Abi(testabijson);
+    const abi = new Abi(testabijson1);
+    console.log(abi.messages.balanceOf('5QpTfTDYSLWkuVEvRqEcugQtFZnhE3qyJLCzwGQgdzNRpiSQ'));
   });
 
   describe.skip('erc20', () => {
