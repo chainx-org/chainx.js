@@ -25,7 +25,8 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    const abi = new Abi(testabi1);
+    // const abi = new Abi(testabi1);
+    const resp = chainx.trustee.getTrusteeSessionInfo(1);
     // // console.log(Vec.with(U8), [1,2,3]));
     // const C = Vec.with(u8);
     // console.log(new C([Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]));
