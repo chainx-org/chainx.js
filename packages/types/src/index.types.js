@@ -133,5 +133,6 @@ export { default as NominationRecordV1 } from './NominationRecordV1';
 export { default as PseduIntentionVoteWeight } from './PseduIntentionVoteWeight';
 export { default as PseduIntentionVoteWeightV1 } from './PseduIntentionVoteWeightV1';
 export { default as Selector } from './Selector';
+export { default as ERC20Selector } from './ERC20Selector';
 
 export { default as Metadata } from './Metadata';

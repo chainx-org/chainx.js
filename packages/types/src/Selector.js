@@ -1,3 +1,7 @@
-import U8a from './codec/U8a';
+import U8aFixed from './codec/U8aFixed';
 
-export default class Selector extends U8a {}
+export default class Selector extends U8aFixed {
+  constructor(value) {
+    super(value, 32);
+  }
+}

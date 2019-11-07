@@ -13,7 +13,7 @@ import testabi from './testabi';
 import testabi1 from './testabi1';
 
 describe('chainx.js', () => {
-  const chainx = new Chainx('ws://120.27.210.87:8087');
+  const chainx = new Chainx('ws://192.168.0.100:10001');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
   const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
   const Test = chainx.account.from('0x436861696e582d5361746f736869202020202020202020202020202020202020');
@@ -25,8 +25,8 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    // const abi = new Abi(testabi1);
-    const resp = chainx.trustee.getTrusteeSessionInfo(1);
+    const abi = new Abi(testabi1);
+    // const resp = chainx.trustee.getTrusteeSessionInfo(1);
     // // console.log(Vec.with(U8), [1,2,3]));
     // const C = Vec.with(u8);
     // console.log(new C([Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]));
@@ -38,7 +38,7 @@ describe('chainx.js', () => {
     // console.log(JSON.stringify(abi.constructors[0].args[1].type))
     // console.log(abi.constructors[0]('2100', [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])], { elems: [1, 2] }, '18'));
 
-    // console.log(abi.messages.totalSupply())
+    console.log(abi.messages.totalSupply());
     // console.log(abi);
     // '0x4011';
     // console.log(createType('StorageData', u8aToU8a('0x206400000000000000')));
