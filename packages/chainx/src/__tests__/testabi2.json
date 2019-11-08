@@ -1,0 +1,962 @@
+{
+  "registry": {
+    "strings": [
+      "Erc20",
+      "erc20",
+      "normal",
+      "total_supply",
+      "Value",
+      "ink_core",
+      "storage",
+      "value",
+      "cell",
+      "SyncCell",
+      "sync_cell",
+      "Key",
+      "key",
+      "decimals",
+      "name",
+      "Vec",
+      "elems",
+      "symbol",
+      "balances",
+      "HashMap",
+      "collections",
+      "hash_map",
+      "impls",
+      "AccountId",
+      "env",
+      "xrml",
+      "types",
+      "len",
+      "entries",
+      "SyncChunk",
+      "chunk",
+      "sync_chunk",
+      "Entry",
+      "Occupied",
+      "OccupiedEntry",
+      "val",
+      "Removed",
+      "cells_key",
+      "allowances",
+      "on_deploy",
+      "init_value",
+      "u64",
+      "Text",
+      "u16",
+      "balance_of",
+      "owner",
+      "issue",
+      "to",
+      "bool",
+      "destroy",
+      "allowance",
+      "spender",
+      "transfer",
+      "approve",
+      "transfer_from",
+      "from",
+      "Approval",
+      "Destroy",
+      "Issue",
+      "Transfer",
+      "Option",
+      "None",
+      "Some"
+    ],
+    "types": [
+      {
+        "id": {
+          "custom.name": 1,
+          "custom.namespace": [2, 3],
+          "custom.params": []
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 4,
+              "type": 2
+            },
+            {
+              "name": 14,
+              "type": 8
+            },
+            {
+              "name": 15,
+              "type": 11
+            },
+            {
+              "name": 18,
+              "type": 11
+            },
+            {
+              "name": 19,
+              "type": 15
+            },
+            {
+              "name": 39,
+              "type": 23
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 4
+            }
+          ]
+        }
+      },
+      {
+        "id": "u64",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 12,
+          "custom.namespace": [6, 7, 13],
+          "custom.params": []
+        },
+        "def": {
+          "tuple_struct.types": [6]
+        }
+      },
+      {
+        "id": {
+          "array.len": 32,
+          "array.type": 7
+        },
+        "def": "builtin"
+      },
+      {
+        "id": "u8",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [9]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 10
+            }
+          ]
+        }
+      },
+      {
+        "id": "u16",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [9]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [12]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 14
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 16,
+          "custom.namespace": [],
+          "custom.params": [7]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 17,
+              "type": 13
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "slice.type": 7
+        },
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [12]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 20,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [16, 3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 28,
+              "type": 17
+            },
+            {
+              "name": 29,
+              "type": 20
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 24,
+          "custom.namespace": [6, 25, 26, 27],
+          "custom.params": []
+        },
+        "def": {
+          "tuple_struct.types": [6]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 5,
+          "custom.namespace": [6, 7, 8],
+          "custom.params": [18]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 19
+            }
+          ]
+        }
+      },
+      {
+        "id": "u32",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 10,
+          "custom.namespace": [6, 7, 9, 11],
+          "custom.params": [18]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 9,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 30,
+          "custom.namespace": [6, 7, 31, 32, 31],
+          "custom.params": [21]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 38,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 33,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [16, 3]
+        },
+        "def": {
+          "enum.variants": [
+            {
+              "tuple_struct_variant.name": 34,
+              "tuple_struct_variant.types": [22]
+            },
+            {
+              "unit_variant.name": 37
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 35,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [16, 3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 13,
+              "type": 16
+            },
+            {
+              "name": 36,
+              "type": 3
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 20,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [24, 3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 28,
+              "type": 17
+            },
+            {
+              "name": 29,
+              "type": 25
+            }
+          ]
+        }
+      },
+      {
+        "id": [16, 16],
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 30,
+          "custom.namespace": [6, 7, 31, 32, 31],
+          "custom.params": [26]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 38,
+              "type": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 33,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [24, 3]
+        },
+        "def": {
+          "enum.variants": [
+            {
+              "tuple_struct_variant.name": 34,
+              "tuple_struct_variant.types": [27]
+            },
+            {
+              "unit_variant.name": 37
+            }
+          ]
+        }
+      },
+      {
+        "id": {
+          "custom.name": 35,
+          "custom.namespace": [6, 7, 21, 22, 23],
+          "custom.params": [24, 3]
+        },
+        "def": {
+          "struct.fields": [
+            {
+              "name": 13,
+              "type": 24
+            },
+            {
+              "name": 36,
+              "type": 3
+            }
+          ]
+        }
+      },
+      {
+        "id": "bool",
+        "def": "builtin"
+      },
+      {
+        "id": {
+          "custom.name": 61,
+          "custom.namespace": [],
+          "custom.params": [16]
+        },
+        "def": {
+          "enum.variants": [
+            {
+              "unit_variant.name": 62
+            },
+            {
+              "tuple_struct_variant.name": 63,
+              "tuple_struct_variant.types": [16]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "storage": {
+    "struct.type": 1,
+    "struct.fields": [
+      {
+        "name": 4,
+        "layout": {
+          "struct.type": 2,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "range.len": 1,
+                "range.elem_type": 3
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 14,
+        "layout": {
+          "struct.type": 8,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000001",
+                "range.len": 1,
+                "range.elem_type": 9
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 15,
+        "layout": {
+          "struct.type": 11,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000002",
+                "range.len": 1,
+                "range.elem_type": 12
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 18,
+        "layout": {
+          "struct.type": 11,
+          "struct.fields": [
+            {
+              "name": 9,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000003",
+                "range.len": 1,
+                "range.elem_type": 12
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 19,
+        "layout": {
+          "struct.type": 15,
+          "struct.fields": [
+            {
+              "name": 28,
+              "layout": {
+                "struct.type": 17,
+                "struct.fields": [
+                  {
+                    "name": 9,
+                    "layout": {
+                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000004",
+                      "range.len": 1,
+                      "range.elem_type": 18
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 29,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000000000005",
+                "range.len": 4294967295,
+                "range.elem_type": 21
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": 39,
+        "layout": {
+          "struct.type": 23,
+          "struct.fields": [
+            {
+              "name": 28,
+              "layout": {
+                "struct.type": 17,
+                "struct.fields": [
+                  {
+                    "name": 9,
+                    "layout": {
+                      "range.offset": "0x0000000000000000000000000000000000000000000000000000000100000004",
+                      "range.len": 1,
+                      "range.elem_type": 18
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "name": 29,
+              "layout": {
+                "range.offset": "0x0000000000000000000000000000000000000000000000000000000100000005",
+                "range.len": 4294967295,
+                "range.elem_type": 26
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "contract": {
+    "name": 1,
+    "constructors": [
+      {
+        "name": 40,
+        "selector": "[\"0x00\",\"0x00\",\"0x00\",\"0x00\"]",
+        "args": [
+          {
+            "name": 41,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          },
+          {
+            "name": 15,
+            "type": {
+              "ty": 12,
+              "display_name": [43]
+            }
+          },
+          {
+            "name": 18,
+            "type": {
+              "ty": 12,
+              "display_name": [43]
+            }
+          },
+          {
+            "name": 14,
+            "type": {
+              "ty": 9,
+              "display_name": [44]
+            }
+          }
+        ],
+        "docs": []
+      }
+    ],
+    "messages": [
+      {
+        "name": 4,
+        "selector": "[\"0x38\",\"0x93\",\"0x5D\",\"0x92\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 3,
+          "display_name": [42]
+        },
+        "docs": ["Returns the total number of tokens in existence."]
+      },
+      {
+        "name": 45,
+        "selector": "[\"0xE4\",\"0x1D\",\"0xBB\",\"0x26\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 46,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 3,
+          "display_name": [42]
+        },
+        "docs": ["Returns the balance of the given AccountId."]
+      },
+      {
+        "name": 15,
+        "selector": "[\"0xD0\",\"0x41\",\"0x13\",\"0x01\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 12,
+          "display_name": [43]
+        },
+        "docs": ["Returns the name of the token."]
+      },
+      {
+        "name": 18,
+        "selector": "[\"0x54\",\"0xE9\",\"0x3E\",\"0x98\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 12,
+          "display_name": [43]
+        },
+        "docs": ["Returns the symbol of the token."]
+      },
+      {
+        "name": 14,
+        "selector": "[\"0xE0\",\"0x44\",\"0x65\",\"0x93\"]",
+        "mutates": false,
+        "args": [],
+        "return_type": {
+          "ty": 9,
+          "display_name": [44]
+        },
+        "docs": ["Returns the decimals of the token."]
+      },
+      {
+        "name": 47,
+        "selector": "[\"0x9D\",\"0x64\",\"0x83\",\"0x8C\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 48,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 28,
+          "display_name": [49]
+        },
+        "docs": []
+      },
+      {
+        "name": 50,
+        "selector": "[\"0x18\",\"0xC9\",\"0x37\",\"0x4B\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 8,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 28,
+          "display_name": [49]
+        },
+        "docs": []
+      },
+      {
+        "name": 51,
+        "selector": "[\"0xB6\",\"0x39\",\"0x76\",\"0x70\"]",
+        "mutates": false,
+        "args": [
+          {
+            "name": 46,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 52,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 3,
+          "display_name": [42]
+        },
+        "docs": ["Returns the amount of tokens that an owner allowed to a spender."]
+      },
+      {
+        "name": 53,
+        "selector": "[\"0xC9\",\"0x28\",\"0x03\",\"0x27\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 48,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 28,
+          "display_name": [49]
+        },
+        "docs": ["Transfers token from the sender to the `to` AccountId."]
+      },
+      {
+        "name": 54,
+        "selector": "[\"0x19\",\"0xB3\",\"0x60\",\"0xCA\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 52,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 28,
+          "display_name": [49]
+        },
+        "docs": [
+          "Approve the passed AccountId to spend the specified amount of tokens",
+          "on the behalf of the message\\'s sender."
+        ]
+      },
+      {
+        "name": 55,
+        "selector": "[\"0x0B\",\"0xC5\",\"0x58\",\"0x63\"]",
+        "mutates": true,
+        "args": [
+          {
+            "name": 56,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 48,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "return_type": {
+          "ty": 28,
+          "display_name": [49]
+        },
+        "docs": ["Transfer tokens from one AccountId to another."]
+      }
+    ],
+    "events": [
+      {
+        "name": 57,
+        "args": [
+          {
+            "name": 46,
+            "indexed": false,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 52,
+            "indexed": false,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "indexed": false,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "docs": []
+      },
+      {
+        "name": 58,
+        "args": [
+          {
+            "name": 46,
+            "indexed": false,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "indexed": false,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "docs": []
+      },
+      {
+        "name": 59,
+        "args": [
+          {
+            "name": 48,
+            "indexed": false,
+            "type": {
+              "ty": 16,
+              "display_name": [24]
+            }
+          },
+          {
+            "name": 8,
+            "indexed": false,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "docs": []
+      },
+      {
+        "name": 60,
+        "args": [
+          {
+            "name": 56,
+            "indexed": false,
+            "type": {
+              "ty": 29,
+              "display_name": [61]
+            }
+          },
+          {
+            "name": 48,
+            "indexed": false,
+            "type": {
+              "ty": 29,
+              "display_name": [61]
+            }
+          },
+          {
+            "name": 8,
+            "indexed": false,
+            "type": {
+              "ty": 3,
+              "display_name": [42]
+            }
+          }
+        ],
+        "docs": []
+      }
+    ],
+    "docs": []
+  }
+}

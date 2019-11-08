@@ -5,15 +5,16 @@ import { compactAddLength, compactFromU8a, u8aToHex, u8aToU8a, u8aConcat } from 
 import { isU8a } from '@chainx/util';
 
 import { Abi } from '@chainx/api-contract';
-import { Bytes, U8a, createType, Extrinsic, Vec, u8, Text, getTypeDef } from '@chainx/types';
+import { Bytes, U8a, createType, BTreeMap, ERC20Selector, Selector } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
 import testabi from './testabi';
 import testabi1 from './testabi1';
+import testabi2 from './testabi2';
 
 describe('chainx.js', () => {
-  const chainx = new Chainx('ws://192.168.0.100:10001');
+  const chainx = new Chainx('ws://120.27.210.87:8087');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
   const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
   const Test = chainx.account.from('0x436861696e582d5361746f736869202020202020202020202020202020202020');
@@ -25,7 +26,18 @@ describe('chainx.js', () => {
   });
 
   it('erc21', done => {
-    const abi = new Abi(testabi1);
+    // const abi = new Abi(testabi2);
+
+    const Cla = BTreeMap.with(ERC20Selector, Selector);
+
+    console.log(new Cla('0x03000000009d64838c01e41dbb260238935d92').toJSON());
+
+    // chainx.api.tx.xContracts.setTokenErc20('BTC', '5D2Bha2QbTHnuPL3B7BwVNkMAt1fYzdWnZuTKCJtERj64Rtd', [
+    //   ['Issue', '0x9d64838c'],
+    //   ['BalanceOf', '0xe41dbb26'],
+    //   ['TotalSupply', '0x38935d92'],
+    // ]);
+
     // const resp = chainx.trustee.getTrusteeSessionInfo(1);
     // // console.log(Vec.with(U8), [1,2,3]));
     // const C = Vec.with(u8);
@@ -38,7 +50,7 @@ describe('chainx.js', () => {
     // console.log(JSON.stringify(abi.constructors[0].args[1].type))
     // console.log(abi.constructors[0]('2100', [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])], { elems: [1, 2] }, '18'));
 
-    console.log(abi.messages.totalSupply());
+    // console.log(abi.messages.totalSupply());
     // console.log(abi);
     // '0x4011';
     // console.log(createType('StorageData', u8aToU8a('0x206400000000000000')));

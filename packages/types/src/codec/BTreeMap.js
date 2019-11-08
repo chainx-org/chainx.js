@@ -5,6 +5,7 @@ import { isHex, hexToU8a, isU8a, u8aConcat, u8aToHex, u8aToU8a } from '@chainx/u
 import { blake2AsU8a } from '@chainx/util-crypto';
 import Compact from './Compact';
 import U8a from './U8a';
+import U32 from '../U32';
 import { compareMap, decodeU8a, typeToConstructor } from './utils';
 export default class BTreeMap extends Map {
   constructor(keyType, valType, rawValue) {
@@ -42,12 +43,13 @@ export default class BTreeMap extends Map {
   }
   static decodeBTreeMapFromU8a(KeyClass, ValClass, u8a) {
     const output = new Map();
-    const [offset, length] = Compact.decodeU8a(u8a);
+    const length = new U32(u8a).toNumber();
     const types = [];
-    for (let i = 0; i < length.toNumber(); i++) {
+    for (let i = 0; i < length; i++) {
       types.push(KeyClass, ValClass);
     }
-    const values = decodeU8a(u8a.subarray(offset), types);
+    console.log(u8a.subarray(4));
+    const values = decodeU8a(u8a.subarray(4), types);
     for (let i = 0; i < values.length; i += 2) {
       output.set(values[i], values[i + 1]);
     }
@@ -138,7 +140,7 @@ export default class BTreeMap extends Map {
   toU8a(isBare) {
     const encoded = new Array();
     if (!isBare) {
-      encoded.push(Compact.encodeU8a(this.size));
+      encoded.push(new U32(this.size).toU8a());
     }
     this.forEach((v, k) => {
       encoded.push(k.toU8a(isBare), v.toU8a(isBare));

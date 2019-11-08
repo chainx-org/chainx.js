@@ -1259,6 +1259,16 @@
                 }
               ],
               "documentation": []
+            },
+            {
+              "name": "modify_token_black_list",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                }
+              ],
+              "documentation": []
             }
           ],
           "events": null
@@ -3527,7 +3537,7 @@
                 "Type": "Schedule"
               },
               "fallback": "0x0000000001000000000000000100000000000000010000000000000001000000000000000100000000000000010000000000000001000000000000008700000000000000af0000000000000001000000000000000100000000000000040000000000010010000000004000000020000000",
-              "documentation": [" Current cost schedule for contract."]
+              "documentation": [" Current cost schedule for contracts."]
             },
             {
               "name": "PristineCode",
@@ -3592,6 +3602,34 @@
               },
               "fallback": "0x0100000000000000",
               "documentation": [" The price of one unit of gas."]
+            },
+            {
+              "name": "Erc20InfoOfToken",
+              "modifier": 0,
+              "type": {
+                "Map": {
+                  "hasher": "Blake2_256",
+                  "key": "Token",
+                  "value": "(AccountId,BTreeMap<ERC20Selector,Selector>)",
+                  "linked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
+            },
+            {
+              "name": "TokenOfErc20",
+              "modifier": 0,
+              "type": {
+                "Map": {
+                  "hasher": "Blake2_256",
+                  "key": "AccountId",
+                  "value": "Token",
+                  "linked": false
+                }
+              },
+              "fallback": "0x00",
+              "documentation": []
             }
           ],
           "calls": [
@@ -3604,7 +3642,7 @@
                 }
               ],
               "documentation": [
-                " Updates the schedule for metering contract.",
+                " Updates the schedule for metering contracts.",
                 "",
                 " The schedule must have a greater version than the stored schedule."
               ]
@@ -3623,7 +3661,7 @@
               ],
               "documentation": [
                 " Stores the given binary Wasm code into the chain's storage and returns its `codehash`.",
-                " You can instantiate contract only with stored code."
+                " You can instantiate contracts only with stored code."
               ]
             },
             {
@@ -3710,11 +3748,113 @@
               ]
             },
             {
+              "name": "convert_to_erc20",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "value",
+                  "type": "Compact<Balance>"
+                },
+                {
+                  "name": "gas_limit",
+                  "type": "Compact<Gas>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "convert_to_asset",
+              "args": [
+                {
+                  "name": "to",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "value",
+                  "type": "Compact<Balance>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_token_erc20",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "erc20_addr",
+                  "type": "AccountId"
+                },
+                {
+                  "name": "selectors",
+                  "type": "BTreeMap<ERC20Selector,Selector>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_erc20_selector",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "selectors",
+                  "type": "BTreeMap<ERC20Selector,Selector>"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "remove_token_erc20",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "force_issue_erc20",
+              "args": [
+                {
+                  "name": "token",
+                  "type": "Token"
+                },
+                {
+                  "name": "issues",
+                  "type": "Vec<(AccountId,Balance)>"
+                },
+                {
+                  "name": "gas_limit",
+                  "type": "Gas"
+                }
+              ],
+              "documentation": []
+            },
+            {
               "name": "set_gas_price",
               "args": [
                 {
                   "name": "price",
                   "type": "Balance"
+                }
+              ],
+              "documentation": []
+            },
+            {
+              "name": "set_println",
+              "args": [
+                {
+                  "name": "state",
+                  "type": "bool"
                 }
               ],
               "documentation": []
