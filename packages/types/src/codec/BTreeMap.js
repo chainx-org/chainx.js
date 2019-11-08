@@ -81,7 +81,7 @@ export default class BTreeMap extends Map {
    * @description The length of the value when encoded as a Uint8Array
    */
   get encodedLength() {
-    let len = Compact.encodeU8a(this.size).length;
+    let len = new U32(this.size).encodedLength;
     this.forEach((v, k) => {
       len += v.encodedLength + k.encodedLength;
     });
