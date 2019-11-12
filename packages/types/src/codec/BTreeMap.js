@@ -48,7 +48,6 @@ export default class BTreeMap extends Map {
     for (let i = 0; i < length; i++) {
       types.push(KeyClass, ValClass);
     }
-    console.log(u8a.subarray(4));
     const values = decodeU8a(u8a.subarray(4), types);
     for (let i = 0; i < values.length; i += 2) {
       output.set(values[i], values[i + 1]);
