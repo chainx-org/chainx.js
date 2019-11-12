@@ -1,6 +1,6 @@
 {
   "name": "@chainx/types",
-  "version": "2.22.19",
+  "version": "2.22.20",
   "main": "index.js",
   "dependencies": {
     "@chainx/keyring": "^2.22.2",
