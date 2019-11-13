@@ -5,7 +5,7 @@ import { compactAddLength, compactFromU8a, u8aToHex, u8aToU8a, u8aConcat } from 
 import { isU8a } from '@chainx/util';
 
 import { Abi } from '@chainx/api-contract';
-import { Bytes, U8a, createType, BTreeMap, Method, ERC20Selector, Selector } from '@chainx/types';
+import { Bytes, U8a, createType, BTreeMap, Method, XRC20Selector, Selector } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
@@ -29,7 +29,7 @@ describe('chainx.js', () => {
   it('erc21', done => {
     // const abi = new Abi(testabi2);
 
-    // const Cla = BTreeMap.with(ERC20Selector, Selector);
+    // const Cla = BTreeMap.with(XRC20Selector, Selector);
 
     // console.log(new Cla('0x03000000009d64838c01e41dbb260238935d92').toJSON());
 

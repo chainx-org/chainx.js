@@ -18,9 +18,9 @@ export default {
       gasLimit: 'u64',
       inputData: 'Bytes',
     },
-    ContractErc20CallRequest: {
+    ContractXRC20CallRequest: {
       token: 'Token',
-      selector: 'ERC20Selector',
+      selector: 'XRC20Selector',
       inputData: 'Bytes',
     },
     ContractExecResultSuccess: {

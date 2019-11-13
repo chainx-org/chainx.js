@@ -283,16 +283,16 @@ const contractGetStorage = {
   type: 'RawJSON',
 };
 
-const contractErc20Call = {
+const contractXRC20Call = {
   description: '',
   params: [
-    createParam('contractErc20CallRequest', 'ContractErc20CallRequest'),
+    createParam('ContractXRC20CallRequest', 'ContractXRC20CallRequest'),
     createParam('at', 'Hash', { isOptional: true }),
   ],
   type: 'RawJSON',
 };
 
-const contractErc20Info = {
+const contractXRC20Info = {
   description: '',
   params: [createParam('at', 'Hash', { isOptional: true })],
   type: 'RawJSON',
@@ -354,7 +354,7 @@ export default {
     ),
     contractCall: createMethod(section, 'contractCall', contractCall),
     contractGetStorage: createMethod(section, 'contractGetStorage', contractGetStorage),
-    contractErc20Call: createMethod(section, 'contractErc20Call', contractErc20Call),
-    contractErc20Info: createMethod(section, 'contractErc20Info', contractErc20Info),
+    contractXRC20Call: createMethod(section, 'contractXRC20Call', contractXRC20Call),
+    contractXRC20Info: createMethod(section, 'contractXRC20Info', contractXRC20Info),
   },
 };
