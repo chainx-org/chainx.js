@@ -273,6 +273,31 @@ const contractCall = {
   type: 'RawJSON',
 };
 
+const contractGetStorage = {
+  description: '',
+  params: [
+    createParam('contractAddress', 'PublicKey'),
+    createParam('storageKey', 'H256'),
+    createParam('at', 'Hash', { isOptional: true }),
+  ],
+  type: 'RawJSON',
+};
+
+const contractErc20Call = {
+  description: '',
+  params: [
+    createParam('contractErc20CallRequest', 'ContractErc20CallRequest'),
+    createParam('at', 'Hash', { isOptional: true }),
+  ],
+  type: 'RawJSON',
+};
+
+const contractErc20Info = {
+  description: '',
+  params: [createParam('at', 'Hash', { isOptional: true })],
+  type: 'RawJSON',
+};
+
 const section = 'chainx';
 
 /**
@@ -328,5 +353,8 @@ export default {
       getCrossMiningDividendByAccount
     ),
     contractCall: createMethod(section, 'contractCall', contractCall),
+    contractGetStorage: createMethod(section, 'contractGetStorage', contractGetStorage),
+    contractErc20Call: createMethod(section, 'contractErc20Call', contractErc20Call),
+    contractErc20Info: createMethod(section, 'contractErc20Info', contractErc20Info),
   },
 };

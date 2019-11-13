@@ -18,6 +18,11 @@ export default {
       gasLimit: 'u64',
       inputData: 'Bytes',
     },
+    ContractErc20CallRequest: {
+      token: 'Token',
+      selector: 'ERC20Selector',
+      inputData: 'Bytes',
+    },
     ContractExecResultSuccess: {
       status: 'u8',
       data: 'Bytes',
