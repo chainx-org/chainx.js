@@ -1,11 +1,11 @@
 import Chainx from '../index';
 import fs from 'fs';
 import path from 'path';
-import { compactAddLength, compactFromU8a, u8aToHex, u8aToU8a, u8aConcat } from '@chainx/util';
+import { compactAddLength, compactFromU8a, u8aToHex, hexToU8a, u8aToU8a, u8aConcat } from '@chainx/util';
 import { isU8a } from '@chainx/util';
 
 import { Abi } from '@chainx/api-contract';
-import { Bytes, U8a, createType, BTreeMap, Method, XRC20Selector, Selector } from '@chainx/types';
+import { Bytes, U8a, createType, BTreeMap, u64, Method, XRC20Selector, Selector } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
 import erc21 from './erc21';
@@ -17,7 +17,7 @@ import { create } from 'handlebars';
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:10001');
   const Alice1 = chainx.account.from('0x446861696e582d41616963652020202020202020202020202020202020202020');
-  const Alice = chainx.account.from('0x436861696e582d416c6963652020202020202020202020202020202020202020');
+  const Alice = chainx.account.from('0xabf8e5bdbe30c65656c0a3cbd181ff8a56294a69dfedd27982aace4a76909115');
   const Test = chainx.account.from('0x436861696e582d5361746f736869202020202020202020202020202020202020');
 
   jest.setTimeout(30000);
@@ -26,17 +26,38 @@ describe('chainx.js', () => {
     await chainx.isRpcReady();
   });
 
-  it('erc21', done => {
+  it('erc21', async done => {
     // const abi = new Abi(testabi2);
-
+    const ex = await chainx.chain.convertToAsset(10000, 0, 500000);
+    ex.signAndSend(Alice, (error, result) => {
+      console.log(error, result);
+      if (result) {
+        console.log(JSON.stringify(result));
+      }
+    });
     // const Cla = BTreeMap.with(XRC20Selector, Selector);
 
     // console.log(new Cla('0x03000000009d64838c01e41dbb260238935d92').toJSON());
-    chainx.api.rpc.chainx.contractXRC20Call({
-      token: 'BTC',
-      selector: 'BalanceOf',
-      inputData: '0x88dc3417d5058ec4b4503e0c12ea1a0a89be200fe98922423d4334014fa6b0ee',
-    });
+    // chainx.api.rpc.chainx.contractXRCTokenInfo().then(data => {
+    //   const contractAddress = data.BTC.XRC20.address;
+    //   const selector = data.BTC.XRC20.selectors.Destroy;
+
+    //   const ex = chainx.api.tx.xContracts.call(
+    //     contractAddress, // contract address
+    //     0, // value
+    //     500000, // gas
+    //     u8aToHex(u8aConcat(hexToU8a(selector), new u64(10000).toU8a()))
+    //   );
+
+    //   console.log(ex.method.toU8a())
+
+    //   ex.signAndSend(Alice, (error, result) => {
+    //     console.log(error, result);
+    //     if (result) {
+    //       console.log(JSON.stringify(result));
+    //     }
+    //   });
+    // });
     // console.log(
     //   JSON.stringify(
     //     createType(
