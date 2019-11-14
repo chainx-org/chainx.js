@@ -292,7 +292,7 @@ const contractXRC20Call = {
   type: 'RawJSON',
 };
 
-const contractXRC20Info = {
+const contractXRCTokenInfo = {
   description: '',
   params: [createParam('at', 'Hash', { isOptional: true })],
   type: 'RawJSON',
@@ -355,6 +355,6 @@ export default {
     contractCall: createMethod(section, 'contractCall', contractCall),
     contractGetStorage: createMethod(section, 'contractGetStorage', contractGetStorage),
     contractXRC20Call: createMethod(section, 'contractXRC20Call', contractXRC20Call),
-    contractXRC20Info: createMethod(section, 'contractXRC20Info', contractXRC20Info),
+    contractXRCTokenInfo: createMethod(section, 'contractXRCTokenInfo', contractXRCTokenInfo),
   },
 };
