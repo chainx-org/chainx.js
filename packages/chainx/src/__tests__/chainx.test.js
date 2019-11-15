@@ -8,11 +8,6 @@ import { Abi } from '@chainx/api-contract';
 import { Bytes, U8a, createType, BTreeMap, u64, Method, XRC20Selector, Selector } from '@chainx/types';
 import { blake2AsU8a } from '@chainx/util-crypto';
 import erc20 from './erc20';
-import erc21 from './erc21';
-import testabi from './testabi';
-import testabi1 from './testabi1';
-import testabi2 from './testabi2';
-import { create } from 'handlebars';
 
 describe('chainx.js', () => {
   const chainx = new Chainx('ws://192.168.0.100:10001');
@@ -27,30 +22,31 @@ describe('chainx.js', () => {
   });
 
   it('erc21', async done => {
-    // const abi = new Abi(testabi2);
-    const ex = await chainx.chain.convertToAsset(10000, 0, 500000);
-    ex.signAndSend(Alice, (error, result) => {
-      console.log(error, result);
-      if (result) {
-        console.log(JSON.stringify(result));
-      }
+    chainx.chain.convertToAsset('BTC', 100000, 0, 500000).then(extrinsic => {
+      extrinsic.signAndSend(Alice, (error, result) => {
+        console.log(error, result);
+      });
     });
+    // const abi = new Abi(testabi2);
+    // const ex = await chainx.chain.convertToAsset(10000, 0, 500000);
+    // ex.signAndSend(Alice, (error, result) => {
+    //   console.log(error, result);
+    //   if (result) {
+    //     console.log(JSON.stringify(result));
+    //   }
+    // });
     // const Cla = BTreeMap.with(XRC20Selector, Selector);
-
     // console.log(new Cla('0x03000000009d64838c01e41dbb260238935d92').toJSON());
     // chainx.api.rpc.chainx.contractXRCTokenInfo().then(data => {
     //   const contractAddress = data.BTC.XRC20.address;
     //   const selector = data.BTC.XRC20.selectors.Destroy;
-
     //   const ex = chainx.api.tx.xContracts.call(
     //     contractAddress, // contract address
     //     0, // value
     //     500000, // gas
     //     u8aToHex(u8aConcat(hexToU8a(selector), new u64(10000).toU8a()))
     //   );
-
     //   console.log(ex.method.toU8a())
-
     //   ex.signAndSend(Alice, (error, result) => {
     //     console.log(error, result);
     //     if (result) {
@@ -72,11 +68,9 @@ describe('chainx.js', () => {
     //       })
     //   )
     // );
-
     // console.log(new Method(
     //   Uint8Array.from('0x14070c4254432a5039bea4301370cea9d438b2fb9000e578b48fc4c77adebe42bbd513717f0903000000009d64838c01e41dbb260238935d92')
     // ));
-
     // console.log(
     //   chainx.api.tx.xContracts.setTokenErc20(
     //     'BTC',
@@ -84,25 +78,21 @@ describe('chainx.js', () => {
     //     new Map([['Issue', '0x9d64838c'], ['BalanceOf', '0xe41dbb26'], ['TotalSupply', '0x38935d92']])
     //   ).method.toHex()
     // );
-
     // chainx.api.tx.xContracts.setTokenErc20('BTC', '5D2Bha2QbTHnuPL3B7BwVNkMAt1fYzdWnZuTKCJtERj64Rtd', [
     //   ['Issue', '0x9d64838c'],
     //   ['BalanceOf', '0xe41dbb26'],
     //   ['TotalSupply', '0x38935d92'],
     // ]);
-
     // const resp = chainx.trustee.getTrusteeSessionInfo(1);
     // // console.log(Vec.with(U8), [1,2,3]));
     // const C = Vec.with(u8);
     // console.log(new C([Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]));
     // new Vec(U8, [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])]);
-
     // new Vec(Text, ['1', '23', '345', '4567', new Text('56789')])
     // console.log(getTypeDef(`{"elems":"Vec<u16>"}`))
     // console.log(getTypeDef("Vec<u16>"))
     // console.log(JSON.stringify(abi.constructors[0].args[1].type))
     // console.log(abi.constructors[0]('2100', [Uint8Array.from([0x11]), Uint8Array.from([0x11]), Uint8Array.from([0x11])], { elems: [1, 2] }, '18'));
-
     // console.log(abi.messages.totalSupply());
     // console.log(abi);
     // '0x4011';
@@ -137,14 +127,21 @@ describe('chainx.js', () => {
     // );
   });
 
+  xit('transfer', done => {
+    const ex = chainx.api.tx.xAssets.transfer(Test.address(), 'PCX', 1000000000, '');
+    ex.signAndSend(Alice, (error, result) => {
+      console.log(error, result);
+    });
+  });
+
   xit('putCode', done => {
-    const code = fs.readFileSync(path.resolve(__dirname, './erc20.wasm'));
-    const ex = chainx.api.tx.xContracts.putCode(500000, compactAddLength(code));
-    console.log(Test.publicKey());
+    const code = compactAddLength(fs.readFileSync(path.resolve(__dirname, './erc20.wasm')));
+    const ex = chainx.api.tx.xContracts.putCode(50000000, code);
     ex.signAndSend(Test, (error, result) => {
       console.log(error, result);
-      if (result) {
-        console.log(JSON.stringify(result));
+      if (result && result.result === 'ExtrinsicSuccess') {
+        // 获取 codeHash
+        console.log(result.events.find(e => e.method === 'CodeStored').event.data);
       }
     });
   });
@@ -195,13 +192,12 @@ describe('chainx.js', () => {
 
   xit('instantiate', done => {
     const abi = new Abi(erc20);
+    const code = fs.readFileSync(path.resolve(__dirname, './erc20.wasm'));
 
-    const ex = chainx.api.tx.xContracts.instantiate(
-      1000,
-      500000,
-      '0x5e71dc66c1527bf4047942c5ada9c5c59941bff8eb8b2d1a6d849306bfd52e93',
-      abi.constructors[0](800000003)
-    );
+    const codeHash = u8aToHex(blake2AsU8a(code));
+
+    console.log(codeHash);
+    const ex = chainx.api.tx.xContracts.instantiate(0, 5000000, codeHash, abi.constructors[0](5, 'sss', 'www', 10));
 
     ex.signAndSend(Alice, (error, result) => {
       console.log(error, result);
@@ -215,11 +211,10 @@ describe('chainx.js', () => {
     const abi = new Abi(erc20);
 
     const ex = chainx.api.tx.xContracts.call(
-      '5F5ggb7h6NPpMBd1U5Z8Cn5KSN53dgSNoTbBk9JrDBJM6QPh', // contract address
+      '5GE7vwvDmKCCPrVLc9XZJAiAspM9LhQWbQjPvZ3QxzBUbhT7', // contract address
       0, // value
       500000, // gas
-      abi.messages.flipTo(true)
-      // abi.messages.flip()
+      abi.messages.transfer('5FvHGYk44FHZXznrhoskVyr2zGPYn5CpUXphRKM8eGRJZMtX', 10)
     );
 
     ex.signAndSend(Alice, (error, result) => {
