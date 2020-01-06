@@ -8,6 +8,7 @@ import Asset from './Asset';
 import Chain from './Chain';
 import Trade from './Trade';
 import Trustee from './Trustee';
+import SubmittableExtrinsic from './SubmittableExtrinsic';
 
 class ChainX {
   constructor(wsUrlOrProvider = 'ws://127.0.0.1:8087', { broadcast = [], ignoreCheckType = false } = {}) {
@@ -117,6 +118,6 @@ class ChainX {
   };
 }
 
-export { ApiBase, WsProvider, HttpProvider, Account };
+export { ApiBase, WsProvider, HttpProvider, Account, SubmittableExtrinsic };
 
 export default ChainX;
