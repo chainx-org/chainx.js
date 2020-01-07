@@ -1,10 +1,10 @@
 {
   "name": "@chainx/types",
-  "version": "2.22.29",
+  "version": "2.22.31",
   "main": "index.js",
   "dependencies": {
-    "@chainx/keyring": "^2.22.29",
-    "@chainx/util": "^2.22.29",
+    "@chainx/keyring": "^2.22.31",
+    "@chainx/util": "^2.22.31",
     "bitcoinjs-lib": "^4.0.2",
     "bn.js": "^4.11.8"
   }

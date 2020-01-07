@@ -1,10 +1,10 @@
 {
   "name": "@chainx/account",
-  "version": "2.22.29",
+  "version": "2.22.31",
   "main": "index.js",
   "dependencies": {
-    "@chainx/keyring": "^2.22.29",
-    "@chainx/keystore": "^2.22.29",
+    "@chainx/keyring": "^2.22.31",
+    "@chainx/keystore": "^2.22.31",
     "bip32": "^1.0.2",
     "bs58": "^4.0.1",
     "tweetnacl": "^1.0.0"
