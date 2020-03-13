@@ -1,7 +1,7 @@
 // Copyright 2017-2018 @polkadot/types authors & contributors
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
-import { assert, isString, stringToU8a, u8aToString, u8aToHex } from '@chainx/util';
+import { assert, isString, stringToU8a, u8aToString, u8aToHex, isHex, u8aToU8a } from '@chainx/util';
 import Compact from './codec/Compact';
 /**
  * @name Text
@@ -44,6 +44,8 @@ export default class Text extends String {
   static decodeText(value) {
     if (isString(value)) {
       return value.toString();
+    } else if (isHex(value)) {
+      return u8aToString(u8aToU8a(value));
     } else if (value instanceof Uint8Array) {
       if (!value.length) {
         return '';
