@@ -8,7 +8,7 @@
     "test:unit": "NODE_ENV= jest --testPathIgnorePatterns e2e",
     "build:metadata": "babel-node ./scripts/metadataJsonWrite",
     "build:rpc": "babel-node ./scripts/rpcJsonWrite",
-    "release": "yarn build && lerna publish --registry=https://registry.npmjs.org/"
+    "release": "yarn build && lerna publish"
   },
   "workspaces": [
     "packages/*"
