@@ -1280,6 +1280,98 @@
         "pubsub": ["", "", ""],
         "section": "chainx",
         "type": "RawJSON"
+      },
+      "contractCall": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "contractCall",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "callRequest",
+            "type": "ContractCallRequest"
+          },
+          {
+            "isOptional": true,
+            "name": "at",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "contractGetStorage": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "contractGetStorage",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "contractAddress",
+            "type": "PublicKey"
+          },
+          {
+            "isOptional": false,
+            "name": "storageKey",
+            "type": "H256"
+          },
+          {
+            "isOptional": true,
+            "name": "at",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "contractXRC20Call": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "contractXRC20Call",
+        "params": [
+          {
+            "isOptional": false,
+            "name": "ContractXRC20CallRequest",
+            "type": "ContractXRC20CallRequest"
+          },
+          {
+            "isOptional": true,
+            "name": "at",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
+      },
+      "contractXRCTokenInfo": {
+        "description": "",
+        "isDeprecated": false,
+        "isHidden": false,
+        "isSigned": false,
+        "isSubscription": false,
+        "method": "contractXRCTokenInfo",
+        "params": [
+          {
+            "isOptional": true,
+            "name": "at",
+            "type": "Hash"
+          }
+        ],
+        "pubsub": ["", "", ""],
+        "section": "chainx",
+        "type": "RawJSON"
       }
     }
   }

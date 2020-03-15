@@ -9,5 +9,6 @@
     "@chainx/storage": "^2.22.36",
     "@chainx/types": "^2.22.36",
     "@chainx/util": "^2.22.31"
-  }
+  },
+  "gitHead": "32ae18cbeeab9f4ef6f2382ac6a14a473e9a0914"
 }
