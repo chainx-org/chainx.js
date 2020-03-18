@@ -20,9 +20,9 @@ export default class Text extends String {
   constructor(value = '') {
     super(Text.decodeText(value));
     // 奇怪的编码
-    if (value instanceof Uint8Array) {
-      this._rawU8a = Text.decodeU8a(value);
-    }
+    //if (value instanceof Uint8Array) {
+    // this._rawU8a = Text.decodeU8a(value);
+    //}
   }
 
   static decodeU8a(value) {
