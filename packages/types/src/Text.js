@@ -51,15 +51,16 @@ export default class Text extends String {
         return '';
       }
 
-      const [offset, length] = Compact.decodeU8a(value);
-      const total = offset + length.toNumber();
+      //const [offset, length] = Compact.decodeU8a(value);
+      //const total = offset + length.toNumber();
 
       // assert(
       //   total <= value.length,
       //   `Text: required length less than remainder, expected at least ${total}, found ${value.length}`
       // );
+      return u8aToString(u8aToU8a(value));
 
-      return u8aToString(value.subarray(offset, total));
+      //return u8aToString(value.subarray(offset, total));
     }
 
     return `${value}`;
