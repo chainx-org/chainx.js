@@ -47,9 +47,7 @@ export default class Text extends String {
     } else if (isHex(value)) {
       return u8aToString(u8aToU8a(value));
     } else if (value instanceof Uint8Array) {
-      //const [offset, length] = Compact.decodeU8a(value);
-      //const total = offset + length.toNumber();
-      //return u8aToString(value.subarray(offset, total));
+      //const [offset, length] = Compact.decodeU8a(value);const total = offset + length.toNumber();return u8aToString(value.subarray(offset, total));
 
       return u8aToString(u8aToU8a(value));
     }
